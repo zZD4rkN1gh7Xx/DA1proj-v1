@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-class PumpingStations {
+class PumpingStation {
 
     private:
 
@@ -16,8 +16,8 @@ class PumpingStations {
 
     public:
 
-        PumpingStations(int pumping_station_id, std::string pumping_station_code);
-        PumpingStations(void);
+        PumpingStation(int pumping_station_id, std::string pumping_station_code);
+        PumpingStation(void);
         int get_pumping_station_id(void);
         std::string get_pumping_station_code(void);
 
