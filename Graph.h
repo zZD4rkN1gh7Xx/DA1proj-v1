@@ -15,6 +15,8 @@ template <class T> class Edge;
 template <class T> class Graph;
 template <class T> class Vertex;
 
+#include "Pipes.h"
+
 
 /****************** Provided structures  ********************/
 
@@ -28,7 +30,7 @@ class Vertex {
     int num;               // auxiliary field
     int low;               // auxiliary field
 
-    void addEdge(Vertex<T> *dest, double w);
+    void addEdge(Vertex<T> *dest, Pipe w);
 	bool removeEdgeTo(Vertex<T> *d);
 
 public:
@@ -54,12 +56,12 @@ public:
 template <class T>
 class Edge {
 	Vertex<T> * dest;      // destination vertex
-	double weight;         // edge weight
+	Pipe weight;         // edge weight
 public:
-	Edge(Vertex<T> *d, double w);
+	Edge(Vertex<T> *d, Pipe w);
     Vertex<T> *getDest() const;
     void setDest(Vertex<T> *dest);
-    double getWeight() const;
+    Pipe getWeight() const;
     void setWeight(double weight);
     friend class Graph<T>;
 	friend class Vertex<T>;
@@ -74,7 +76,7 @@ public:
     int getNumVertex() const;
 	bool addVertex( T &in);
 	bool removeVertex(T &in);
-	bool addEdge(const T &sourc, const T &dest, double w);
+	bool addEdge(const T &sourc, const T &dest, Pipe w);
 	bool removeEdge(const T &sourc, const T &dest);
     vector<Vertex<T> * > getVertexSet() const;
 	vector<T> dfs() const;
@@ -90,7 +92,7 @@ template <class T>
 Vertex<T>::Vertex(T in): info(in) {}
 
 template <class T>
-Edge<T>::Edge(Vertex<T> *d, double w): dest(d), weight(w) {}
+Edge<T>::Edge(Vertex<T> *d, Pipe w): dest(d), weight(w) {}
 
 
 template <class T>
@@ -153,7 +155,7 @@ void Edge<T>::setDest(Vertex<T> *d) {
 }
 
 template<class T>
-double Edge<T>::getWeight() const {
+Pipe Edge<T>::getWeight() const {
     return weight;
 }
 
@@ -222,7 +224,7 @@ bool Graph<T>::addVertex( T &in) {
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
 template <class T>
-bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
+bool Graph<T>::addEdge(const T &sourc, const T &dest, Pipe w) {
 	auto v1 = findVertex(sourc);
 	auto v2 = findVertex(dest);
 	if (v1 == NULL || v2 == NULL)
@@ -236,7 +238,7 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
  * with a given destination vertex (d) and edge weight (w).
  */
 template <class T>
-void Vertex<T>::addEdge(Vertex<T> *d, double w) {
+void Vertex<T>::addEdge(Vertex<T> *d, Pipe w) {
 	adj.push_back(Edge<T>(d, w));
 }
 

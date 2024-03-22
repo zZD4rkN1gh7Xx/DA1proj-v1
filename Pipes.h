@@ -11,17 +11,17 @@ class Pipe {
 
     private:
 
-        std::string service_point_A;
-        std::string service_point_B;
+        std::string code_point_A;
+        std::string code_point_B;
         int capacity;
         int direction;
 
     public:
 
-        Pipe(std::string service_point_A, std::string service_point_B, int capacity, int direction);
+        Pipe(std::string code_point_A, std::string code_point_B, int capacity, int direction);
         Pipe(void);
-        std::string get_point_A(void);
-        std::string get_point_B(void);
+        std::string get_code_A(void);
+        std::string get_code_B(void);
         int get_capacity(void);
         int get_direction(void);
 

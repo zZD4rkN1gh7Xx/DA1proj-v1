@@ -11,12 +11,15 @@
 #include "waterReservoir.h"
 #include "Pipes.h"
 #include "agua.h"
+#include <unordered_map>
 
 
 class WMSGraph :public Graph<Agua>{
 
-    public:
+    private:
+        std::unordered_map<std::string, Agua> aguapoints;
 
+    public:
 
         void add_delivery_site(DeliverySite& delivery_site);
         void add_pumping_station(PumpingStation& pumping_station);
@@ -24,7 +27,8 @@ class WMSGraph :public Graph<Agua>{
         void remove_delivery_site(DeliverySite& delivery_site);
         void remove_pumping_station(PumpingStation& pumping_station);
         void remove_water_reservoir(WaterReservoir& water_reservoir);
-
+        void add_pipe(Pipe& pipe);
+        void remove_pipe(Pipe& pipe);
 
 };
 
