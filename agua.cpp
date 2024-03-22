@@ -22,7 +22,7 @@ std::string Agua::get_code(void)
     return this->code;
 }
 
-bool Agua::operator==(Agua& other)
+bool Agua::operator==(const Agua& other) const
 {
     return (this->id == other.id);
 }

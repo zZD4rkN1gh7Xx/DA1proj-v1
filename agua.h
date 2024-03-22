@@ -20,7 +20,7 @@ class Agua {
         Agua(void);
         int get_id(void);
         std::string get_code(void);
-        bool operator==(Agua& other);
+        bool operator==(const Agua& other) const;
         bool operator!=(Agua& other);
 
 };

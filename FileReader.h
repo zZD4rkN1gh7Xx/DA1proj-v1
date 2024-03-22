@@ -11,11 +11,15 @@
 #include "pumpingStations.h"
 #include "waterReservoir.h"
 #include "WMSGraph.h"
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <iostream>
 
 class FileReader {
 
     public:
-        static void add_reserviors(const std::string &filename, WMSGraph &OurGraph);
+        static void add_reservoirs(const std::string &filename, WMSGraph &OurGraph);
         static void add_stations(const std::string &filename, WMSGraph &OurGraph);
         static void add_cities(const std::string &filename, WMSGraph &OurGraph);
         static void add_pipes(const std::string &filename, WMSGraph &OurGraph);
