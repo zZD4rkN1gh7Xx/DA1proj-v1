@@ -26,3 +26,4 @@ int DeliverySite::get_population(void)
 {
     return this->population;
 }
+

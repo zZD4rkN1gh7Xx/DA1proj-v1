@@ -21,3 +21,13 @@ std::string Agua::get_code(void)
 {
     return this->code;
 }
+
+bool Agua::operator==(Agua& other)
+{
+    return (this->id == other.id);
+}
+
+bool Agua::operator!=(Agua& other)
+{
+    return !(this->id == other.id);
+}

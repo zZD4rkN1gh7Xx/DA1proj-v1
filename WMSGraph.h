@@ -13,9 +13,10 @@
 #include "agua.h"
 
 
-class WMSGraph : Graph<Agua>{
+class WMSGraph :public Graph<Agua>{
 
     public:
+
 
         void add_delivery_site(DeliverySite& delivery_site);
         void add_pumping_station(PumpingStation& pumping_station);
@@ -24,7 +25,10 @@ class WMSGraph : Graph<Agua>{
         void remove_pumping_station(PumpingStation& pumping_station);
         void remove_water_reservoir(WaterReservoir& water_reservoir);
 
+
 };
 
+template bool Graph<Agua>::addVertex(Agua &in);
+template bool Graph<Agua>::removeVertex(Agua &in);
 
 #endif //DAPROJ1_WMSGRAPH_H
