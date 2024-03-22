@@ -6,9 +6,10 @@
 #define DAPROJ1_WATERRESERVOIR_H
 
 #include <string>
+#include "agua.h"
 
 
-class WaterReservoir {
+class WaterReservoir : public Agua{
 
     private:
 
@@ -19,7 +20,7 @@ class WaterReservoir {
 
     public:
 
-        WaterReservoir(std::string reservoir, std::string municipality, int reservoir_id, int max_delivery);
+        WaterReservoir(std::string reservoir, std::string municipality, int reservoir_id, std::string reservoid_code, int max_delivery);
         WaterReservoir(void);
         std::string get_reservoir(void);
         std::string get_municipality(void);

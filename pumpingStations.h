@@ -6,8 +6,10 @@
 #define DAPROJ1_PUMPINGSTATIONS_H
 
 #include <iostream>
+#include <string>
+#include "agua.h"
 
-class PumpingStation {
+class PumpingStation : public Agua{
 
     private:
 
@@ -18,8 +20,7 @@ class PumpingStation {
 
         PumpingStation(int pumping_station_id, std::string pumping_station_code);
         PumpingStation(void);
-        int get_pumping_station_id(void);
-        std::string get_pumping_station_code(void);
+
 
 };
 

@@ -4,18 +4,6 @@
 
 #include "pumpingStations.h"
 
-PumpingStation::PumpingStation(int pumping_station_id, std::string pumping_station_code)
-{
-    this->pumping_station_id = pumping_station_id;
-    this->pumping_station_code = pumping_station_code;
-}
+PumpingStation::PumpingStation(int pumping_station_id, std::string pumping_station_code) : Agua(pumping_station_id, pumping_station_code){}
 
-int PumpingStation::get_pumping_station_id(void)
-{
-    return this->pumping_station_id;
-}
 
-std::string PumpingStation::get_pumping_station_code(void)
-{
-    return this->pumping_station_code;
-}

@@ -10,24 +10,19 @@
 #include "pumpingStations.h"
 #include "waterReservoir.h"
 #include "Pipes.h"
+#include "agua.h"
 
 
-class WMSGraph : public virtual Graph<DeliverySite>, public virtual Graph<PumpingStation>, public virtual Graph<WaterReservoir>{
+class WMSGraph : Graph<Agua>{
 
     public:
 
         void add_delivery_site(DeliverySite& delivery_site);
-        void remove_delivery_site(DeliverySite& delivery_site);
         void add_pumping_station(PumpingStation& pumping_station);
-        void remove_pumping_station(PumpingStation& pumping_station);
         void add_water_reservoir(WaterReservoir& water_reservoir);
+        void remove_delivery_site(DeliverySite& delivery_site);
+        void remove_pumping_station(PumpingStation& pumping_station);
         void remove_water_reservoir(WaterReservoir& water_reservoir);
-        void add_pipe(Pipe& pipe);
-        void remove_pipe(Pipe& pipe);
-
-        using Graph<DeliverySite>::addVertex;
-        using Graph<PumpingStation>::addVertex;
-        using Graph<WaterReservoir>::addVertex;
 
 };
 

@@ -6,8 +6,9 @@
 #define DAPROJ1_DELIVERYSITES_H
 
 #include <string>
+#include "agua.h"
 
-class DeliverySite {
+class DeliverySite : public Agua {
 
     private:
 
