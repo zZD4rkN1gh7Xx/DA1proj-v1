@@ -19,10 +19,10 @@
 class FileReader {
 
     public:
-        static void add_reservoirs(const std::string &filename, WMSGraph &OurGraph);
-        static void add_stations(const std::string &filename, WMSGraph &OurGraph);
-        static void add_cities(const std::string &filename, WMSGraph &OurGraph);
-        static void add_pipes(const std::string &filename, WMSGraph &OurGraph);
+        static void add_reservoirs(WMSGraph &OurGraph);
+        static void add_stations(WMSGraph &OurGraph);
+        static void add_cities(WMSGraph &OurGraph);
+        static void add_pipes(WMSGraph &OurGraph);
 
 };
 

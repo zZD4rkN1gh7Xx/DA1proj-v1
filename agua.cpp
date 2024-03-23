@@ -11,6 +11,12 @@ Agua::Agua(int id, std::string code)
     this->code = code;
 }
 
+Agua::Agua(void)
+{
+    this->id = NULL;
+    this->code = "";
+}
+
 
 int Agua::get_id(void)
 {

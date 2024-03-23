@@ -27,3 +27,7 @@ int DeliverySite::get_population(void)
     return this->population;
 }
 
+std::string DeliverySite::get_delivery_site_code(void)
+{
+    return this->delivery_site_code;
+}
