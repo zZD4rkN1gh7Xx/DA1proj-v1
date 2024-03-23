@@ -13,7 +13,7 @@ Agua::Agua(int id, std::string code)
 
 Agua::Agua(void)
 {
-    this->id = NULL;
+    this->id = 0;
     this->code = "";
 }
 
@@ -30,10 +30,35 @@ std::string Agua::get_code(void)
 
 bool Agua::operator==(const Agua& other) const
 {
-    return (this->id == other.id);
+    if (this->code[0] == other.code[0]) {
+
+        if (this->id == other.id) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    else {
+        return false;
+    }
 }
 
 bool Agua::operator!=(Agua& other)
 {
-    return !(this->id == other.id);
+
+    if (this->code[0] == other.get_code()[0]) {
+
+        if (this->id == other.get_id()) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    else {
+        return true;
+    }
 }
