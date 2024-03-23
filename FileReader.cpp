@@ -5,9 +5,9 @@
 #include "FileReader.h"
 
 
-void FileReader::add_stations(const std::string &filename, WMSGraph &OurGraph)
+void FileReader::add_stations(WMSGraph &OurGraph)
 {
-    std::ifstream inputfile(filename);
+    std::ifstream inputfile("Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv");
 
     if(inputfile.is_open())
     {
@@ -16,28 +16,37 @@ void FileReader::add_stations(const std::string &filename, WMSGraph &OurGraph)
 
         while(std::getline(inputfile,line))
         {
+            if (line.empty() || line.find_first_not_of(',') == std::string::npos) {
+                continue;
+            }
+
+            while (!line.empty() && line.back() == ',') {
+                line.pop_back();
+            }
+
             std::istringstream iss(line);
             std::string Id, Code;
 
             if(std::getline(iss, Id, ',') &&
-               std::getline(iss, Code, '\r'))
+               std::getline(iss, Code, ','))
             {
                 PumpingStation new_pumping_station = PumpingStation(std::stoi(Id),Code);
+                OurGraph.add_pumping_station(new_pumping_station);
             }
         }
     }
 
     else
     {
-        std::cout << "No file to open or wrong path selected !" << std::endl;
+        std::cout << "No file to open or wrong path selected!" << std::endl;
     }
 
     inputfile.close();
 }
 
-void FileReader::add_reservoirs(const std::string &filename, WMSGraph &OurGraph) {
+void FileReader::add_reservoirs(WMSGraph &OurGraph) {
 
-    std::ifstream inputfile(filename);
+    std::ifstream inputfile("Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv");
 
     if(inputfile.is_open())
     {
@@ -52,16 +61,16 @@ void FileReader::add_reservoirs(const std::string &filename, WMSGraph &OurGraph)
         }
         inputfile.close();
     }
-    else
+    else {
         cout << "No file to open or wrong path selected!" << std::endl;
+    }
 
     inputfile.close();
 }
 
-
-void FileReader::add_cities(const std::string &filename, WMSGraph &OurGraph)
+void FileReader::add_cities(WMSGraph &OurGraph)
 {
-    std::ifstream in(filename);
+    std::ifstream in("Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv");
 
     if(in.is_open()) {
         string line, city, id, code, demand, population;
@@ -69,10 +78,11 @@ void FileReader::add_cities(const std::string &filename, WMSGraph &OurGraph)
 
         while (std::getline(in, city, ','), std::getline(in, id, ','), std::getline(in, code, ','), std::getline(in, demand, ','), std::getline(in, population))
         {
+
             std::string result;
             for (char c : population) {
 
-                if (c != '\"') {
+                if (c != '\"' && c != ',') {
                     result += c;
                 }
             }
@@ -86,37 +96,34 @@ void FileReader::add_cities(const std::string &filename, WMSGraph &OurGraph)
 }
 
 
-void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph)
+void FileReader::add_pipes(WMSGraph &OurGraph)
 {
+    std::ifstream in("Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv");
 
-    std::ifstream inputfile(filename);
-
-    if(inputfile.is_open())
+    if (in.is_open())
     {
         std::string line;
-        std::getline(inputfile,line);
+        std::getline(in, line);
 
-        while(std::getline(inputfile, line))
+        while (std::getline(in, line))
         {
             std::istringstream iss(line);
             std::string service_point_A, service_point_B, capacity, direction;
 
-            if(std::getline(iss, service_point_A, ',') &&
-               std::getline(iss,service_point_B, ',') &&
-               std::getline(iss,capacity, ',') &&
-               std::getline(iss, direction, '\r' ))
+            if (std::getline(iss, service_point_A, ',') &&
+                std::getline(iss, service_point_B, ',') &&
+                std::getline(iss, capacity, ',') &&
+                std::getline(iss, direction))
             {
-                Pipe new_pipe = Pipe(service_point_A, service_point_B, std::stoi(capacity), std::stoi(direction));
+                Pipe new_pipe(service_point_A, service_point_B, std::stoi(capacity), std::stoi(direction));
                 OurGraph.add_pipe(new_pipe);
             }
         }
     }
-
     else
     {
-        cout << "No file to open or wrong path selected!" << std::endl;
+        std::cout << "No file to open or wrong path selected!" << std::endl;
     }
 
-    inputfile.close();
-
+    in.close();
 }

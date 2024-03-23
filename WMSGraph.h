@@ -29,7 +29,7 @@ class WMSGraph :public Graph<Agua>{
         void remove_water_reservoir(WaterReservoir& water_reservoir);
         void add_pipe(Pipe& pipe);
         void remove_pipe(Pipe& pipe);
-
+        std::unordered_map<std::string, Agua> get_aguapoints(void);
 };
 
 template bool Graph<Agua>::addVertex(Agua &in);
