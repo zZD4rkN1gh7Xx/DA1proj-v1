@@ -2,9 +2,13 @@
 // Created by Administrador on 25/03/2024.
 //
 
-#include <string>
+#ifndef HELPFUNCTIONS_H
+#define HELPFUNCTIONS_H
 
-std::string capitalizeFirstLetter(std::string str) {
+#include <string>
+#include <vector>
+
+inline std::string capitalizeFirstLetter(std::string str) {
     if (str.empty()) {
         return str; // Return the unchanged string if it's empty
     }
@@ -20,7 +24,10 @@ std::string capitalizeFirstLetter(std::string str) {
     return str;
 }
 
-std::vector<WaterReservoir> get_all_sources(std::string sink)
+inline std::vector<WaterReservoir> get_all_sources(std::string sink)
 {
-
+    vector<WaterReservoir> test;
+    return test;
 }
+
+#endif // HELPFUNCTIONS_H

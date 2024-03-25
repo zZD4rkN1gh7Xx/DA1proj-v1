@@ -38,7 +38,7 @@ void FileReader::add_stations(const std::string &filename, WMSGraph &OurGraph)
 
     else
     {
-        std::cout << "No file to open or wrong path selected!" << std::endl;
+        std::cout << "No file to open or wrong path selected for stations!" << std::endl;
     }
 
     inputfile.close();
@@ -62,7 +62,7 @@ void FileReader::add_reservoirs(const std::string &filename ,WMSGraph &OurGraph)
         inputfile.close();
     }
     else {
-        cout << "No file to open or wrong path selected!" << std::endl;
+        cout << "No file to open or wrong path selected for reservoirs!" << std::endl;
     }
 
     inputfile.close();
@@ -92,7 +92,7 @@ void FileReader::add_cities(const std::string &filename,WMSGraph &OurGraph)
         in.close();
     }
     else
-        cout << "No file to open or wrong path selected!" << std::endl;
+        cout << "No file to open or wrong path selected for cities!" << std::endl;
 }
 
 
@@ -122,7 +122,7 @@ void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph)
     }
     else
     {
-        std::cout << "No file to open or wrong path selected!" << std::endl;
+        std::cout << "No file to open or wrong path selected for pipes!" << std::endl;
     }
 
     in.close();
