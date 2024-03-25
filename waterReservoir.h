@@ -15,12 +15,13 @@ class WaterReservoir : public Agua{
 
         std::string reservoir;
         std::string municipality;
+        std::string reservoir_code;
         int reservoir_id;
         int max_delivery;
 
     public:
 
-        WaterReservoir(std::string reservoir, std::string municipality, int reservoir_id, std::string reservoid_code, int max_delivery);
+        WaterReservoir(std::string reservoir, std::string municipality, int reservoir_id, std::string reservoir_code, int max_delivery);
         WaterReservoir(void);
         std::string get_reservoir(void);
         std::string get_municipality(void);

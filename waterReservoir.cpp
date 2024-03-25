@@ -4,11 +4,20 @@
 
 #include "waterReservoir.h"
 
-WaterReservoir::WaterReservoir(std::string reservoir, std::string municipality, int reservoir_id, std::string reservoid_code, int max_delivery) : Agua(reservoir_id,reservoid_code)
+WaterReservoir::WaterReservoir(std::string reservoir, std::string municipality, int reservoir_id, std::string reservoid_code, int max_delivery) : Agua(reservoir_id,reservoir_code)
 {
     this->reservoir = reservoir;
     this->municipality = municipality;
     this->max_delivery = max_delivery;
+}
+
+WaterReservoir::WaterReservoir(void)
+{
+    this->max_delivery = 0;
+    this->municipality = '0';
+    this->reservoir = "0";
+    this->reservoir_id = 0;
+    this->reservoir_code = '0';
 }
 
 std::string WaterReservoir::get_reservoir(void)

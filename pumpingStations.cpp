@@ -6,4 +6,8 @@
 
 PumpingStation::PumpingStation(int pumping_station_id, std::string pumping_station_code) : Agua(pumping_station_id, pumping_station_code){}
 
-
+PumpingStation::PumpingStation(void)
+{
+    this->pumping_station_id = 0;
+    this->pumping_station_code = '0';
+}
