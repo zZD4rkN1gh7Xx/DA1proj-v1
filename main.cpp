@@ -35,8 +35,7 @@ int main(void)
 
     FileReader::add_pipes("../Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
     cout << "Pipes worked!" << endl;
-    FileReader::add_pipes("../Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", shadowGraph, shadowGraph);
-    cout << "Pipes worked!" << endl;
+
 
     Menu(globalGraph).MainMenu();
 

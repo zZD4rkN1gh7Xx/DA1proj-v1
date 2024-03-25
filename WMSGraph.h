@@ -35,7 +35,7 @@ class WMSGraph :public Graph<Agua>{
         void remove_water_reservoir(WaterReservoir& water_reservoir);
         void add_pipe(Pipe& pipe);
         void add_shadow_pipe(Pipe& pipe);
-        void remove_pipe(Pipe& pipe);
+        void remove_pipe(Pipe pipe);
         std::unordered_map<std::string, Agua> get_aguapoints(void);
         DeliverySite get_agua_city_name(std::string city);
         DeliverySite get_agua_city_code(Agua agua);
