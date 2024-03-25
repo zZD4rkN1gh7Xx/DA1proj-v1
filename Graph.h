@@ -1,4 +1,4 @@
-/*
+ /*
  * Graph.h
  */
 #ifndef GRAPH_H_
@@ -24,6 +24,7 @@ template <class T>
 class Vertex {
 	T info;                // contents
 	vector<Edge<T> > adj;  // list of outgoing edges
+    vector<Edge<T>> ingoing; // list of ingoing edges
 	bool visited;          // auxiliary field
     bool processing;       // auxiliary field
     int indegree;          // auxiliary field
@@ -49,7 +50,9 @@ public:
     int getLow() const;
 
     const vector<Edge<T>> &getAdj() const;
+    const vector<Edge<T>> &getingoing() const;
     void setAdj(const vector<Edge<T>> &adj);
+    void setIngoing(const vector<Edge<T>> &ingoing);
     friend class Graph<T>;
 };
 

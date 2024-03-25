@@ -21,6 +21,7 @@ class DeliverySite : public Agua {
     public:
 
         DeliverySite(std::string city, int delivery_site_id, std::string delivery_site_code, int demand, int population);
+        DeliverySite(void);
         std::string get_city(void);
         int get_delivery_site_id(void);
         std::string get_delivery_site_code(void);

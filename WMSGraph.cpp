@@ -9,6 +9,7 @@ void WMSGraph::add_delivery_site(DeliverySite& delivery_site)
 {
     addVertex(delivery_site);
     this->aguapoints.insert(std::make_pair(delivery_site.get_code(), delivery_site));
+    this->agua_cities.insert(std::make_pair(delivery_site.get_city(), delivery_site));
 }
 
 
@@ -67,4 +68,21 @@ void WMSGraph::remove_pipe(Pipe& pipe)
 
 std::unordered_map<std::string, Agua> WMSGraph::get_aguapoints(void) {
     return this->aguapoints;
+}
+
+DeliverySite WMSGraph::get_agua_city(std::string city)
+{
+    std::string new_city = capitalizeFirstLetter(city);
+
+    auto it = agua_cities.find(new_city);
+
+    if (it != agua_cities.end())
+    {
+        DeliverySite new_delivery_site = it->second;
+        return new_delivery_site;
+    }
+    else
+    {
+        return DeliverySite(); // later use for checking errors
+    }
 }

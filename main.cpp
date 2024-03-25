@@ -6,6 +6,7 @@
 #include "FileReader.h"
 #include "WMSGraph.h"
 #include "GraphTester.h"
+#include "helpfunctions.h"
 
 using namespace std;
 
@@ -14,8 +15,9 @@ int main(void)
 
 
     WMSGraph globalGraph;
+    std::string testString = "aHaHahHHAAAAA";
 
-    FileReader::add_cities("Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
+    /*FileReader::add_cities("Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
     cout << "Cities worked!" << endl;
     FileReader::add_reservoirs("Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",globalGraph);
     cout << "Reservoirs worked!" << endl;
@@ -26,7 +28,10 @@ int main(void)
 
     GraphTester(globalGraph).testPipes();
     GraphTester(globalGraph).testVertexes();
-    GraphTester(globalGraph).testAguaPoints();
+    GraphTester(globalGraph).testAguaPoints();*/
+
+    std::cout << capitalizeFirstLetter(testString) << std::endl;
+
 
     return 0;
 }

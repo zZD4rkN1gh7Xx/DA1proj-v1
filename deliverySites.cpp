@@ -12,6 +12,15 @@ DeliverySite::DeliverySite(std::string city, int delivery_site_id, std::string d
 
 }
 
+DeliverySite::DeliverySite(void)
+{
+    this->delivery_site_code = '0';
+    this->delivery_site_id = 0;
+    this->city = '0';
+    this->demand = 0;
+    this->population = 0;
+}
+
 std::string DeliverySite::get_city(void)
 {
     return this->city;

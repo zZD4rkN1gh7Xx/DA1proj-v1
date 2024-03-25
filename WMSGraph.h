@@ -12,12 +12,13 @@
 #include "Pipes.h"
 #include "agua.h"
 #include <unordered_map>
-
+#include "helpfunctions.h"
 
 class WMSGraph :public Graph<Agua>{
 
     private:
         std::unordered_map<std::string, Agua> aguapoints;
+        std::unordered_map<std::string, DeliverySite> agua_cities;
 
     public:
 
@@ -30,6 +31,7 @@ class WMSGraph :public Graph<Agua>{
         void add_pipe(Pipe& pipe);
         void remove_pipe(Pipe& pipe);
         std::unordered_map<std::string, Agua> get_aguapoints(void);
+        DeliverySite get_agua_city(std::string city);
 };
 
 template bool Graph<Agua>::addVertex(Agua &in);
