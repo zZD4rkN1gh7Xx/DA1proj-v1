@@ -7,6 +7,9 @@
 
 #include <string>
 #include <vector>
+#include <queue>
+
+
 
 inline std::string capitalizeFirstLetter(std::string str) {
     if (str.empty()) {
@@ -24,10 +27,5 @@ inline std::string capitalizeFirstLetter(std::string str) {
     return str;
 }
 
-inline std::vector<WaterReservoir> get_all_sources(std::string sink)
-{
-    vector<WaterReservoir> test;
-    return test;
-}
 
 #endif // HELPFUNCTIONS_H

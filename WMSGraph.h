@@ -13,12 +13,17 @@
 #include "agua.h"
 #include <unordered_map>
 #include "helpfunctions.h"
+#include <queue>
 
 class WMSGraph :public Graph<Agua>{
 
     private:
-        std::unordered_map<std::string, Agua> aguapoints;
-        std::unordered_map<std::string, DeliverySite> agua_cities;
+        std::unordered_map<std::string, Agua> aguapoints; // unordered map co tudos os vertexes do grapho e chave o seu codigo
+        std::unordered_map<std::string, DeliverySite> agua_cities_name; // unordered map com os vertexes que sao delivery sites do grapho e chave o seu nome
+        std::unordered_map<std::string, DeliverySite> agua_cities_code; // unordered map com os vertexes que sao delivery sites  do grapho e chave o seu codigo
+        std::unordered_map<std::string, PumpingStation> agua_pumping_stations_code; // unordered map com as pumping stations do grapho e chave o seu codigo
+        std::unordered_map<std::string, WaterReservoir> agua_water_reservoir_code; // unordered map com os water reservoirs do grapho e chave o seu codigo
+
 
     public:
 
@@ -32,7 +37,11 @@ class WMSGraph :public Graph<Agua>{
         void add_shadow_pipe(Pipe& pipe);
         void remove_pipe(Pipe pipe);
         std::unordered_map<std::string, Agua> get_aguapoints(void);
-        DeliverySite get_agua_city(std::string city);
+        DeliverySite get_agua_city_name(std::string city);
+        DeliverySite get_agua_city_code(Agua agua);
+        PumpingStation get_pumping_station_code(Agua agua);
+        WaterReservoir get_water_reservoir_code(Agua agua);
+        std::vector<WaterReservoir> get_all_sources(std::string sink); // auxiliar function
 };
 
 template bool Graph<Agua>::addVertex(Agua &in);

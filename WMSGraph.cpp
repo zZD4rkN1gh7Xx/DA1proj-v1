@@ -9,7 +9,8 @@ void WMSGraph::add_delivery_site(DeliverySite& delivery_site)
 {
     addVertex(delivery_site);
     this->aguapoints.insert(std::make_pair(delivery_site.get_code(), delivery_site));
-    this->agua_cities.insert(std::make_pair(delivery_site.get_city(), delivery_site));
+    this->agua_cities_name.insert(std::make_pair(delivery_site.get_city(), delivery_site));
+    this->agua_cities_code.insert(std::make_pair(delivery_site.get_code(), delivery_site));
 }
 
 
@@ -17,12 +18,14 @@ void WMSGraph::add_pumping_station(PumpingStation& pumping_station)
 {
     addVertex(pumping_station);
     this->aguapoints.insert(std::make_pair(pumping_station.get_code(), pumping_station));
+    this->agua_pumping_stations_code.insert(std::make_pair(pumping_station.get_code(), pumping_station));
 }
 
 void WMSGraph::add_water_reservoir(WaterReservoir& water_reservoir)
 {
     addVertex(water_reservoir);
     this->aguapoints.insert(std::make_pair(water_reservoir.get_code(), water_reservoir));
+    this->agua_water_reservoir_code.insert(std::make_pair(water_reservoir.get_code(), water_reservoir));
 }
 
 void WMSGraph::remove_delivery_site(DeliverySite& delivery_site)
@@ -90,13 +93,13 @@ std::unordered_map<std::string, Agua> WMSGraph::get_aguapoints(void) {
     return this->aguapoints;
 }
 
-DeliverySite WMSGraph::get_agua_city(std::string city)
+DeliverySite WMSGraph::get_agua_city_name(std::string city)
 {
     std::string new_city = capitalizeFirstLetter(city);
 
-    auto it = agua_cities.find(new_city);
+    auto it = agua_cities_name.find(new_city);
 
-    if (it != agua_cities.end())
+    if (it != agua_cities_code.end())
     {
         DeliverySite new_delivery_site = it->second;
         return new_delivery_site;
@@ -106,3 +109,79 @@ DeliverySite WMSGraph::get_agua_city(std::string city)
         return DeliverySite(); // later use for checking errors
     }
 }
+
+DeliverySite WMSGraph::get_agua_city_code(Agua agua)
+{
+    auto it = agua_cities_code.find(agua.get_code());
+
+    if(it != agua_cities_code.end())
+    {
+        DeliverySite new_delivery_site = it->second;
+        return new_delivery_site;
+    }
+    else
+    {
+        return DeliverySite(); // later use to check errors
+    }
+}
+
+PumpingStation WMSGraph::get_pumping_station_code(Agua agua)
+{
+    auto it = agua_pumping_stations_code.find(agua.get_code());
+
+    if(it != agua_pumping_stations_code.end())
+    {
+        PumpingStation new_pumping_station = it->second;
+        return new_pumping_station;
+    }
+    else
+    {
+        return PumpingStation(); // later use to check errors
+    }
+}
+WaterReservoir WMSGraph::get_water_reservoir_code(Agua agua)
+{
+    auto it = agua_water_reservoir_code.find(agua.get_code());
+
+    if(it != agua_water_reservoir_code.end())
+    {
+        WaterReservoir new_water_reservoir = it->second;
+        return new_water_reservoir;
+    }
+    else
+    {
+        return WaterReservoir(); // later use to check errors
+    }
+}
+
+
+
+std::vector<WaterReservoir> WMSGraph::get_all_sources(std::string sink)
+{
+
+    DeliverySite actual_sink = get_agua_city_name(sink);
+    vector<WaterReservoir> sources;
+    queue<Agua> q;
+
+    q.push(actual_sink);
+
+    findVertex(actual_sink)->setVisited(true);
+
+    while(!q.empty())
+    {
+        Agua current = q.front();
+        q.pop();
+
+        vector<Edge<Agua>> prev = findVertex(current)->getAdj();
+
+        if(prev.empty())
+            sources.push_back(current);
+    }
+
+
+
+
+
+    return sources;
+}
+
