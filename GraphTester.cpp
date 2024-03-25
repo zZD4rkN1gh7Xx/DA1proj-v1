@@ -124,10 +124,10 @@ void GraphTester::testPipesRemoval() {
         }
     }
     if (success1 && success2 && success3) {
-        cout << "All indicated pipes were removed successfully!" << endl;
+        cout << "All indicated pipes were removed successfully!" << endl << endl << "Removed pipes were added back." << endl << endl;
     }
     else {
-        cout << "One or more pipes were NOT removed completely." << endl << endl;
+        cout << "One or more pipes were NOT removed completely." << endl << endl << "Removed pipes were added back." << endl << endl;
     }
     if (success1) {
         tt_graph.add_pipe(getback1);
