@@ -32,3 +32,13 @@ int Pipe::get_direction(void)
 {
     return this->direction;
 }
+
+void Pipe::set_capacity(int capacity)
+{
+    this->capacity = capacity;
+}
+
+void Pipe::set_inverse_direction(void)
+{
+    this->direction = 2;
+}

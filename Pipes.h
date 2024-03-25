@@ -24,6 +24,8 @@ class Pipe {
         std::string get_code_B(void);
         int get_capacity(void);
         int get_direction(void);
+        void set_capacity(int capacity);
+        void set_inverse_direction(void);
 
 };
 

@@ -96,7 +96,7 @@ void FileReader::add_cities(const std::string &filename,WMSGraph &OurGraph)
 }
 
 
-void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph)
+void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph, WMSGraph &shadowGraph)
 {
     std::ifstream in(filename);
 
@@ -116,7 +116,10 @@ void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph)
                 std::getline(iss, direction))
             {
                 Pipe new_pipe(service_point_A, service_point_B, std::stoi(capacity), std::stoi(direction));
+                Pipe new_shadow_pipe(service_point_B, service_point_A, 0, std::stoi(direction));
+
                 OurGraph.add_pipe(new_pipe);
+                shadowGraph.add_shadow_pipe(new_shadow_pipe); // so para ficar mais prety :D
             }
         }
     }
@@ -127,3 +130,4 @@ void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph)
 
     in.close();
 }
+

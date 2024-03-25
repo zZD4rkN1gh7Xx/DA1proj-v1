@@ -58,7 +58,23 @@ void WMSGraph::remove_water_reservoir(WaterReservoir& water_reservoir)
 
 void WMSGraph::add_pipe(Pipe& pipe)
 {
-    addEdge(aguapoints[pipe.get_code_A()],aguapoints[pipe.get_code_B()], pipe);
+    if(pipe.get_direction() == 0)
+    {
+        addEdge(aguapoints[pipe.get_code_A()],aguapoints[pipe.get_code_B()], pipe);
+
+        pipe.set_inverse_direction();
+        addEdge(aguapoints[pipe.get_code_B()],aguapoints[pipe.get_code_A()], pipe);
+    }
+    else
+        addEdge(aguapoints[pipe.get_code_A()],aguapoints[pipe.get_code_B()], pipe);
+}
+void WMSGraph::add_shadow_pipe(Pipe& pipe)
+{
+    Pipe shadow_pipe = pipe;
+
+    shadow_pipe.set_capacity(0);
+
+    addEdge(aguapoints[pipe.get_code_B()],aguapoints[pipe.get_code_A()],shadow_pipe);
 }
 
 void WMSGraph::remove_pipe(Pipe& pipe)
