@@ -12,18 +12,16 @@ using namespace std;
 int main(void)
 {
 
-    /* Por alguma razão a única maneira de ler os ficheiros é a por o Working Directory
-    para o DA1proj-v1 nas configurações de correr o programa */
 
     WMSGraph globalGraph;
 
-    FileReader::add_cities(globalGraph);
+    FileReader::add_cities("Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
     cout << "Cities worked!" << endl;
-    FileReader::add_reservoirs(globalGraph);
+    FileReader::add_reservoirs("Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",globalGraph);
     cout << "Reservoirs worked!" << endl;
-    FileReader::add_stations(globalGraph);
+    FileReader::add_stations("Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",globalGraph);
     cout << "Stations worked!" << endl;
-    FileReader::add_pipes(globalGraph);
+    FileReader::add_pipes("Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph);
     cout << "Pipes worked!" << endl;
 
     GraphTester(globalGraph).testPipes();

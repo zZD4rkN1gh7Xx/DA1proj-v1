@@ -5,9 +5,9 @@
 #include "FileReader.h"
 
 
-void FileReader::add_stations(WMSGraph &OurGraph)
+void FileReader::add_stations(const std::string &filename, WMSGraph &OurGraph)
 {
-    std::ifstream inputfile("Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv");
+    std::ifstream inputfile(filename);
 
     if(inputfile.is_open())
     {
@@ -44,9 +44,9 @@ void FileReader::add_stations(WMSGraph &OurGraph)
     inputfile.close();
 }
 
-void FileReader::add_reservoirs(WMSGraph &OurGraph) {
+void FileReader::add_reservoirs(const std::string &filename ,WMSGraph &OurGraph) {
 
-    std::ifstream inputfile("Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv");
+    std::ifstream inputfile(filename);
 
     if(inputfile.is_open())
     {
@@ -68,9 +68,9 @@ void FileReader::add_reservoirs(WMSGraph &OurGraph) {
     inputfile.close();
 }
 
-void FileReader::add_cities(WMSGraph &OurGraph)
+void FileReader::add_cities(const std::string &filename,WMSGraph &OurGraph)
 {
-    std::ifstream in("Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv");
+    std::ifstream in(filename);
 
     if(in.is_open()) {
         string line, city, id, code, demand, population;
@@ -96,9 +96,9 @@ void FileReader::add_cities(WMSGraph &OurGraph)
 }
 
 
-void FileReader::add_pipes(WMSGraph &OurGraph)
+void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph)
 {
-    std::ifstream in("Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv");
+    std::ifstream in(filename);
 
     if (in.is_open())
     {
