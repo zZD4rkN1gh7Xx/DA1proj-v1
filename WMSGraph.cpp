@@ -77,9 +77,13 @@ void WMSGraph::add_shadow_pipe(Pipe& pipe)
     addEdge(aguapoints[pipe.get_code_B()],aguapoints[pipe.get_code_A()],shadow_pipe);
 }
 
-void WMSGraph::remove_pipe(Pipe& pipe)
+void WMSGraph::remove_pipe(Pipe pipe)
 {
-    removeEdge(aguapoints[pipe.get_code_A()], aguapoints[pipe.get_code_B()]);
+    if (pipe.get_direction() == 0) {
+        removeEdge(aguapoints[pipe.get_code_A()], aguapoints[pipe.get_code_B()]);
+        removeEdge(aguapoints[pipe.get_code_B()], aguapoints[pipe.get_code_A()]);
+    }
+    else removeEdge(aguapoints[pipe.get_code_A()], aguapoints[pipe.get_code_B()]);
 }
 
 std::unordered_map<std::string, Agua> WMSGraph::get_aguapoints(void) {

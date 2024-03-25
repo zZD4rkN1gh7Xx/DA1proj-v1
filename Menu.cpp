@@ -15,8 +15,9 @@ void Menu::MainMenu(void)
 {
     cout<< "---------------------------" << " Water Supply Management System " << "---------------------------" << endl;
     cout<< "1 - Test the Pipes." << endl;
-    cout<< "2 - Test the Vertexes." << endl;
-    cout<< "3 - Test the Aguapoints." << endl << endl;
+    cout<< "2 - Test Pipe Removal." << endl;
+    cout<< "3 - Test the Vertexes." << endl;
+    cout<< "4 - Test the Aguapoints." << endl << endl;
 
     string ans;
     bool ret;
@@ -28,12 +29,21 @@ void Menu::MainMenu(void)
             if(MenuToMain()) {
                 MainMenu();
             }
-            else {
+            else
                 break;
-            }
+
 
         }
         else if (ans == "2") {
+            GraphTester(Graph).testPipesRemoval();
+            if(MenuToMain()) {
+                MainMenu();
+            }
+            else
+                break;
+        }
+
+        else if (ans == "3") {
             GraphTester(Graph).testVertexes();
             if(MenuToMain()) {
                 MainMenu();
@@ -42,7 +52,7 @@ void Menu::MainMenu(void)
                 break;
             }
         }
-        else if (ans == "3") {
+        else if (ans == "4") {
             GraphTester(Graph).testAguaPoints();
             if(MenuToMain()) {
                 MainMenu();

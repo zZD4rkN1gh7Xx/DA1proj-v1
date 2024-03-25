@@ -4,6 +4,12 @@
 
 #include "Pipes.h"
 
+Pipe::Pipe() {
+    this->code_point_A = "";
+    this->code_point_B = "";
+    this->capacity = -1;
+    this->direction = -1;
+}
 
 Pipe::Pipe(std::string code_point_A, std::string code_point_B, int capacity, int direction)
 {

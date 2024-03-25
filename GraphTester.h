@@ -16,6 +16,7 @@ class GraphTester {
         void testVertexes(void);
         void testPipes(void);
         void testAguaPoints(void);
+        void testPipesRemoval(void);
 
 };
 
