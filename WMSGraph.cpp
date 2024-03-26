@@ -93,6 +93,11 @@ std::unordered_map<std::string, Agua> WMSGraph::get_aguapoints(void) {
     return this->aguapoints;
 }
 
+Agua WMSGraph::get_agua_point(std::string agua_point)
+{
+    return aguapoints[agua_point];
+}
+
 DeliverySite WMSGraph::get_agua_city_name(std::string city)
 {
     std::string new_city = capitalizeFirstLetter(city);
@@ -154,13 +159,20 @@ WaterReservoir WMSGraph::get_water_reservoir_code(Agua agua)
     }
 }
 
+void WMSGraph::set_all_unvisited(const vector<Vertex<Agua> * >& all_agua)
+{
+    for(Vertex<Agua>* agua : all_agua)
+    {
+        agua->setVisited(false);
+    }
+}
 
-
-std::vector<WaterReservoir> WMSGraph::get_all_sources(std::string sink)
+std::vector<Agua> WMSGraph::get_all_sources(std::string sink)
 {
 
     DeliverySite actual_sink = get_agua_city_name(sink);
-    vector<WaterReservoir> sources;
+    set_all_unvisited(getVertexSet());
+    vector<Agua> sources;
     queue<Agua> q;
 
     q.push(actual_sink);
@@ -170,17 +182,30 @@ std::vector<WaterReservoir> WMSGraph::get_all_sources(std::string sink)
     while(!q.empty())
     {
         Agua current = q.front();
+
+        std::cout << "queue front " << current.get_code() << endl;
+
         q.pop();
 
-        vector<Edge<Agua>> prev = findVertex(current)->getAdj();
+        bool is_source = true;
 
-        if(prev.empty())
+        auto a = findVertex(current);
+
+        /*for(Edge<Agua> agua_point : a )
+        {
+            Vertex<Agua>* current_agua = agua_point.getDest();
+
+            if(!current_agua->isVisited())
+            {
+                q.push(current_agua->getInfo());
+                current_agua->setVisited(true);
+                is_source = false;
+            }
+        }
+        if(is_source)
             sources.push_back(current);
+            */
     }
-
-
-
-
 
     return sources;
 }
