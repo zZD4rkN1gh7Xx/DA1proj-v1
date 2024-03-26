@@ -44,8 +44,7 @@ class WMSGraph :public Graph<Agua>{
         WaterReservoir get_water_reservoir_code(Agua agua);
         void set_all_unvisited(const vector<Vertex<Agua> * >& all_agua); // auxiliar function self-explanatory
         std::vector<Agua> get_all_sources(std::string sink); // auxiliar function
-        void reset_shadow_capacities();
-        int edmond_karp(std::string city);
+        int edmonds_karp(std::string city);
 };
 
 template bool Graph<Agua>::addVertex(Agua &in);

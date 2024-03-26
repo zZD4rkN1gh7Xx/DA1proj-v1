@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 #include <queue>
-
+#include "WMSGraph.h"
 
 
 inline std::string capitalizeFirstLetter(std::string str) {
@@ -26,6 +26,8 @@ inline std::string capitalizeFirstLetter(std::string str) {
 
     return str;
 }
+
+
 
 
 #endif // HELPFUNCTIONS_H

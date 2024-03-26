@@ -228,9 +228,3 @@ std::vector<Agua> WMSGraph::get_all_sources(std::string sink)
     return sources;
 }
 
-int WMSGraph::edmond_karp(std::string city)
-{
-
-    std::vector<Agua> sources = get_all_sources(capitalizeFirstLetter(city));
-
-}
