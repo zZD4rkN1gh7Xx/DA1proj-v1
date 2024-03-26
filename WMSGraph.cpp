@@ -169,42 +169,45 @@ void WMSGraph::set_all_unvisited(const vector<Vertex<Agua> * >& all_agua)
 
 std::vector<Agua> WMSGraph::get_all_sources(std::string sink)
 {
-
     DeliverySite actual_sink = get_agua_city_name(sink);
-    set_all_unvisited(getVertexSet());
-    vector<Agua> sources;
-    queue<Agua> q;
 
-    q.push(actual_sink);
+    // Marcar todos os vértices como não visitados
+    for (auto vertex : getVertexSet()) {
+        vertex->setVisited(false);
+    }
 
-    findVertex(actual_sink)->setVisited(true);
+    std::vector<Agua> sources;
+    std::queue<Vertex<Agua>*> q;
 
-    while(!q.empty())
-    {
-        Agua current = q.front();
+    Vertex<Agua>* sinkVertex = findVertex(actual_sink);
+    if (sinkVertex == nullptr) {
+        std::cerr << "Erro: Cidade de destino não encontrada no grafo." << std::endl;
+        return sources; // Retorna vetor vazio se o destino não for encontrado
+    }
 
-        std::cout << "queue front " << current.get_code() << endl;
+    q.push(sinkVertex);
+    sinkVertex->setVisited(true);
 
+    while (!q.empty()) {
+        Vertex<Agua>* currentVertex = q.front();
         q.pop();
 
-        bool is_source = true;
+        bool isSource = true;
 
-        auto a = findVertex(current);
+        for (const Edge<Agua>& edge : currentVertex->getAdj()) {
+            Vertex<Agua>* adjacentVertex = edge.getDest();
 
-        /*for(Edge<Agua> agua_point : a )
-        {
-            Vertex<Agua>* current_agua = agua_point.getDest();
-
-            if(!current_agua->isVisited())
-            {
-                q.push(current_agua->getInfo());
-                current_agua->setVisited(true);
-                is_source = false;
+            if (!adjacentVertex->isVisited()) {
+                q.push(adjacentVertex);
+                adjacentVertex->setVisited(true);
+                isSource = false;
             }
         }
-        if(is_source)
-            sources.push_back(current);
-            */
+
+        if (isSource) {
+            if (currentVertex->getInfo().get_code()[0] == 'R')
+                sources.push_back(currentVertex->getInfo());
+        }
     }
 
     return sources;

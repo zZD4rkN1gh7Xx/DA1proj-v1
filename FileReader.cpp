@@ -89,7 +89,7 @@ void FileReader::add_cities(const std::string &filename,WMSGraph &OurGraph)
                     result += c;
                 }
             }
-            DeliverySite new_delivery_site = DeliverySite(city, std::stoi(id), code, std::stod(demand), std::stoi(result));
+            DeliverySite new_delivery_site = DeliverySite(capitalizeFirstLetter(city), std::stoi(id), code, std::stod(demand), std::stoi(result));
             OurGraph.add_delivery_site(new_delivery_site);
         }
         in.close();
@@ -119,10 +119,9 @@ void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph, WMSG
                 std::getline(iss, direction))
             {
                 Pipe new_pipe(service_point_A, service_point_B, std::stoi(capacity), std::stoi(direction));
-                Pipe new_shadow_pipe(service_point_B, service_point_A, 0, std::stoi(direction));
 
                 OurGraph.add_pipe(new_pipe);
-                shadowGraph.add_shadow_pipe(new_shadow_pipe); // so para ficar mais prety :D
+                shadowGraph.add_shadow_pipe(new_pipe); // so para ficar mais prety :D
             }
         }
     }
