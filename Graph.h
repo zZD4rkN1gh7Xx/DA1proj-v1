@@ -49,7 +49,7 @@ public:
     int getNum() const;
     int getLow() const;
 
-    const vector<Edge<T>> &getAdj() const;
+    vector<Edge<T>> &getAdj();
     const vector<Edge<T>> &getingoing() const;
     void setAdj(const vector<Edge<T>> &adj);
     void setIngoing(const vector<Edge<T>> &ingoing);
@@ -65,7 +65,7 @@ public:
     Vertex<T> *getDest() const;
     void setDest(Vertex<T> *dest);
     Pipe getWeight() const;
-    void setWeight(double weight);
+    void setWeight(Pipe weight);
     friend class Graph<T>;
 	friend class Vertex<T>;
 };
@@ -163,7 +163,7 @@ Pipe Edge<T>::getWeight() const {
 }
 
 template<class T>
-void Edge<T>::setWeight(double weight) {
+void Edge<T>::setWeight(Pipe weight) {
     Edge::weight = weight;
 }
 
@@ -198,7 +198,7 @@ void Vertex<T>::setIndegree(int indegree) {
 }
 
 template<class T>
-const vector<Edge<T>> &Vertex<T>::getAdj() const {
+vector<Edge<T>> &Vertex<T>::getAdj()  {
     return adj;
 }
 

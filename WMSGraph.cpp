@@ -167,8 +167,23 @@ void WMSGraph::set_all_unvisited(const vector<Vertex<Agua> * >& all_agua)
     }
 }
 
+void WMSGraph::reset_shadow_capacities()
+{
+    for(auto& agua_point : getVertexSet())
+    {
+        for(auto& pipes : agua_point->getAdj())
+        {
+            Pipe new_pipe = pipes.getWeight();
+            new_pipe.set_capacity(0);
+            pipes.setWeight(new_pipe);
+        }
+    }
+}
+
+
 std::vector<Agua> WMSGraph::get_all_sources(std::string sink)
 {
+
     DeliverySite actual_sink = get_agua_city_name(sink);
 
     // Marcar todos os vértices como não visitados
@@ -213,3 +228,9 @@ std::vector<Agua> WMSGraph::get_all_sources(std::string sink)
     return sources;
 }
 
+int WMSGraph::edmond_karp(std::string city)
+{
+
+    std::vector<Agua> sources = get_all_sources(capitalizeFirstLetter(city));
+
+}

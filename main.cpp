@@ -36,15 +36,28 @@ int main(void)
     FileReader::add_pipes("../Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
     //cout << "Pipes worked!" << endl;
 
-    std::vector<Agua> a = shadowGraph.get_all_sources("PoNTa dO Sol");
+    WMSGraph teste;
 
-    for(auto b : a)
-    {
-        cout << b.get_code() << endl;
-    }
+    WaterReservoir res = WaterReservoir("s", "b",  1, "R_2", 3);
+    DeliverySite de = DeliverySite("Boooooooooooooooo", 1, "DL_1", 2, 1 );
+    PumpingStation pu = PumpingStation(1, "P_2");
 
+    teste.add_pumping_station(pu);
+    teste.add_water_reservoir(res);
+    teste.add_delivery_site(de);
 
-    //Menu(globalGraph).MainMenu();
+    Pipe pipe_1 = Pipe("R_2", "P_2", 5, 1);
+    Pipe pipe_2 = Pipe("P_2", "DL_1", 5, 1);
+
+    teste.add_pipe(pipe_1);
+    teste.add_pipe(pipe_2);
+
+    GraphTester(teste).testPipes();
+
+    teste.reset_shadow_capacities();
+
+    GraphTester(teste).testPipes();
+
 
 
 
