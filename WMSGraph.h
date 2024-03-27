@@ -47,6 +47,7 @@ class WMSGraph :public Graph<Agua>{
         void set_all_unvisited(const vector<Vertex<Agua> * >& all_agua); // auxiliar function self-explanatory
         std::vector<Agua> get_all_sources(std::string sink); // auxiliar function
         void reset_shadow_capacities(void);
+        std::unordered_map<std::string, DeliverySite> get_agua_cities();
 };
 
 template bool Graph<Agua>::addVertex(Agua &in);

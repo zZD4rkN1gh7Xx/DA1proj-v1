@@ -72,11 +72,8 @@ int main(void)
     shadow_teste.add_pipe(pipe_2);
 
 
-
-    if(int a = full_edmonds_karp("Santana", globalGraph, shadowGraph))
-    {
-        std::cout << a << " we got to the functions" << std::endl;
-    }
+    Menu main = Menu(globalGraph, shadowGraph);
+    main.MainMenu();
 
     return 0;
 }

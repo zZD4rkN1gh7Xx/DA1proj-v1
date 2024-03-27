@@ -249,3 +249,7 @@ std::vector<Agua> WMSGraph::get_all_sources(std::string sink)
     return sources;
 }
 
+std::unordered_map<std::string, DeliverySite> WMSGraph::get_agua_cities() {
+    return this->agua_cities_name;
+}
+

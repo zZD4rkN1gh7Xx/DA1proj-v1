@@ -10,11 +10,13 @@
 
 class Menu {
     WMSGraph Graph;
+    WMSGraph Shadow;
 
     public:
-        Menu(WMSGraph Graph);
-        void MainMenu(void);
+        Menu(WMSGraph Graph, WMSGraph Shadow);
+        int MainMenu(void);
         bool MenuToMain(void);
+        int WaterDelivMenu(void);
 };
 
 #endif //DA1PROJ_V1_MENU_H

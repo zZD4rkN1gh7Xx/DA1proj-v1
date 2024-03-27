@@ -15,14 +15,13 @@
 
 
 // nao esquecer de que o input do glogal graph tem de ser uma copia para nao alterarmos o grafo oriiginal
-int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph) {
+inline int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph) {
 
     global_graph.set_all_unvisited(global_graph.getVertexSet()); // volta a dar set up aos vertexes caso outras funçoes nao tenham deixado
 
 
     Agua sink = global_graph.get_agua_city_name(capitalizeFirstLetter(city)); // Destination
     Agua source = global_graph.get_agua_reservoir_name(capitalizeFirstLetter(reservoir)); // Source
-    std::cout << source.get_code() << endl << endl;
     if(sink.get_id() == 0 || source.get_id() == 0)
         std::cout << "Didnt find source or sink in edmonds karp func";
 
@@ -131,7 +130,7 @@ int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph
 }
 
 //Fazer os couts no menu.
-int full_edmonds_karp(std::string city, WMSGraph global_graph, WMSGraph shadow_graph)  //e no shadow que se vai buscar
+inline int full_edmonds_karp(std::string city, WMSGraph global_graph, WMSGraph shadow_graph)  //e no shadow que se vai buscar
 {
     int max_flow = 0;
     WMSGraph dumy = global_graph;
