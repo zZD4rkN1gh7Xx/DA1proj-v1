@@ -83,6 +83,9 @@ int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph
                         if (edge)
                         {
                             edge->getWeight().set_capacity(edge->getWeight().get_capacity() - bottleneck_capacity);
+                            Pipe new_pipe = edge->getWeight();
+                            new_pipe.set_capacity(edge->getWeight().get_capacity() - bottleneck_capacity);
+                            edge->setWeight(new_pipe);
 
                         }
                         else
@@ -126,8 +129,26 @@ int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph
 
         return max_flow;
     }
-
 }
 
+
+int full_edmonds_karp(std::string city, WMSGraph global_graph)
+{
+    int max_flow = 0;
+    WMSGraph dumy = global_graph;
+
+    std::vector<Agua> sorces = global_graph.get_all_sources(city);
+
+    for(auto& sorce : sorces)
+    {
+        std::string reservoir = global_graph.get_water_reservoir_code(sorce).get_reservoir();
+
+        max_flow += edmonds_karp(city, reservoir, dumy );
+
+    }
+
+    return max_flow;
+
+}
 
 #endif //DAPROJ_V1_TAREFAS_H
