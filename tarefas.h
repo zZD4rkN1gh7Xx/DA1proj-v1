@@ -82,7 +82,6 @@ int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph
 
                         if (edge)
                         {
-                            edge->getWeight().set_capacity(edge->getWeight().get_capacity() - bottleneck_capacity);
                             Pipe new_pipe = edge->getWeight();
                             new_pipe.set_capacity(edge->getWeight().get_capacity() - bottleneck_capacity);
                             edge->setWeight(new_pipe);
