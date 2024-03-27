@@ -26,7 +26,7 @@ void WMSGraph::add_water_reservoir(WaterReservoir& water_reservoir)
     addVertex(water_reservoir);
     this->aguapoints.insert(std::make_pair(water_reservoir.get_code(), water_reservoir));
     this->agua_water_reservoir_code.insert(std::make_pair(water_reservoir.get_code(), water_reservoir));
-    this->agua_water_reservoir_name.insert(std::make_pair(water_reservoir.get_reservoir(), water_reservoir));
+    this->agua_water_reservoir_name.insert(std::make_pair(capitalizeFirstLetter(water_reservoir.get_reservoir()), water_reservoir));
 
 }
 

@@ -16,7 +16,7 @@ int main(void)
 {
 
 
-    /*WMSGraph globalGraph;
+    WMSGraph globalGraph;
     WMSGraph shadowGraph;
 
     FileReader::add_cities("../Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
@@ -35,7 +35,7 @@ int main(void)
     //cout << "Stations worked!" << endl;
 
     FileReader::add_pipes("../Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
-    //cout << "Pipes worked!" << endl;*/
+    //cout << "Pipes worked!" << endl;
 
     WMSGraph teste;
     WMSGraph shadow_teste;
@@ -63,9 +63,9 @@ int main(void)
 
 
 
-    if(int a = edmonds_karp("Boooooooooooooooo","s", teste, shadow_teste))
+    if(int a = edmonds_karp("Porto Moniz","Ribeira do Seixal", globalGraph))
     {
-        std::cout << " we got to the functions" << std::endl;
+        std::cout << a << " we got to the functions" << std::endl;
     }
 
     return 0;

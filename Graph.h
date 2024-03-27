@@ -423,7 +423,6 @@ vector<T> Graph<T>::bfs(const T & source) const {
             if(!next_node->visited){
                 myqueue.push(next_node);
                 next_node->visited = true;
-
             }
 
         }

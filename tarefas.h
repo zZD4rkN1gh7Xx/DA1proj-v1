@@ -13,15 +13,16 @@
 #include <limits>
 #include <unordered_map>
 
+
 // nao esquecer de que o input do glogal graph tem de ser uma copia para nao alterarmos o grafo oriiginal
-int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph, WMSGraph& shadow_graph) {
+int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph) {
 
     global_graph.set_all_unvisited(global_graph.getVertexSet()); // volta a dar set up aos vertexes caso outras funçoes nao tenham deixado
-    shadow_graph.reset_shadow_capacities(); //da reset aos shadows = 0 caso tenham dido mudificados
+
 
     Agua sink = global_graph.get_agua_city_name(capitalizeFirstLetter(city)); // Destination
     Agua source = global_graph.get_agua_reservoir_name(capitalizeFirstLetter(reservoir)); // Source
-
+    std::cout << source.get_code() << endl << endl;
     if(sink.get_id() == 0 || source.get_id() == 0)
         std::cout << "Didnt find source or sink in edmonds karp func";
 
@@ -62,7 +63,7 @@ int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph
                     int bottleneck_capacity = INT_MAX;
                     for (size_t i = 1; i < augmenting_path.size(); ++i)
                     {
-                        Edge<Agua>* edge = global_graph.findEdge(augmenting_path[i - 1]->getInfo(), augmenting_path[i]->getInfo());
+                        Edge<Agua>* edge = global_graph.findEdge(augmenting_path[i]->getInfo(), augmenting_path[i - 1]->getInfo());
 
                         if (edge)
                         {
@@ -77,21 +78,12 @@ int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph
                     // Update the capacities of edges along the augmenting path
                     for (size_t i = 1; i < augmenting_path.size(); ++i)
                     {
-                        Edge<Agua>* edge = global_graph.findEdge(augmenting_path[i - 1]->getInfo(), augmenting_path[i]->getInfo());
+                        Edge<Agua>* edge = global_graph.findEdge(augmenting_path[i]->getInfo(), augmenting_path[i - 1]->getInfo());
 
                         if (edge)
                         {
                             edge->getWeight().set_capacity(edge->getWeight().get_capacity() - bottleneck_capacity);
-                            Edge<Agua>* shadow_edge = shadow_graph.findEdge(augmenting_path[i]->getInfo(), augmenting_path[i - 1]->getInfo()); // Reverse direction for shadow graph edges
 
-                            if (shadow_edge)
-                            {
-                                shadow_edge->getWeight().set_capacity(shadow_edge->getWeight().get_capacity() + bottleneck_capacity);
-                            }
-                            else
-                            {
-                                std::cout << "No shadow edge found in the Edmonds-Karp function" << std::endl << std::endl;
-                            }
                         }
                         else
                         {
