@@ -131,13 +131,13 @@ int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph
     }
 }
 
-
-int full_edmonds_karp(std::string city, WMSGraph global_graph)
+//Fazer os couts no menu.
+int full_edmonds_karp(std::string city, WMSGraph global_graph, WMSGraph shadow_graph)  //e no shadow que se vai buscar
 {
     int max_flow = 0;
     WMSGraph dumy = global_graph;
 
-    std::vector<Agua> sorces = global_graph.get_all_sources(city);
+    std::vector<Agua> sorces = shadow_graph.get_all_sources(city);
 
     for(auto& sorce : sorces)
     {

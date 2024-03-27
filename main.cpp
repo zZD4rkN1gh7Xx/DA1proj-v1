@@ -24,22 +24,22 @@ int main(void)
     WMSGraph globalGraph;
     WMSGraph shadowGraph;
 
-    FileReader::add_cities("Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
+    FileReader::add_cities("../Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
     //cout << "Cities worked!" << endl;
-    FileReader::add_cities("Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",shadowGraph);
+    FileReader::add_cities("../Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",shadowGraph);
     //cout << "Cities worked!" << endl;
 
-    FileReader::add_reservoirs("Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",globalGraph);
+    FileReader::add_reservoirs("../Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",globalGraph);
     //cout << "Reservoirs worked!" << endl;
-    FileReader::add_reservoirs("Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",shadowGraph);
+    FileReader::add_reservoirs("../Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",shadowGraph);
     //cout << "Reservoirs worked!" << endl;
 
-    FileReader::add_stations("Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",globalGraph);
+    FileReader::add_stations("../Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",globalGraph);
     //cout << "Stations worked!" << endl;
-    FileReader::add_stations("Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",shadowGraph);
+    FileReader::add_stations("../Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",shadowGraph);
     //cout << "Stations worked!" << endl;
 
-    FileReader::add_pipes("Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
+    FileReader::add_pipes("../Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
     //cout << "Pipes worked!" << endl;
 
 
@@ -73,7 +73,7 @@ int main(void)
 
 
 
-    if(int a = full_edmonds_karp("Porto Moniz", globalGraph))
+    if(int a = full_edmonds_karp("Santana", globalGraph, shadowGraph))
     {
         std::cout << a << " we got to the functions" << std::endl;
     }
