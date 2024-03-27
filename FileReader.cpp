@@ -58,7 +58,7 @@ void FileReader::add_reservoirs(const std::string &filename ,WMSGraph &OurGraph)
         while (std::getline(inputfile, reservoir, ','), std::getline(inputfile, municipality, ','), std::getline(inputfile, id, ','), std::getline(inputfile, code, ','), std::getline(inputfile, max, ','), std::getline(inputfile, dump))
         {
 
-            WaterReservoir new_water_reservoir = WaterReservoir(reservoir, municipality, std::stoi(id), code, std::stoi(max));
+            WaterReservoir new_water_reservoir = WaterReservoir(capitalizeFirstLetter(reservoir), municipality, std::stoi(id), code, std::stoi(max));
 
             OurGraph.add_water_reservoir(new_water_reservoir);
         }

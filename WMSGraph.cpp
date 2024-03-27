@@ -26,6 +26,8 @@ void WMSGraph::add_water_reservoir(WaterReservoir& water_reservoir)
     addVertex(water_reservoir);
     this->aguapoints.insert(std::make_pair(water_reservoir.get_code(), water_reservoir));
     this->agua_water_reservoir_code.insert(std::make_pair(water_reservoir.get_code(), water_reservoir));
+    this->agua_water_reservoir_name.insert(std::make_pair(water_reservoir.get_reservoir(), water_reservoir));
+
 }
 
 void WMSGraph::remove_delivery_site(DeliverySite& delivery_site)
@@ -115,6 +117,23 @@ DeliverySite WMSGraph::get_agua_city_name(std::string city)
     }
 }
 
+WaterReservoir WMSGraph::get_agua_reservoir_name(std::string reservoir)
+{
+    std::string new_city = capitalizeFirstLetter(reservoir);
+
+    auto it = agua_water_reservoir_name.find(new_city);
+
+    if (it != agua_water_reservoir_name.end())
+    {
+        WaterReservoir new_delivery_site = it->second;
+        return new_delivery_site;
+    }
+    else
+    {
+        return WaterReservoir(); // later use for checking errors
+    }
+}
+
 DeliverySite WMSGraph::get_agua_city_code(Agua agua)
 {
     auto it = agua_cities_code.find(agua.get_code());
@@ -167,7 +186,7 @@ void WMSGraph::set_all_unvisited(const vector<Vertex<Agua> * >& all_agua)
     }
 }
 
-void WMSGraph::reset_shadow_capacities()
+void WMSGraph::reset_shadow_capacities(void)
 {
     for(auto& agua_point : getVertexSet())
     {

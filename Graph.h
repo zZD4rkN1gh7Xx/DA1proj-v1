@@ -86,6 +86,7 @@ public:
 	vector<T> dfs(const T & source) const;
 	vector<T> bfs(const T &source) const;
     void emitDOTFile(string gname);
+    Edge<T>* findEdge(const T& source_info, const T& dest_info) const;
 
 };
 
@@ -295,6 +296,20 @@ bool Graph<T>::removeVertex( T &in) {
 	return false;
 }
 
+ template <class T>
+ Edge<T>* Graph<T>::findEdge(const T& source_info, const T& dest_info) const {
+     for (auto& vertex : vertexSet) {
+         if (vertex->getInfo() == source_info) {
+             for (auto& edge : vertex->getAdj()) {
+                 if (edge.getDest()->getInfo() == dest_info) {
+                     return &edge;
+                 }
+             }
+             break; // Break loop if source vertex found
+         }
+     }
+     return nullptr; // Edge not found
+ }
 
 //=============================================================================
 // Exercise 1.1: Depth First Search
