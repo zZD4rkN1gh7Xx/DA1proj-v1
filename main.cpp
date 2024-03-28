@@ -46,37 +46,45 @@ int main(void)
     WMSGraph teste;
     WMSGraph shadow_teste;
 
-    WaterReservoir res = WaterReservoir("s", "b",  1, "R_2", 3);
-    DeliverySite de = DeliverySite("Boooooooooooooooo", 1, "DL_1", 2, 1 );
+    WaterReservoir res = WaterReservoir("s", "b",  1, "R_2", 8);
+    DeliverySite de = DeliverySite("Boooooooooooooooo", 1, "C_1", 2, 1 );
     PumpingStation pu = PumpingStation(1, "P_2");
-    PumpingStation pu2 = PumpingStation(3, "P_5");
+    PumpingStation pu2 = PumpingStation(2, "P_5");
+    DeliverySite de2 = DeliverySite("T", 2, "C_2", 10, 10);
 
     teste.add_pumping_station(pu);
     teste.add_water_reservoir(res);
     teste.add_delivery_site(de);
     teste.add_pumping_station(pu2);
+    teste.add_delivery_site(de2);
 
     shadow_teste.add_pumping_station(pu);
     shadow_teste.add_water_reservoir(res);
     shadow_teste.add_delivery_site(de);
 
-    Pipe pipe_1 = Pipe("R_2", "P_2", 5, 1);
-    Pipe pipe_2 = Pipe("P_2", "DL_1", 5, 1);
-    Pipe pipe_3 = Pipe("P_2", "P_5", 5, 1);
+    Pipe pipe_1 = Pipe("R_2", "P_2", 10, 1, 1);
+    Pipe pipe_2 = Pipe("P_2", "C_1", 5, 1,2);
+    Pipe pipe_3 = Pipe("P_2", "P_5", 5, 1,3);
+    Pipe pipe_4 = Pipe("P_5", "C_2", 5, 1, 4);
+
 
     teste.add_pipe(pipe_1);
     teste.add_pipe(pipe_2);
     teste.add_pipe(pipe_3);
+    teste.add_pipe(pipe_4);
 
     shadow_teste.add_pipe(pipe_1);
     shadow_teste.add_pipe(pipe_2);
+    shadow_teste.add_pipe(pipe_3);
+    shadow_teste.add_pipe(pipe_4);
 
+    std::unordered_map<int, int> map = is_it_enough(globalGraph);
 
-
-    if(int a = full_edmonds_karp("Santana", globalGraph, shadowGraph))
-    {
-        std::cout << a << " we got to the functions" << std::endl;
+    for (int c = 1; c <= map.size(); c++) {
+        cout << map.find(c)->first << " " <<map.find(c)->second << endl;
     }
+    cout << endl << map.size();
+
 
     return 0;
 }
