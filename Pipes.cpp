@@ -9,14 +9,16 @@ Pipe::Pipe() {
     this->code_point_B = "";
     this->capacity = -1;
     this->direction = -1;
+    this->id = -1;
 }
 
-Pipe::Pipe(std::string code_point_A, std::string code_point_B, int capacity, int direction)
+Pipe::Pipe(std::string code_point_A, std::string code_point_B, int capacity, int direction, int id)
 {
     this->code_point_A = code_point_A;
     this->code_point_B = code_point_B;
     this->capacity = capacity;
     this->direction = direction;
+    this->id = id;
 }
 
 std::string Pipe::get_code_A(void)
@@ -37,6 +39,11 @@ int Pipe::get_capacity(void)
 int Pipe::get_direction(void)
 {
     return this->direction;
+}
+
+int Pipe::get_id(void)
+{
+    return this->id;
 }
 
 void Pipe::set_capacity(int capacity)

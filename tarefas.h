@@ -150,4 +150,83 @@ int full_edmonds_karp(std::string city, WMSGraph global_graph, WMSGraph shadow_g
 
 }
 
+//greedy algorithm, // nao precisamos de usar status de visited ja que dps vamos querer voltar a ele e atualiza lo
+std::unordered_map<int, int> is_it_enough(WMSGraph global_graph) {
+    std::unordered_map<int, int> carry; // What each pipe will carry
+    std::unordered_map<int, int> giving;
+    std::queue<Vertex<Agua>*> q;
+
+    for (auto& source : global_graph.get_agua_reservoir())
+    {
+        Vertex<Agua>* current_source = global_graph.findVertex(source.second);
+
+        if (current_source == nullptr)
+        {
+            std::cout << "source was not fund in is_it_enough func" << std::endl;
+            continue;
+        }
+
+        int flow = global_graph.get_water_reservoir_code(current_source->getInfo()).get_max_delivery();
+        q.push(current_source);
+
+        global_graph.set_all_unvisited(global_graph.getVertexSet());
+
+        while (!q.empty())
+        {
+            Vertex<Agua>* current = q.front();
+            q.pop();
+
+            current->setVisited(true);
+
+            for (auto& pipe : current->getAdj())
+            {
+                Vertex<Agua>* neighbour = pipe.getDest();
+
+                if (!neighbour->isVisited())
+                {
+                    if (current->getInfo().get_code()[0] == 'R')
+                    {
+                        if (carry.count(pipe.getWeight().get_id()) == 0)
+                        {
+                            carry[pipe.getWeight().get_id()] = 0;
+                            giving[pipe.getWeight().get_id()] = 0;
+                        }
+
+                        q.push(neighbour);
+
+                        int capacity = pipe.getWeight().get_capacity();
+
+                        if (flow >= capacity)
+                        {
+                            carry[pipe.getWeight().get_id()] = capacity;
+                            flow -= capacity;
+                        }
+                        else
+                        {
+                            carry[pipe.getWeight().get_id()] = flow;
+                            flow = 0;
+                        }
+                    }
+                    else if (current->getInfo().get_code()[0] == 'P')
+                    {
+                        if (carry[pipe.getWeight().get_id()] <= pipe.getWeight().get_capacity())
+                        {
+                            q.push(neighbour);
+
+                            if (giving[current->getInfo().get_id()] < carry[current->getInfo().get_id()])
+                            {
+                                carry[pipe.getWeight().get_id()] = carry[current->getInfo().get_id()] - giving[current->getInfo().get_id()];
+                            }
+                        }
+                    }
+                    // Mark neighbour vertex as visited
+                    neighbour->setVisited(true);
+                }
+            }
+        }
+    }
+
+    return giving; // Return the giving map according to function name
+}
+
 #endif //DAPROJ_V1_TAREFAS_H

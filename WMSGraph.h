@@ -44,6 +44,7 @@ class WMSGraph :public Graph<Agua>{
         DeliverySite get_agua_city_code(Agua agua);
         PumpingStation get_pumping_station_code(Agua agua);
         WaterReservoir get_water_reservoir_code(Agua agua);
+        std::unordered_map<std::string, WaterReservoir> get_agua_reservoir();
         void set_all_unvisited(const vector<Vertex<Agua> * >& all_agua); // auxiliar function self-explanatory
         std::vector<Agua> get_all_sources(std::string sink); // auxiliar function
         void reset_shadow_capacities(void);

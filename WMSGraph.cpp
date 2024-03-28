@@ -134,6 +134,11 @@ WaterReservoir WMSGraph::get_agua_reservoir_name(std::string reservoir)
     }
 }
 
+std::unordered_map<std::string, WaterReservoir> WMSGraph::get_agua_reservoir()
+{
+    return this->agua_water_reservoir_code;
+}
+
 DeliverySite WMSGraph::get_agua_city_code(Agua agua)
 {
     auto it = agua_cities_code.find(agua.get_code());
