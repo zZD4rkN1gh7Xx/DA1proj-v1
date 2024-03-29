@@ -21,7 +21,7 @@ int main(void)
 {
 
 
-    WMSGraph globalGraph;
+    /*WMSGraph globalGraph;
     WMSGraph shadowGraph;
 
     FileReader::add_cities("../Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
@@ -40,7 +40,7 @@ int main(void)
     //cout << "Stations worked!" << endl;
 
     FileReader::add_pipes("../Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
-    //cout << "Pipes worked!" << endl;
+    //cout << "Pipes worked!" << endl;*/
 
 
     WMSGraph teste;
@@ -61,6 +61,10 @@ int main(void)
     shadow_teste.add_pumping_station(pu);
     shadow_teste.add_water_reservoir(res);
     shadow_teste.add_delivery_site(de);
+    shadow_teste.add_pumping_station(pu2);
+    shadow_teste.add_delivery_site(de2);
+
+
 
     Pipe pipe_1 = Pipe("R_2", "P_2", 10, 1, 1);
     Pipe pipe_2 = Pipe("P_2", "C_1", 5, 1,2);
@@ -78,12 +82,7 @@ int main(void)
     shadow_teste.add_pipe(pipe_3);
     shadow_teste.add_pipe(pipe_4);
 
-    std::unordered_map<int, int> map = is_it_enough(globalGraph);
-
-    for (int c = 1; c <= map.size(); c++) {
-        cout << map.find(c)->first << " " <<map.find(c)->second << endl;
-    }
-    cout << endl << map.size();
+    is_it_enough(teste, shadow_teste);
 
 
     return 0;

@@ -257,3 +257,13 @@ std::vector<Agua> WMSGraph::get_all_sources(std::string sink)
     return sources;
 }
 
+int WMSGraph::get_total_num_of_edges(void)
+{
+    int total_edges = 0;
+    for(auto vertex : getVertexSet())
+    {
+        total_edges += vertex->getAdj().size();
+    }
+
+    return total_edges;
+}

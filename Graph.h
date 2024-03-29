@@ -59,7 +59,8 @@ public:
 template <class T>
 class Edge {
 	Vertex<T> * dest;      // destination vertex
-	Pipe weight;         // edge weight
+	Pipe weight;// edge weight
+
 public:
 	Edge(Vertex<T> *d, Pipe w);
     Vertex<T> *getDest() const;
