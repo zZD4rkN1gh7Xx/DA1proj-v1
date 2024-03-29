@@ -62,3 +62,11 @@ void Pipe::set_city_link(bool city_link)
 {
     this->city_link = city_link;
 }
+
+void Pipe::set_code_A(std::string codeA) {
+    this->code_point_A = codeA;
+}
+
+void Pipe::set_code_B(std::string codeB) {
+    this->code_point_B = codeB;
+}

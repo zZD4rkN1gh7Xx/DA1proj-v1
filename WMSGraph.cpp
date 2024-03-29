@@ -19,6 +19,7 @@ void WMSGraph::add_pumping_station(PumpingStation& pumping_station)
     addVertex(pumping_station);
     this->aguapoints.insert(std::make_pair(pumping_station.get_code(), pumping_station));
     this->agua_pumping_stations_code.insert(std::make_pair(pumping_station.get_code(), pumping_station));
+    this->agua_pumping_stations.insert(std::make_pair(pumping_station.get_id(), pumping_station));
 }
 
 void WMSGraph::add_water_reservoir(WaterReservoir& water_reservoir)
@@ -69,11 +70,14 @@ void WMSGraph::add_pipe(Pipe& pipe)
     if(pipe.get_direction() == 0)
     {
         addEdge(aguapoints[pipe.get_code_A()],aguapoints[pipe.get_code_B()], pipe);
+        this->agua_pipes.insert(std::make_pair(pipe.get_id(), pipe));
         pipe.set_inverse_direction();
         addEdge(aguapoints[pipe.get_code_B()],aguapoints[pipe.get_code_A()], pipe);
+
     }
     else {
         addEdge(aguapoints[pipe.get_code_A()], aguapoints[pipe.get_code_B()], pipe);
+        this->agua_pipes.insert(std::make_pair(pipe.get_id(), pipe));
     }
 }
 void WMSGraph::add_shadow_pipe(Pipe& pipe)
@@ -169,6 +173,36 @@ PumpingStation WMSGraph::get_pumping_station_code(Agua agua)
     else
     {
         return PumpingStation(); // later use to check errors
+    }
+}
+
+PumpingStation WMSGraph::get_pumping_station(int id) {
+    auto it = agua_pumping_stations.find(id);
+
+    if(it != nullptr)
+    {
+        PumpingStation new_pumping_station = it->second;
+        return new_pumping_station;
+    }
+    else
+    {
+        return PumpingStation(); // later use to check errors
+    }
+}
+
+
+Pipe WMSGraph::get_pipe_id(int id)
+{
+    auto it = agua_pipes.find(id);
+
+    if(it != nullptr)
+    {
+        Pipe new_pipe = it->second;
+        return new_pipe;
+    }
+    else
+    {
+        return Pipe(); // later use to check errors
     }
 }
 

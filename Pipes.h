@@ -30,6 +30,8 @@ class Pipe {
         void set_capacity(int capacity);
         void set_inverse_direction(void);
         void set_city_link(bool city_link);
+        void set_code_A(std::string codeA);
+        void set_code_B(std::string codeB);
 
 
 };

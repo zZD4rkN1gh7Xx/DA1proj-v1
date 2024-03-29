@@ -9,6 +9,8 @@
 #include "helpfunctions.h"
 #include "tarefas.h"
 #include "Menu.h"
+#include <algorithm>
+#include <set>
 
 using namespace std;
 
@@ -21,7 +23,7 @@ int main(void)
 {
 
 
-    /*WMSGraph globalGraph;
+    WMSGraph globalGraph;
     WMSGraph shadowGraph;
 
     FileReader::add_cities("../Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
@@ -40,22 +42,27 @@ int main(void)
     //cout << "Stations worked!" << endl;
 
     FileReader::add_pipes("../Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
-    //cout << "Pipes worked!" << endl;*/
+    //cout << "Pipes worked!" << endl;
 
 
     WMSGraph teste;
     WMSGraph shadow_teste;
 
-    WaterReservoir res = WaterReservoir("s", "b",  1, "R_2", 8);
+    WaterReservoir res = WaterReservoir("s", "b",  1, "R_2", 99);
     DeliverySite de = DeliverySite("Boooooooooooooooo", 1, "C_1", 2, 1 );
     PumpingStation pu = PumpingStation(1, "P_2");
     PumpingStation pu2 = PumpingStation(2, "P_5");
+    PumpingStation pu3 = PumpingStation(3, "P_ciclo1");
+    PumpingStation pu4 = PumpingStation(4, "P_ciclo2");
     DeliverySite de2 = DeliverySite("T", 2, "C_2", 10, 10);
+
 
     teste.add_pumping_station(pu);
     teste.add_water_reservoir(res);
     teste.add_delivery_site(de);
     teste.add_pumping_station(pu2);
+    teste.add_pumping_station(pu3);
+    teste.add_pumping_station(pu4);
     teste.add_delivery_site(de2);
 
     shadow_teste.add_pumping_station(pu);
@@ -63,6 +70,8 @@ int main(void)
     shadow_teste.add_delivery_site(de);
     shadow_teste.add_pumping_station(pu2);
     shadow_teste.add_delivery_site(de2);
+    shadow_teste.add_pumping_station(pu3);
+    shadow_teste.add_pumping_station(pu4);
 
 
 
@@ -70,19 +79,46 @@ int main(void)
     Pipe pipe_2 = Pipe("P_2", "C_1", 5, 1,2);
     Pipe pipe_3 = Pipe("P_2", "P_5", 5, 1,3);
     Pipe pipe_4 = Pipe("P_5", "C_2", 5, 1, 4);
+    Pipe pipe_5 = Pipe("P_5","P_ciclo1", 5,1,5);
+    Pipe pipe_6 = Pipe("P_ciclo1","P_ciclo2", 5,1,6);
+    Pipe pipe_7 = Pipe("P_ciclo2","P_5", 5,1,7);
 
 
     teste.add_pipe(pipe_1);
     teste.add_pipe(pipe_2);
     teste.add_pipe(pipe_3);
     teste.add_pipe(pipe_4);
+    teste.add_pipe(pipe_5);
+    teste.add_pipe(pipe_6);
+    teste.add_pipe(pipe_7);
 
-    shadow_teste.add_pipe(pipe_1);
-    shadow_teste.add_pipe(pipe_2);
-    shadow_teste.add_pipe(pipe_3);
-    shadow_teste.add_pipe(pipe_4);
+    shadow_teste.add_shadow_pipe(pipe_1);
+    shadow_teste.add_shadow_pipe(pipe_2);
+    shadow_teste.add_shadow_pipe(pipe_3);
+    shadow_teste.add_shadow_pipe(pipe_4);
+    shadow_teste.add_shadow_pipe(pipe_5);
+    shadow_teste.add_shadow_pipe(pipe_6);
+    shadow_teste.add_shadow_pipe(pipe_7);
 
-    is_it_enough(teste, shadow_teste);
+    unordered_map<int, vector<int>> parents;
+    vector<int> parentes = {3};
+    parents[3] = parentes;
+
+    std::unordered_map<int, int> giving;
+    giving[1] = 10;
+    giving[2] = 10;
+    giving[3] = 10;
+    giving[4] = 10;
+    giving[5] = 10;
+    giving[6] = 10;
+    giving[7] = 10;
+
+
+    is_it_enough(globalGraph, shadowGraph);
+
+
+
+
 
 
     return 0;

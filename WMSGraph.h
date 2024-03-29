@@ -25,6 +25,8 @@ class WMSGraph :public Graph<Agua>{
         std::unordered_map<std::string, PumpingStation> agua_pumping_stations_code; // unordered map com as pumping stations do grapho e chave o seu codigo
         std::unordered_map<std::string, WaterReservoir> agua_water_reservoir_code; // unordered map com os water reservoirs do grapho e chave o seu codigo
         std::unordered_map<std::string, WaterReservoir> agua_water_reservoir_name; // unordered map com os water reservoirs do grapho e chave o seu nome
+        std::unordered_map<int, PumpingStation> agua_pumping_stations; // unordered map com as pumping stations do grapho e chave o seu id
+        std::unordered_map<int, Pipe> agua_pipes;
 
     public:
 
@@ -45,6 +47,8 @@ class WMSGraph :public Graph<Agua>{
         PumpingStation get_pumping_station_code(Agua agua);
         WaterReservoir get_water_reservoir_code(Agua agua);
         std::unordered_map<std::string, WaterReservoir> get_agua_reservoir();
+        PumpingStation get_pumping_station(int id);
+        Pipe get_pipe_id(int id);
         void set_all_unvisited(const vector<Vertex<Agua> * >& all_agua); // auxiliar function self-explanatory
         std::vector<Agua> get_all_sources(std::string sink); // auxiliar function
         void reset_shadow_capacities(void);

@@ -13,6 +13,18 @@
 #include <limits>
 #include <unordered_map>
 #include <unordered_set>
+#include <list>
+#include <set>
+#include <algorithm>
+
+
+bool in_cycle(int id, vector<int> cycle) {
+    for (auto a : cycle) {
+        if (id == a) return true;
+    }
+    return false;
+}
+
 
 int get_total_cap(Vertex<Agua>* pumping_station, WMSGraph shadow_graph, std::unordered_map<int, int> giving)
 {
@@ -427,6 +439,7 @@ void is_it_enough(WMSGraph global_graph, WMSGraph shadow_graph) {
 
     while(visited.size() < global_graph.get_total_num_of_edges()) // para termos a certeza a que fomos a todas as edges
     {
+
         for(auto& source : global_graph.get_agua_reservoir())
         {
             Vertex<Agua>* current_source = global_graph.findVertex(source.second);
@@ -441,10 +454,21 @@ void is_it_enough(WMSGraph global_graph, WMSGraph shadow_graph) {
 
             while(!q.empty())
             {
+                cout << "Estamos num loop infinito!" << endl;
                 Vertex<Agua>* current = q.front();
-
                 q.pop();
                 int delivery = get_total_cap(current,shadow_graph, giving );
+
+                if (current->getInfo().get_code()[0] == 'C')
+                {
+                    int receives = get_total_cap(current, shadow_graph, giving);
+
+                    if(receives == -1)
+                        continue;
+
+                    std::cout << "the city " << current->getInfo().get_code() << " receives " << receives << std::endl;
+                }
+
                 for (auto& pipe : current->getAdj())
                 {
                     Vertex<Agua>* neighbour = pipe.getDest();
@@ -503,15 +527,7 @@ void is_it_enough(WMSGraph global_graph, WMSGraph shadow_graph) {
                         }
                     }
 
-                    else if (current->getInfo().get_code()[0] == 'C')
-                    {
-                        int receives = get_total_cap(current, shadow_graph, giving);
 
-                        if(receives == -1)
-                            continue;
-
-                        std::cout << "the city " << current->getInfo().get_code() << " receives " << receives << std::endl;
-                    }
                 }
             }
         }
@@ -519,6 +535,42 @@ void is_it_enough(WMSGraph global_graph, WMSGraph shadow_graph) {
 }
 
 
+void remove_cycle(WMSGraph graph, WMSGraph shadow, unordered_map<int, vector<int>> parents, Vertex<Agua> last, Vertex<Agua> first, std::unordered_map<int, int> giving)
+{
+    int id_cycle;
+    int total_getting = 0;
+    int total_giver = 0;
+    vector<int> first_parents = parents[first.getInfo().get_id()];
+    vector<int> last_parents = parents[last.getInfo().get_id()];
+    vector<int> cycle_vertex;
+
+
+    cycle_vertex.push_back(last.getInfo().get_id());
+
+    std::set<int> elementsSet(first_parents.begin(), first_parents.end());
+
+    cycle_vertex.erase(std::remove_if(cycle_vertex.begin(), cycle_vertex.end(), [&](int x) { return elementsSet.count(x); }), cycle_vertex.end());
+
+    for (auto id : cycle_vertex) {
+        auto finder_shadow = shadow.findVertex(shadow.get_pumping_station(id));
+        for (auto edge : finder_shadow->getAdj()) {
+            if (in_cycle(edge.getWeight().get_id(), cycle_vertex)) {
+                id_cycle = edge.getWeight().get_id();
+                continue;
+            }
+            else {
+                total_getting += giving[edge.getWeight().get_id()];
+            }
+        }
+        auto finder_normal = graph.findVertex(graph.get_pumping_station(id));
+        for (auto edge : finder_normal->getAdj()) {
+            total_giver += giving[edge.getWeight().get_id()];
+        }
+        if (total_getting >= total_giver) {
+            graph.remove_pipe(graph.get_pipe_id(id_cycle));
+        }
+    }
+}
 
 
 
