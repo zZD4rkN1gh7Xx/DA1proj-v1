@@ -146,6 +146,11 @@ std::unordered_map<std::string, WaterReservoir> WMSGraph::get_agua_reservoir()
     return this->agua_water_reservoir_code;
 }
 
+std::unordered_map<std::string, DeliverySite> WMSGraph::get_agua_city()
+{
+    return this->agua_cities_code;
+}
+
 DeliverySite WMSGraph::get_agua_city_code(Agua agua)
 {
     auto it = agua_cities_code.find(agua.get_code());
@@ -290,6 +295,12 @@ std::vector<Agua> WMSGraph::get_all_sources(std::string sink)
 
     return sources;
 }
+
+std::unordered_map<int, Pipe> WMSGraph::get_pipes(void)
+{
+    return this->agua_pipes;
+}
+
 
 int WMSGraph::get_total_num_of_edges(void)
 {

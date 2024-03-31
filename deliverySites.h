@@ -27,6 +27,7 @@ class DeliverySite : public Agua {
         std::string get_delivery_site_code(void);
         int get_demand(void);
         int get_population(void);
+        bool operator<(const DeliverySite& other) const;
 
 
 };

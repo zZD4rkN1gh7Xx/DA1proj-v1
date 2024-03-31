@@ -49,11 +49,12 @@ class WMSGraph :public Graph<Agua>{
         std::unordered_map<std::string, WaterReservoir> get_agua_reservoir();
         PumpingStation get_pumping_station(int id);
         Pipe get_pipe_id(int id);
+        std::unordered_map<int, Pipe> get_pipes(void);
         void set_all_unvisited(const vector<Vertex<Agua> * >& all_agua); // auxiliar function self-explanatory
         std::vector<Agua> get_all_sources(std::string sink); // auxiliar function
         void reset_shadow_capacities(void);
         int get_total_num_of_edges(void);
-        int get_total_cap(Vertex<Agua> pumping_station);
+        std::unordered_map<std::string, DeliverySite> get_agua_city();
 };
 
 template bool Graph<Agua>::addVertex(Agua &in);

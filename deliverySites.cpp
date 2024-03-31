@@ -40,3 +40,8 @@ std::string DeliverySite::get_delivery_site_code(void)
 {
     return this->delivery_site_code;
 }
+
+bool DeliverySite::operator<(const DeliverySite& other) const {
+
+    return this->demand < other.demand;
+}
