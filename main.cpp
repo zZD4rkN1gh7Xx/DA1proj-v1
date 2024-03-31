@@ -7,8 +7,8 @@
 #include "WMSGraph.h"
 #include "GraphTester.h"
 #include "helpfunctions.h"
-#include "tarefas.h"
 #include "Menu.h"
+#include "tarefas_2.h"
 #include <algorithm>
 #include <set>
 

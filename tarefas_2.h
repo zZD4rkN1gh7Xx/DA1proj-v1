@@ -17,7 +17,24 @@
 #include <set>
 #include <algorithm>
 
-vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city)
+
+Vertex<Agua> *get_available_city(std::queue<Vertex<Agua> *> reservoir_queue, std::unordered_map<int, int> status)
+{
+    reservoir_queue.pop();
+    while (!reservoir_queue.empty()) {
+        auto current = reservoir_queue.front();
+        reservoir_queue.pop();
+
+        if (status[current->getInfo().get_id()] == 1) {
+            return current;
+        }
+
+    }
+    Vertex<Agua> *empty = nullptr;
+    return empty;
+}
+
+vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city, std::unordered_map<int, bool> full)
 {
     global_graph.set_all_unvisited(global_graph.getVertexSet());
     unordered_map<std::string, std::string> parents;
@@ -47,9 +64,11 @@ vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir
 
         for(auto neighbour : current->getAdj())
         {
-            neighbour.getDest()->setVisited(true);
-            parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
-            q.push(neighbour.getDest());
+            if (!full[neighbour.getWeight().get_id()] && !neighbour.getDest()->isVisited()) {    // fazia ciclo infinito, ver se continua certo
+                neighbour.getDest()->setVisited(true);
+                parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
+                q.push(neighbour.getDest());
+            }
         }
     }
 
@@ -76,8 +95,10 @@ queue<Vertex<Agua> * > get_possible_cities(WMSGraph global_graph, Vertex<Agua>* 
 
         for(auto neighbour : current->getAdj())
         {
-            neighbour.getDest()->setVisited(true);
-            q.push(neighbour.getDest());
+            if (!neighbour.getDest()->isVisited()) {
+                neighbour.getDest()->setVisited(true);
+                q.push(neighbour.getDest());
+            }
         }
     }
 
@@ -160,7 +181,7 @@ bool is_done(std::unordered_map<int, int> status)
 
 }
 
-void back_track(WMSGraph& global_graph  ,WMSGraph shadow_graph, vector<std::string> path, std::unordered_map<std::string, int>& giving,std::unordered_map<int, int>& carry )
+void back_track(WMSGraph& global_graph  ,WMSGraph shadow_graph, vector<std::string> path, std::unordered_map<std::string, int>& giving,std::unordered_map<int, int>& carry, std::unordered_map<int, bool> full, std::unordered_map<int, int> status)
 {
     vector<std::string> reverse_path = path;
 
@@ -175,13 +196,16 @@ void back_track(WMSGraph& global_graph  ,WMSGraph shadow_graph, vector<std::stri
     for(auto it = reverse_path.begin() + 1; it != reverse_path.end(); it++)
     {
         auto edge = global_graph.findEdge(global_graph.get_agua_point(*it), global_graph.get_agua_point(*(it - 1)));
+        full[edge->getWeight().get_id()] = false;
         carry[edge->getWeight().get_id()] -= exceeds;
         giving[*it] -= exceeds;
     }
 
+    status[global_graph.get_agua_city_name(reverse_path[0]).get_id()] = 2;
+
 }
 
-int fill_city(WMSGraph global_graph,std::unordered_map<int, int>& carry, std::unordered_map<std::string, int>& giving, vector<std::string> city_path)
+void fill_city(WMSGraph global_graph,std::unordered_map<int, int>& carry, std::unordered_map<std::string, int>& giving, vector<std::string> city_path, std::unordered_map<int, bool>& full)
 {
     auto current_reservoir = global_graph.get_water_reservoir_code(global_graph.get_agua_point(city_path[0]));
 
@@ -199,6 +223,9 @@ int fill_city(WMSGraph global_graph,std::unordered_map<int, int>& carry, std::un
                 giving[current_reservoir.get_code()] -= fill;
                 carry[current_edge->getWeight().get_id()] += fill;
                 giving[next_point->getInfo().get_code()] += fill;
+                if(carry[current_edge->getWeight().get_id()] == current_edge->getWeight().get_capacity()) {
+                    full[current_edge->getWeight().get_id()] = true;
+                }
            }
            else
            {
@@ -216,6 +243,7 @@ void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
     std::unordered_map<int, bool> full;
     std::unordered_map<int, int> status; // status of the water 0: to be processed, 1: processed, more water than nedded received, 2: unavailable(gitting the limit wanted), -1 being processed
     std::unordered_map<std::string, queue<Vertex<Agua> * >> reservoirs_cities;
+    std::unordered_map<std::string, vector<std::string>> path_saver;
     std::queue<Vertex<Agua> *> reservoir_queue;
 
     for(auto reservoir : global_graph.get_agua_reservoir()) // inicaliazdor das cidades que cada reservatoio chega
@@ -244,13 +272,14 @@ void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
         {
             if(status[city->getInfo().get_id()] == 0)
             {
-                vector<std::string> path = get_city_path(global_graph, current_reservoir, city);
-                fill_city(global_graph, carry, giving, path);
+                vector<std::string> path = get_city_path(global_graph, current_reservoir, city, full);
+                fill_city(global_graph, carry, giving, path, full);
 
                 if(giving[city->getInfo().get_code()] > global_graph.get_agua_city_code(city->getInfo()).get_demand())
                 {
                     status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 1;
                     reservoirs_cities[current_reservoir->getInfo().get_code()].push(city);
+                    path_saver[city->getInfo().get_code()] = path;
                 }
 
                 if(giving[city->getInfo().get_code()] < global_graph.get_agua_city_code(city->getInfo()).get_demand())
@@ -263,19 +292,31 @@ void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
                 {
                     status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 2;
 
-            }   }
+                }
+            }
+
+            if(status[city->getInfo().get_id()] == -1) {
+                auto vertex = get_available_city(reservoirs_cities[current_reservoir->getInfo().get_code()], status);
+                if (vertex == nullptr) {
+                    reservoirs_cities[current_reservoir->getInfo().get_code()].pop();
+                }
+                back_track(global_graph,shadow_graph, path_saver[vertex->getInfo().get_code()], giving, carry, full, status);
+                fill_city(global_graph,carry,giving, get_city_path(global_graph, current_reservoir, city, full), full);
+            }
+
         }
-
-
 
 
         if(giving[current_reservoir->getInfo().get_code()] < global_graph.get_water_reservoir_code(current_reservoir->getInfo()).get_max_delivery())
             reservoir_queue.push(current_reservoir);
 
+
+    }
+    for (auto a : global_graph.get_agua_city()) {
+        cout << a.first << " gets " << giving[a.first] << endl;
     }
 
 }
-
 
 
 
