@@ -104,7 +104,6 @@ int main(void)
 
 
 
-
 is_it_enough(globalGraph, shadowGraph);
 
 

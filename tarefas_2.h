@@ -19,6 +19,25 @@
 #include <climits>
 
 
+
+void status_checker(WMSGraph global_graph, Vertex<Agua> *city ,unordered_map<std::string, int>& giving, unordered_map<std::string, vector<std::string>> &path_saver, unordered_map<int, int> &status, vector<std::string> path) {
+    if(giving[city->getInfo().get_code()] > global_graph.get_agua_city_code(city->getInfo()).get_demand())
+    {
+        status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 1;
+        path_saver[city->getInfo().get_code()] = path;
+    }
+
+    if(giving[city->getInfo().get_code()] < global_graph.get_agua_city_code(city->getInfo()).get_demand())
+    {
+        status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = -1;
+    }
+
+    if(giving[city->getInfo().get_code()] == global_graph.get_agua_city_code(city->getInfo()).get_demand())
+    {
+        status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 2;
+    }
+}
+
 Vertex<Agua> *get_available_city(std::queue<Vertex<Agua> *> reservoir_queue, std::unordered_map<int, int> status)
 {
 
@@ -307,8 +326,7 @@ void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
 
     // a condiçao de paragem vai ser ou quando estiverem todos tratados , ou todos indisponiveis ou quando nao houver reservatiorios na queue
 
-    while(!is_done(status) && !reservoir_queue.empty())
-    {
+    while(!is_done(status) && !reservoir_queue.empty()) {
         auto current_reservoir = reservoir_queue.front();
         reservoir_queue.pop();
 
@@ -317,142 +335,131 @@ void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
 
         if (city == nullptr) {
             continue;
-        }
-        if(city->getInfo().get_code() == "C_9") {
-            if(current_reservoir->getInfo().get_code() == "R_2") {
-                cout << "aa" << endl;
-            }
-        }
+        } else {
 
-        if(status[city->getInfo().get_id()] == 2)
-            reservoirs_cities[current_reservoir->getInfo().get_code()].pop();
+            if (status[city->getInfo().get_id()] == 2)
+                reservoirs_cities[current_reservoir->getInfo().get_code()].pop();
 
-        else
-        {
-            if(status[city->getInfo().get_id()] == 0)
-            {
-                vector<std::string> path = get_city_path(global_graph, current_reservoir, city, full);
+            else {
+                if (status[city->getInfo().get_id()] == 0) {
+                    vector<std::string> path = get_city_path(global_graph, current_reservoir, city, full);
 
 
-                if (path.empty()) {
-                    auto vertex = get_available_city(reservoirs_cities[current_reservoir->getInfo().get_code()], status);
-                    if (vertex == nullptr) {
-                        reservoirs_cities[current_reservoir->getInfo().get_code()].pop();
-                        continue;
-                    }
-                    else {
-                        back_track(global_graph, shadow_graph, path_saver[vertex->getInfo().get_code()], giving, carry,
-                                   full, status);
-                        fill_city(global_graph, carry, giving, get_city_path(global_graph, current_reservoir, city, full),
-                                  full);
-                        continue;
-                    }
-                }
+                    if (path.empty()) {
+                        auto vertex = get_available_city(reservoirs_cities[current_reservoir->getInfo().get_code()],
+                                                         status);
+                        if (vertex == nullptr) {
+                            reservoirs_cities[current_reservoir->getInfo().get_code()].pop();
+                            continue;
+                        } else {
+                            back_track(global_graph, shadow_graph, path_saver[vertex->getInfo().get_code()], giving,
+                                       carry,
+                                       full, status);
 
-
-                fill_city(global_graph, carry, giving, path, full);
-
-                if(giving[city->getInfo().get_code()] > global_graph.get_agua_city_code(city->getInfo()).get_demand())
-                {
-                    status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 1;
-                    reservoirs_cities[current_reservoir->getInfo().get_code()].push(city);
-                    path_saver[city->getInfo().get_code()] = path;
-                }
-
-                if(giving[city->getInfo().get_code()] < global_graph.get_agua_city_code(city->getInfo()).get_demand())
-                {
-                    status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = -1;
-                    auto path = get_city_path(global_graph, current_reservoir, city, full);
-                    while (!path.empty() && status[global_graph.get_agua_city_code(city->getInfo()).get_id()] == -1) {
-                        fill_city(global_graph, carry, giving, path, full);
-                        if(giving[city->getInfo().get_code()] > global_graph.get_agua_city_code(city->getInfo()).get_demand())
-                        {
-                            status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 1;
-                            reservoirs_cities[current_reservoir->getInfo().get_code()].push(city);
+                            auto path = get_city_path(global_graph, current_reservoir, city, full);
                             path_saver[city->getInfo().get_code()] = path;
+
+                            fill_city(global_graph, carry, giving, path, full);
+                            status_checker(global_graph, city, giving, path_saver, status, path);
+                            continue;
                         }
+                    } else
+                        fill_city(global_graph, carry, giving, path, full);
 
-                        if(giving[city->getInfo().get_code()] < global_graph.get_agua_city_code(city->getInfo()).get_demand())
-                        {
-                            status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = -1;
-                            reservoirs_cities[current_reservoir->getInfo().get_code()].push(city);
-                        }
-
-                        if(giving[city->getInfo().get_code()] == global_graph.get_agua_city_code(city->getInfo()).get_demand())
-                        {
-                            status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 2;
-                        }
-
-                        path = get_city_path(global_graph, current_reservoir, city, full);
-
-                    }
-
-                    reservoirs_cities[current_reservoir->getInfo().get_code()].push(city);
-                }
-
-                if(giving[city->getInfo().get_code()] == global_graph.get_agua_city_code(city->getInfo()).get_demand())
-                {
-                    status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 2;
-                }
-
-            }
-
-            if(status[city->getInfo().get_id()] == -1) {
-                auto vertex = get_available_city(reservoirs_cities[current_reservoir->getInfo().get_code()], status);
-                if (vertex == nullptr)
-                    reservoirs_cities[current_reservoir->getInfo().get_code()].pop();
-                else {
-                    back_track(global_graph, shadow_graph, path_saver[vertex->getInfo().get_code()], giving, carry, full, status);
-                    auto path = get_city_path(global_graph, current_reservoir, city, full);
-                    fill_city(global_graph, carry, giving, path, full);
-
-                    if(giving[city->getInfo().get_code()] > global_graph.get_agua_city_code(city->getInfo()).get_demand())
-                    {
+                    if (giving[city->getInfo().get_code()] >
+                        global_graph.get_agua_city_code(city->getInfo()).get_demand()) {
                         status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 1;
                         reservoirs_cities[current_reservoir->getInfo().get_code()].push(city);
                         path_saver[city->getInfo().get_code()] = path;
                     }
 
-                    if(giving[city->getInfo().get_code()] < global_graph.get_agua_city_code(city->getInfo()).get_demand())
-                    {
+                    if (giving[city->getInfo().get_code()] <
+                        global_graph.get_agua_city_code(city->getInfo()).get_demand()) {
                         status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = -1;
-                        reservoirs_cities[current_reservoir->getInfo().get_code()].push(city);
+                        auto path = get_city_path(global_graph, current_reservoir, city, full);
+                        while (!path.empty() &&
+                               status[global_graph.get_agua_city_code(city->getInfo()).get_id()] == -1) {
+                            fill_city(global_graph, carry, giving, path, full);
+                            status_checker(global_graph, city, giving, path_saver, status, path);
+                            path = get_city_path(global_graph, current_reservoir, city, full);
+
+                        }
+
+
+                        if (status[global_graph.get_agua_city_code(city->getInfo()).get_id()] == 1)
+                            reservoirs_cities[current_reservoir->getInfo().get_code()].push(city);
                     }
 
-                    if(giving[city->getInfo().get_code()] == global_graph.get_agua_city_code(city->getInfo()).get_demand())
-                    {
+                    if (giving[city->getInfo().get_code()] ==
+                        global_graph.get_agua_city_code(city->getInfo()).get_demand()) {
                         status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 2;
                     }
 
                 }
+
+                if (status[city->getInfo().get_id()] == -1) {
+                    auto vertex = get_available_city(reservoirs_cities[current_reservoir->getInfo().get_code()],
+                                                     status);
+                    if (vertex == nullptr)
+                        reservoirs_cities[current_reservoir->getInfo().get_code()].pop();
+                    else {
+                        back_track(global_graph, shadow_graph, path_saver[vertex->getInfo().get_code()], giving, carry,
+                                   full, status);
+                        auto path = get_city_path(global_graph, current_reservoir, city, full);
+                        fill_city(global_graph, carry, giving, path, full);
+
+                        if (giving[city->getInfo().get_code()] >
+                            global_graph.get_agua_city_code(city->getInfo()).get_demand()) {
+                            status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 1;
+                            reservoirs_cities[current_reservoir->getInfo().get_code()].push(city);
+                            path_saver[city->getInfo().get_code()] = path;
+                        }
+
+                        if (giving[city->getInfo().get_code()] <
+                            global_graph.get_agua_city_code(city->getInfo()).get_demand()) {
+                            status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = -1;
+                            reservoirs_cities[current_reservoir->getInfo().get_code()].push(city);
+                        }
+
+                        if (giving[city->getInfo().get_code()] ==
+                            global_graph.get_agua_city_code(city->getInfo()).get_demand()) {
+                            status[global_graph.get_agua_city_code(city->getInfo()).get_id()] = 2;
+                        }
+
+                    }
+                }
+
             }
+
+
+            if (giving[current_reservoir->getInfo().get_code()] <
+                global_graph.get_water_reservoir_code(current_reservoir->getInfo()).get_max_delivery())
+                if (prev_delivery.count(current_reservoir->getInfo().get_code()) == 0) {
+                    prev_delivery[current_reservoir->getInfo().get_code()] = giving[current_reservoir->getInfo().get_code()];
+                    reservoir_queue.push(current_reservoir);
+                } else if (prev_delivery[current_reservoir->getInfo().get_code()] ==
+                           giving[current_reservoir->getInfo().get_code()]) {
+                    if (status[global_graph.get_agua_city_code(city->getInfo()).get_id()] == 1) {
+                        reservoir_queue.push(current_reservoir);
+                        continue;
+                    }
+                    continue;
+                } else {
+                    prev_delivery[current_reservoir->getInfo().get_code()] = giving[current_reservoir->getInfo().get_code()];
+                    reservoir_queue.push(current_reservoir);
+                }
 
         }
-
-
-        if(giving[current_reservoir->getInfo().get_code()] < global_graph.get_water_reservoir_code(current_reservoir->getInfo()).get_max_delivery())
-            if (prev_delivery.count(current_reservoir->getInfo().get_code()) == 0) {
-                prev_delivery[current_reservoir->getInfo().get_code()] = giving[current_reservoir->getInfo().get_code()];
-                reservoir_queue.push(current_reservoir);
+        for (auto a: global_graph.get_agua_city()) {
+            if (status[a.second.get_id()] == -1) {
+                cout << "The city of " << a.second.get_city() << " is missing "
+                     << a.second.get_demand() - giving[a.second.get_code()] << " m^3/s of water" << endl;
             }
-            else if (prev_delivery[current_reservoir->getInfo().get_code()] == giving[current_reservoir->getInfo().get_code()]) {
-                if (status[global_graph.get_agua_city_code(city->getInfo()).get_id()] == 1) {
-                    reservoir_queue.push(current_reservoir);
-                    continue;
-                }
-                continue;
-            }
-            else {
-                prev_delivery[current_reservoir->getInfo().get_code()] = giving[current_reservoir->getInfo().get_code()];
-                reservoir_queue.push(current_reservoir);
-            }
-
+        }
     }
-    for (auto a : global_graph.get_agua_city()) {
-        cout << a.first << " gets " << giving[a.first] << endl;
-    }
-
 }
+
+
 
 
 
