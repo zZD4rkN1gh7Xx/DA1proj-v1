@@ -84,6 +84,7 @@ int main(void)
     Pipe pipe_7 = Pipe("P_ciclo2","P_5", 5,1,7);
 
 
+
     teste.add_pipe(pipe_1);
     teste.add_pipe(pipe_2);
     teste.add_pipe(pipe_3);
@@ -100,21 +101,11 @@ int main(void)
     shadow_teste.add_shadow_pipe(pipe_6);
     shadow_teste.add_shadow_pipe(pipe_7);
 
-    unordered_map<int, vector<int>> parents;
-    vector<int> parentes = {3};
-    parents[3] = parentes;
-
-    std::unordered_map<int, int> giving;
-    giving[1] = 10;
-    giving[2] = 10;
-    giving[3] = 10;
-    giving[4] = 10;
-    giving[5] = 10;
-    giving[6] = 10;
-    giving[7] = 10;
 
 
-    is_it_enough(globalGraph, shadowGraph);
+
+
+is_it_enough(globalGraph, shadowGraph);
 
 
 
