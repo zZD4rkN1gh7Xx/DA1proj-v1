@@ -456,7 +456,19 @@ void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
 
 }
 
+void reservoirs_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph, WaterReservoir reservoir)
+{
+    WMSGraph dummy_graph;
+    WMSGraph shadow_dummy_graph;
 
+    dummy_graph = global_graph;
+    shadow_dummy_graph = shadow_graph;
+
+    dummy_graph.remove_water_reservoir(reservoir);
+    shadow_dummy_graph.remove_water_reservoir(reservoir);
+
+    is_it_enough(dummy_graph, shadow_dummy_graph);
+}
 
 
 
