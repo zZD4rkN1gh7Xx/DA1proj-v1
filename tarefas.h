@@ -375,13 +375,11 @@ void back_track(WMSGraph& global_graph  ,WMSGraph shadow_graph, vector<std::stri
 
 
 // nao esquecer de que o input do glogal graph tem de ser uma copia para nao alterarmos o grafo oriiginal
-int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph) {
+int edmonds_karp(Agua sink, Agua source, WMSGraph& global_graph) {
 
     global_graph.set_all_unvisited(global_graph.getVertexSet()); // volta a dar set up aos vertexes caso outras funçoes nao tenham deixado
 
 
-    Agua sink = global_graph.get_agua_city_name(capitalizeFirstLetter(city)); // Destination
-    Agua source = global_graph.get_agua_reservoir_name(capitalizeFirstLetter(reservoir)); // Source
     if(sink.get_id() == 0 || source.get_id() == 0)
         std::cout << "Didnt find source or sink in edmonds karp func";
 
@@ -488,7 +486,7 @@ int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph
         return max_flow;
     }
 }
-
+/*
 //Fazer os couts no menu.
 int full_edmonds_karp(std::string city, WMSGraph global_graph, WMSGraph shadow_graph)  //e no shadow que se vai buscar
 {
@@ -509,7 +507,7 @@ int full_edmonds_karp(std::string city, WMSGraph global_graph, WMSGraph shadow_g
     return max_flow;
 
 }
-
+*/
 //A CAPACIDADE DOS PIPES N INTERESSA NO CODIGO
 //SO O PRIMEIRO PIPE ALTERA A AGUA QUE PASSA POR TODOS
 

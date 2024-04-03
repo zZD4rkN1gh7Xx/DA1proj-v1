@@ -47,3 +47,7 @@ bool DeliverySite::operator<(const DeliverySite& other) const {
 
     return this->demand < other.demand;
 }
+
+void DeliverySite::set_demand(int demand) {
+    this->demand = demand;
+}

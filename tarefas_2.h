@@ -7,6 +7,7 @@
 
 #include "WMSGraph.h"
 #include "helpfunctions.h"
+#include "tarefas.h"
 #include <string>
 #include <iostream>
 #include <queue>
@@ -58,6 +59,7 @@ vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir
     queue<Vertex<Agua> * > q;
     vector<std::string> path;
     q.push(reservoir);
+    bool flag = false;
 
     while(!q.empty())
     {
@@ -82,10 +84,18 @@ vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir
 
         for(auto neighbour : current->getAdj())
         {
-            if (!full[neighbour.getWeight().get_id()] && !neighbour.getDest()->isVisited()) {    // fazia ciclo infinito, ver se continua certo
-                neighbour.getDest()->setVisited(true);
-                parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
-                q.push(neighbour.getDest());
+            if (!full[neighbour.getWeight().get_id()] && !neighbour.getDest()->isVisited()) {// fazia ciclo infinito, ver se continua certo
+                if (neighbour.getDest()->getInfo().get_code()[0] == 'R' && flag == false) {
+                    neighbour.getDest()->setVisited(true);
+                    parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
+                    q.push(neighbour.getDest());
+                    flag = true;
+                }
+                else {
+                    neighbour.getDest()->setVisited(true);
+                    parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
+                    q.push(neighbour.getDest());
+                }
             }
         }
     }
@@ -223,7 +233,7 @@ void back_track(WMSGraph& global_graph  ,WMSGraph shadow_graph, vector<std::stri
         auto edge = global_graph.findEdge(global_graph.get_agua_point(*it), global_graph.get_agua_point(*(it - 1)));
         full[edge->getWeight().get_id()] = false;
         carry[edge->getWeight().get_id()] -= exceeds;
-        giving[*it] += exceeds;
+        giving[*it] -= exceeds;
     }
 
     status[global_graph.get_agua_city_name(reverse_path[0]).get_id()] = 2;
@@ -317,22 +327,44 @@ std::unordered_map<std::string, int> is_it_enough(WMSGraph& global_graph, WMSGra
     int count = 0;
     int max_del = 0;
 
-    WaterReservoir super = WaterReservoir("Super" , "RS_2", global_graph.get_agua_reservoir().size() + 1 ,"RS_2", 0);
+    WaterReservoir super_res = WaterReservoir("super" , "RS_2", global_graph.get_agua_reservoir().size() + 1 ,"RS_2", 0);
+    DeliverySite super_del = DeliverySite("City Super",global_graph.get_agua_city().size() + 1, "CS_2", 0, 0);
 
     for(auto reservoir : global_graph.get_agua_reservoir()) // inicaliazdor das cidades que cada reservatoio chega
     {
-        super.set_max_delivery(super.get_max_delivery() + reservoir.second.get_max_delivery());
-        reservoir.second.set_max_delivery(0);
+        super_res.set_max_delivery(super_res.get_max_delivery() + reservoir.second.get_max_delivery());
     }
 
-    global_graph.add_water_reservoir(super);
+    global_graph.add_water_reservoir(super_res);
 
     for(auto reservoir : global_graph.get_agua_reservoir()) // inicaliazdor das cidades que cada reservatoio chega
     {
-        count++;
-        pipe = Pipe("RS_2", reservoir.second.get_code(), reservoir.second.get_max_delivery(), 1, global_graph.get_pipes().size() + count);
-        global_graph.add_pipe(pipe);
+        if (reservoir.second != super_res) {
+            count++;
+            pipe = Pipe("RS_2", reservoir.second.get_code(), reservoir.second.get_max_delivery(), 1,
+                        global_graph.get_pipes().size() + count);
+            global_graph.add_pipe(pipe);
+        }
     }
+
+    count = 0;
+
+    for (auto sink : global_graph.get_agua_city())
+    {
+        super_del.set_demand(super_del.get_demand() + sink.second.get_demand());
+    }
+
+    global_graph.add_delivery_site(super_del);
+
+    for(auto sink : global_graph.get_agua_city()) // inicaliazdor das cidades que cada reservatoio chega
+    {
+        if (sink.second != super_del) {
+            count++;
+            pipe = Pipe(sink.second.get_code(), "CS_2" , sink.second.get_demand(), 1, global_graph.get_pipes().size() + count);
+            global_graph.add_pipe(pipe);
+        }
+    }
+
 
     status = status_inicializator(global_graph);
     carry = carry_initializator(global_graph);
@@ -346,14 +378,16 @@ std::unordered_map<std::string, int> is_it_enough(WMSGraph& global_graph, WMSGra
 
     sort(cities.begin(), cities.end());
 
+    cout << edmonds_karp(super_del, super_res, global_graph) << endl;
+/*
     for (auto city : cities) {
 
-        vector<std::string> path = get_city_path(global_graph, global_graph.findVertex(super), global_graph.findVertex(city), full);
+        vector<std::string> path = get_city_path(global_graph, global_graph.findVertex(super_res), global_graph.findVertex(city), full);
 
         while (!path.empty() && (status[city.get_id()] != 2)) {
             fill_city(global_graph, carry, giving, path,full);
             if (giving[city.get_code()] < city.get_demand()) {
-                path = get_city_path(global_graph, global_graph.findVertex(super), global_graph.findVertex(city), full);
+                path = get_city_path(global_graph, global_graph.findVertex(super_res), global_graph.findVertex(city), full);
                 continue;
             }
             else {
@@ -364,7 +398,7 @@ std::unordered_map<std::string, int> is_it_enough(WMSGraph& global_graph, WMSGra
         }
 
     }
-
+*/
 
     for (auto c : cities) {
         result[c.get_code()] = giving[c.get_code()];

@@ -113,7 +113,7 @@ DeliverySite WMSGraph::get_agua_city_name(std::string city)
 
     auto it = agua_cities_name.find(new_city);
 
-    if (it != agua_cities_code.end())
+    if (it != agua_cities_name.end())
     {
         DeliverySite new_delivery_site = it->second;
         return new_delivery_site;
