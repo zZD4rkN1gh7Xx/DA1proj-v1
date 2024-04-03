@@ -27,6 +27,7 @@ class WaterReservoir : public Agua{
         std::string get_municipality(void);
         int get_reservoi_id(void);
         int get_max_delivery(void);
+        void set_max_delivery(int max_delivery);
 
 };
 
