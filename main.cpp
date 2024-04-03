@@ -9,6 +9,7 @@
 #include "helpfunctions.h"
 #include "Menu.h"
 #include "tarefas_2.h"
+#include "tarefas.h"
 #include <algorithm>
 #include <set>
 
@@ -26,22 +27,22 @@ int main(void)
     WMSGraph globalGraph;
     WMSGraph shadowGraph;
 
-    FileReader::add_cities("../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
+    FileReader::add_cities("../Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
     //cout << "Cities worked!" << endl;
-    FileReader::add_cities("../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",shadowGraph);
+    FileReader::add_cities("../Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",shadowGraph);
     //cout << "Cities worked!" << endl;
 
-    FileReader::add_reservoirs("../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",globalGraph);
+    FileReader::add_reservoirs("../Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",globalGraph);
     //cout << "Reservoirs worked!" << endl;
-    FileReader::add_reservoirs("../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",shadowGraph);
+    FileReader::add_reservoirs("../Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",shadowGraph);
     //cout << "Reservoirs worked!" << endl;
 
-    FileReader::add_stations("../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",globalGraph);
+    FileReader::add_stations("../Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",globalGraph);
     //cout << "Stations worked!" << endl;
-    FileReader::add_stations("../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",shadowGraph);
+    FileReader::add_stations("../Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",shadowGraph);
     //cout << "Stations worked!" << endl;
 
-    FileReader::add_pipes("../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
+    FileReader::add_pipes("../Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
     //cout << "Pipes worked!" << endl;
 
 
@@ -101,11 +102,22 @@ int main(void)
     shadow_teste.add_shadow_pipe(pipe_6);
     shadow_teste.add_shadow_pipe(pipe_7);
 
+    WMSGraph dummy;
+    WMSGraph shadowDummy;
 
+    WMSGraph dummy2;
+    WMSGraph shadowDummy2;
+/*
+    for (auto c : globalGraph.get_agua_city()) {
+        dummy = globalGraph;
+        shadowDummy = shadowGraph;
+        cout << "The city of " <<c.second.get_city() << " gets " << full_edmonds_karp(c.second.get_city(), dummy, shadowDummy) << endl;
+    }
+*/
+    dummy2 = globalGraph;
+    shadowDummy2 = shadowGraph;
 
-
-
-is_it_enough(globalGraph, shadowGraph);
+    is_it_enough(dummy2, shadowDummy2);
 
 
 

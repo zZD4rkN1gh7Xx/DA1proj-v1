@@ -223,7 +223,7 @@ void back_track(WMSGraph& global_graph  ,WMSGraph shadow_graph, vector<std::stri
         auto edge = global_graph.findEdge(global_graph.get_agua_point(*it), global_graph.get_agua_point(*(it - 1)));
         full[edge->getWeight().get_id()] = false;
         carry[edge->getWeight().get_id()] -= exceeds;
-        giving[*it] -= exceeds;
+        giving[*it] += exceeds;
     }
 
     status[global_graph.get_agua_city_name(reverse_path[0]).get_id()] = 2;
@@ -247,6 +247,7 @@ void fill_city(WMSGraph global_graph,std::unordered_map<int, int>& carry, std::u
 
         for (auto it = city_path.begin(); it != city_path.end() - 1; it++) {
             auto current_edge = global_graph.findEdge(global_graph.get_agua_point(*it),global_graph.get_agua_point(*(it + 1)));
+
             auto next_point = global_graph.findVertex(global_graph.get_agua_point(*(it + 1)));
             starting_giving[next_point->getInfo().get_code()] = giving[next_point->getInfo().get_code()];
 
@@ -297,7 +298,7 @@ void fill_city(WMSGraph global_graph,std::unordered_map<int, int>& carry, std::u
             else
                 giving[next_point->getInfo().get_code()] = starting_giving[next_point->getInfo().get_code()] + max_flow;
         }
-        giving[current_reservoir.get_code()] += starting_delivery - max_flow;
+        giving[current_reservoir.get_code()] += (starting_delivery - max_flow);
 
     }
 }
@@ -328,18 +329,16 @@ void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
     {
         auto current_reservoir = reservoir_queue.front();
         reservoir_queue.pop();
-
+        if (reservoirs_cities[current_reservoir->getInfo().get_code()].empty()) {
+            continue;
+        }
         auto city = reservoirs_cities[current_reservoir->getInfo().get_code()].front();
         reservoirs_cities[current_reservoir->getInfo().get_code()].pop();
 
         if (city == nullptr) {
             continue;
         }
-        if(city->getInfo().get_code() == "C_9") {
-            if(current_reservoir->getInfo().get_code() == "R_2") {
-                cout << "aa" << endl;
-            }
-        }
+
 
         if(status[city->getInfo().get_id()] == 2)
             reservoirs_cities[current_reservoir->getInfo().get_code()].pop();

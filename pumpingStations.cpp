@@ -4,7 +4,11 @@
 
 #include "pumpingStations.h"
 
-PumpingStation::PumpingStation(int pumping_station_id, std::string pumping_station_code) : Agua(pumping_station_id, pumping_station_code){}
+PumpingStation::PumpingStation(int pumping_station_id, std::string pumping_station_code) : Agua(pumping_station_id, pumping_station_code)
+{
+    this->pumping_station_code = pumping_station_code;
+    this->pumping_station_id = pumping_station_id;
+}
 
 PumpingStation::PumpingStation(void)
 {

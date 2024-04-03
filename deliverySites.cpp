@@ -6,6 +6,8 @@
 
 DeliverySite::DeliverySite(std::string city, int delivery_site_id, std::string delivery_site_code, int demand, int population) : Agua(delivery_site_id, delivery_site_code)
 {
+    this->delivery_site_id = delivery_site_id;
+    this->delivery_site_code = delivery_site_code;
     this->city = city;
     this->demand = demand;
     this->population = population;

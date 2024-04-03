@@ -16,6 +16,7 @@
 #include <list>
 #include <set>
 #include <algorithm>
+#include "tarefas_2.h"
 
 
 bool in_cycle(int id, vector<int> cycle) {
@@ -24,7 +25,7 @@ bool in_cycle(int id, vector<int> cycle) {
     }
     return false;
 }
-
+/*
 int get_total_cap(Vertex<Agua>* pumping_station, WMSGraph shadow_graph, std::unordered_map<int, int> giving)
 {
     int total = 0;
@@ -39,7 +40,7 @@ int get_total_cap(Vertex<Agua>* pumping_station, WMSGraph shadow_graph, std::uno
 
     return total;
 }
-
+*/
 vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city)
 {
     global_graph.set_all_unvisited(global_graph.getVertexSet());
@@ -103,7 +104,7 @@ vector<Vertex<Agua> *> sort_cities(WMSGraph global_graph, vector<Vertex<Agua> *>
     return agua_cities;
 }
 
-
+/*
 vector<Vertex<Agua> *> get_possible_cities(WMSGraph global_graph, Vertex<Agua>* reservoir)
 {
     global_graph.set_all_unvisited(global_graph.getVertexSet());
@@ -131,6 +132,7 @@ vector<Vertex<Agua> *> get_possible_cities(WMSGraph global_graph, Vertex<Agua>* 
 
     return sort_cities(global_graph, cities);
 }
+*/
 
 void back_track(WMSGraph& global_graph  ,WMSGraph shadow_graph, vector<std::string> path, std::unordered_map<std::string, int>& giving,std::unordered_map<int, int>& carry, std::unordered_map<int, bool> check )
 {
@@ -380,7 +382,6 @@ int edmonds_karp(std::string city, std::string reservoir, WMSGraph& global_graph
 
     Agua sink = global_graph.get_agua_city_name(capitalizeFirstLetter(city)); // Destination
     Agua source = global_graph.get_agua_reservoir_name(capitalizeFirstLetter(reservoir)); // Source
-    std::cout << source.get_code() << endl << endl;
     if(sink.get_id() == 0 || source.get_id() == 0)
         std::cout << "Didnt find source or sink in edmonds karp func";
 
@@ -494,9 +495,10 @@ int full_edmonds_karp(std::string city, WMSGraph global_graph, WMSGraph shadow_g
     int max_flow = 0;
     WMSGraph dumy = global_graph;
 
+
     std::vector<Agua> sorces = shadow_graph.get_all_sources(city);
 
-    for(auto& sorce : sorces)
+    for(const auto& sorce : sorces)
     {
         std::string reservoir = global_graph.get_water_reservoir_code(sorce).get_reservoir();
 
