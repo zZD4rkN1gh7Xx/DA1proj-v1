@@ -26,22 +26,22 @@ int main(void)
     WMSGraph globalGraph;
     WMSGraph shadowGraph;
 
-    FileReader::add_cities("../Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
+    FileReader::add_cities("../Project1LargeDataSet/Cities.csv",globalGraph);
     //cout << "Cities worked!" << endl;
-    FileReader::add_cities("../Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",shadowGraph);
+    FileReader::add_cities("../Project1LargeDataSet/Cities.csv",shadowGraph);
     //cout << "Cities worked!" << endl;
 
-    FileReader::add_reservoirs("../Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",globalGraph);
+    FileReader::add_reservoirs("../Project1LargeDataSet/Reservoir.csv",globalGraph);
     //cout << "Reservoirs worked!" << endl;
-    FileReader::add_reservoirs("../Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",shadowGraph);
+    FileReader::add_reservoirs("../Project1LargeDataSet/Reservoir.csv",shadowGraph);
     //cout << "Reservoirs worked!" << endl;
 
-    FileReader::add_stations("../Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",globalGraph);
+    FileReader::add_stations("../Project1LargeDataSet/Stations.csv",globalGraph);
     //cout << "Stations worked!" << endl;
-    FileReader::add_stations("../Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",shadowGraph);
+    FileReader::add_stations("../Project1LargeDataSet/Stations.csv",shadowGraph);
     //cout << "Stations worked!" << endl;
 
-    FileReader::add_pipes("../Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
+    FileReader::add_pipes("../Project1LargeDataSet/Pipes.csv", globalGraph, shadowGraph);
     //cout << "Pipes worked!" << endl;
 
 
@@ -111,7 +111,7 @@ int main(void)
     dummy2 = globalGraph;
     shadowDummy2 = shadowGraph;
 
-    Menu menu = Menu(dummy2, shadowDummy2);
+    Menu menu = Menu(globalGraph, shadowGraph);
     menu.DisplayMainMenu();
     menu.MainMenu();
 

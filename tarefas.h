@@ -41,6 +41,7 @@ int get_total_cap(Vertex<Agua>* pumping_station, WMSGraph shadow_graph, std::uno
     return total;
 }
 */
+/*
 vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city)
 {
     global_graph.set_all_unvisited(global_graph.getVertexSet());
@@ -79,7 +80,7 @@ vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir
 
     return path;
 }
-
+*/
 
 vector<Vertex<Agua> *> sort_cities(WMSGraph global_graph, vector<Vertex<Agua> *> cities)
 {
@@ -368,124 +369,179 @@ void back_track(WMSGraph& global_graph  ,WMSGraph shadow_graph, vector<std::stri
     }
 }
  */
+vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city, std::unordered_map<int, bool> full, std::unordered_map<int, int> left)
+{
+    global_graph.set_all_unvisited(global_graph.getVertexSet());
+    unordered_map<std::string, std::string> parents;
+    queue<Vertex<Agua> * > q;
+    vector<std::string> path;
+    q.push(reservoir);
+    bool flag = false;
+
+    while(!q.empty())
+    {
+        auto current = q.front();
+        q.pop();
+
+        if(current->getInfo().get_code() == city->getInfo().get_code())
+        {
+            auto child = current->getInfo().get_code();
+            path.push_back(child);
+
+            while(parents[child] != reservoir->getInfo().get_code()) //se fosse child != como estava ficava um valor "" no vetor path
+            {
+                path.push_back(parents[child]);
+                child = parents[child];
+            }
+
+            path.push_back(parents[child]);
+            std::reverse(path.begin(), path.end());
+            return path;
+        }
+
+        for(auto neighbour : current->getAdj())
+        {
+            if (!full[neighbour.getWeight().get_id()] && !neighbour.getDest()->isVisited()) {// fazia ciclo infinito, ver se continua certo
+                    neighbour.getDest()->setVisited(true);
+                    parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
+                    q.push(neighbour.getDest());
+            }
+        }
+    }
+
+    return path;
+}
 
 
 
 
+bool paths_left(Vertex<Agua> * source, unordered_map<int, int> &left)
+{
+    for (auto edge : source->getAdj()) {
+        if (left[edge.getWeight().get_id()] > 0) return true;
+    }
+    return false;
+}
 
+
+bool deliveries_left(WMSGraph graph, Vertex<Agua> * sink, unordered_map<int, int> left)
+{
+    for (auto pipe : graph.get_pipes()) {
+        if (pipe.second.get_code_B() == sink->getInfo().get_code() && left[pipe.second.get_id()] > 0) return true;
+    }
+    return false;
+}
 
 // nao esquecer de que o input do glogal graph tem de ser uma copia para nao alterarmos o grafo oriiginal
 int edmonds_karp(Agua sink, Agua source, WMSGraph& global_graph) {
+    global_graph.set_all_unvisited(global_graph.getVertexSet()); // Reset visited flags
+    unordered_map<int, bool> full;
+    unordered_map<int, int> left;
+    vector<std::string> path;
+    Vertex<Agua>* start_vertex = global_graph.findVertex(source);
+    Vertex<Agua>* end_vertex = global_graph.findVertex(sink);
 
-    global_graph.set_all_unvisited(global_graph.getVertexSet()); // volta a dar set up aos vertexes caso outras funçoes nao tenham deixado
+    path = get_city_path(global_graph,start_vertex,end_vertex, full, left);
+    global_graph.set_all_unvisited(global_graph.getVertexSet());
+
+    int delivered = 0;
+    bool flag = false;
 
 
-    if(sink.get_id() == 0 || source.get_id() == 0)
-        std::cout << "Didnt find source or sink in edmonds karp func";
+    for (auto pipe : global_graph.get_pipes()) {
+        left[pipe.first] = pipe.second.get_capacity();
+        full[pipe.first] = false;
+    }
 
-    else
-    {
-        int max_flow = 0; // Initialize max flow
+    if (sink.get_id() == 0 || source.get_id() == 0) {
+        std::cout << "Didnt find source or sink in Edmonds-Karp func" << std::endl;
+        return 0; // Return 0 if source or sink is not found
+    }
 
-        Vertex<Agua> *start_vertex = global_graph.findVertex(source); // Get the vertex of our source
-        Vertex<Agua> *end_vertex = global_graph.findVertex(sink); // Get the vertex of our sink
+    int max_flow = 0; // Initialize max flow
 
-        std::queue<Vertex<Agua> *> q; // Initialize the queue
 
-        while (true)
-        {
+    std::queue<Vertex<Agua>*> q; // Initialize the queue
+
+    int max_del = global_graph.get_water_reservoir_code(global_graph.get_agua_point(source.get_code())).get_max_delivery();
+
+    while (!path.empty() && (delivered < max_del)) {
+        q.push(start_vertex);
+
+        std::unordered_map<Vertex<Agua>*, Vertex<Agua>*> parent_map; // Map to store parent vertices
+        parent_map.clear(); // Set parent of source to nullptr
+
+        while (!q.empty()) {
+            if (flag) {
+                while (!q.empty()) {
+                    q.pop();
+                }
+                flag = false;
+            }
             q.push(start_vertex);
+            Vertex<Agua>* current = q.front();
+            q.pop();
 
-            std::unordered_map<Vertex<Agua>*, Vertex<Agua>*> parent_map; // Map to store parent vertices
-            parent_map[start_vertex] = nullptr; // Set parent of source to nullptr
-
-            while (!q.empty())
-            {
-                Vertex<Agua>* current = q.front();
-                q.pop();
-
-                if (current == end_vertex)
-                {
-                    std::vector<Vertex<Agua>*> augmenting_path;
-                    Vertex<Agua>* node = end_vertex;
-
-                    // Reconstruct the augmenting path by backtracking through the parent vertices
-                    while (node != nullptr)
-                    {
-                        augmenting_path.push_back(node);
-                        node = parent_map[node];
+            if (current == end_vertex) {
+                // Find the minimum capacity along the augmenting path
+                flag = true;
+                int bottleneck_capacity = INT_MAX;
+                Vertex<Agua>* node = end_vertex;
+                while (parent_map[node] != nullptr) {
+                    Edge<Agua>* edge = global_graph.findEdge(parent_map[node]->getInfo(), node->getInfo());
+                    if (edge) {
+                        bottleneck_capacity = std::min(bottleneck_capacity, left[edge->getWeight().get_id()]);
+                    } else {
+                        std::cout << "Edge was not found in Edmonds-Karp function - searching for min value" << std::endl;
                     }
-
-                    // Calculate the bottleneck capacity of the augmenting path
-                    int bottleneck_capacity = INT_MAX;
-                    for (size_t i = 1; i < augmenting_path.size(); ++i)
-                    {
-                        Edge<Agua>* edge = global_graph.findEdge(augmenting_path[i]->getInfo(), augmenting_path[i - 1]->getInfo());
-
-                        if (edge)
-                        {
-                            bottleneck_capacity = std::min(bottleneck_capacity, edge->getWeight().get_capacity());
-                        }
-                        else
-                        {
-                            std::cout << "Edge was not found in Edmonds-Karp function - searching for min value" << std::endl << std::endl;
-                        }
-                    }
-
-                    // Update the capacities of edges along the augmenting path
-                    for (size_t i = 1; i < augmenting_path.size(); ++i)
-                    {
-                        Edge<Agua>* edge = global_graph.findEdge(augmenting_path[i]->getInfo(), augmenting_path[i - 1]->getInfo());
-
-                        if (edge)
-                        {
-                            Pipe new_pipe = edge->getWeight();
-                            new_pipe.set_capacity(edge->getWeight().get_capacity() - bottleneck_capacity);
-                            edge->setWeight(new_pipe);
-
-                        }
-                        else
-                        {
-                            std::cout << "Edge was not found in Edmonds-Karp function - updating capacity" << std::endl << std::endl;
-                        }
-                    }
-
-                    max_flow += bottleneck_capacity;
-                    break; //sair do loop porque encontramos um augmentation path
+                    node = parent_map[node];
                 }
 
-
-                for (Edge<Agua>& edge : current->getAdj())
-                {
-                    Vertex<Agua>* neighbour = edge.getDest();
-
-                    //check se o proximo que vamos visitar e possivel de visitar, ou seja, capacity positiva e ainda n foi visitado
-                    if ((!neighbour->isVisited()) && (edge.getWeight().get_capacity() > 0))
-                    {
-                        q.push(neighbour);
-                        neighbour->setVisited(true);
-                        parent_map[neighbour] = current; // Update the parent map
+                // Update the capacities of edges along the augmenting path
+                node = end_vertex;
+                while (parent_map[node] != nullptr) {
+                    Edge<Agua>* edge = global_graph.findEdge(parent_map[node]->getInfo(), node->getInfo());
+                    if (edge) {
+                        left[edge->getWeight().get_id()] -= bottleneck_capacity;
+                        if (left[edge->getWeight().get_id()] == 0) full[edge->getWeight().get_id()] = true;
+                    } else {
+                        std::cout << "Edge was not found in Edmonds-Karp function - updating capacity" << std::endl;
                     }
+                    node = parent_map[node];
                 }
+
+                max_flow += bottleneck_capacity;
+                delivered += bottleneck_capacity;
+                cout << max_flow << endl;
+                if (max_flow == 1661) {
+                    deliveries_left(global_graph, end_vertex, left);
+                    path = get_city_path(global_graph,start_vertex,end_vertex, full, left);
+                    global_graph.set_all_unvisited(global_graph.getVertexSet());
+                    cout << "bruh" << endl;
+                }
+                break; // Exit the loop as an augmenting path is found
             }
 
-            // se a queue estiver vazia nao ha mais augmentation paths
-            if (q.empty())
-            {
-                break;
-            }
-
-            // reset aos vertexes visitados
-            global_graph.set_all_unvisited(global_graph.getVertexSet());
-            while (!q.empty())
-            {
-                q.pop();
+            for (Edge<Agua>& edge : current->getAdj()) {
+                Vertex<Agua>* neighbour = edge.getDest();
+                if ((!neighbour->isVisited()) && !full[edge.getWeight().get_id()]) {
+                    q.push(neighbour);
+                    neighbour->setVisited(true);
+                    parent_map[neighbour] = current; // Update the parent map
+                }
             }
         }
 
-        return max_flow;
+
+        // Reset visited flags
+        global_graph.set_all_unvisited(global_graph.getVertexSet());
+        path = get_city_path(global_graph,start_vertex,end_vertex, full, left);
+        global_graph.set_all_unvisited(global_graph.getVertexSet());
     }
+
+    return delivered;
 }
+
 /*
 //Fazer os couts no menu.
 int full_edmonds_karp(std::string city, WMSGraph global_graph, WMSGraph shadow_graph)  //e no shadow que se vai buscar

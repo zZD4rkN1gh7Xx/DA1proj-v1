@@ -52,56 +52,7 @@ Vertex<Agua> *get_available_city(std::queue<Vertex<Agua> *> reservoir_queue, std
     return nullptr;
 }
 
-vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city, std::unordered_map<int, bool> full)
-{
-    global_graph.set_all_unvisited(global_graph.getVertexSet());
-    unordered_map<std::string, std::string> parents;
-    queue<Vertex<Agua> * > q;
-    vector<std::string> path;
-    q.push(reservoir);
-    bool flag = false;
 
-    while(!q.empty())
-    {
-        auto current = q.front();
-        q.pop();
-
-        if(current->getInfo().get_code() == city->getInfo().get_code())
-        {
-            auto child = current->getInfo().get_code();
-            path.push_back(child);
-
-            while(parents[child] != reservoir->getInfo().get_code())                   //se fosse child != como estava ficava um valor "" no vetor path
-            {
-                path.push_back(parents[child]);
-                child = parents[child];
-            }
-
-            path.push_back(parents[child]);
-            std::reverse(path.begin(), path.end());
-            return path;
-        }
-
-        for(auto neighbour : current->getAdj())
-        {
-            if (!full[neighbour.getWeight().get_id()] && !neighbour.getDest()->isVisited()) {// fazia ciclo infinito, ver se continua certo
-                if (neighbour.getDest()->getInfo().get_code()[0] == 'R' && flag == false) {
-                    neighbour.getDest()->setVisited(true);
-                    parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
-                    q.push(neighbour.getDest());
-                    flag = true;
-                }
-                else {
-                    neighbour.getDest()->setVisited(true);
-                    parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
-                    q.push(neighbour.getDest());
-                }
-            }
-        }
-    }
-
-    return path;
-}
 
 queue<Vertex<Agua> * > get_possible_cities(WMSGraph global_graph, Vertex<Agua>* reservoir)
 {
