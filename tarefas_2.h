@@ -469,6 +469,27 @@ void reservoirs_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph, Wa
     is_it_enough(dummy_graph, shadow_dummy_graph);
 }
 
+void pumping_stations_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph)
+{
+    WMSGraph dummy_graph;
+    WMSGraph shadow_dummy_graph;
+
+    dummy_graph = global_graph;
+    shadow_dummy_graph = shadow_graph;
+
+
+    for(auto pumping_station : global_graph.get_pumping_stations())
+    {
+        auto pump = pumping_station.second;
+
+    }
+
+
+
+
+
+
+}
 
 
 
