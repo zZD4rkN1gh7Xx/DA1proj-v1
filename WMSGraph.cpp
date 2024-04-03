@@ -312,3 +312,8 @@ int WMSGraph::get_total_num_of_edges(void)
 
     return total_edges;
 }
+
+std::unordered_map<std::string, PumpingStation> WMSGraph::get_pumping_stations()
+{
+    return this->agua_pumping_stations_code;
+}
