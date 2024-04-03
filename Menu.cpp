@@ -1,87 +1,84 @@
-//
-// Created by jogos on 3/25/2024.
-//
-/*
+
 
 #include "Menu.h"
 #include "GraphTester.h"
+#include "tarefas.h"
+#include <iostream>
 
-Menu::Menu(WMSGraph Graph)
-{
+Menu::Menu(WMSGraph Graph, WMSGraph Shadow) {
     this->Graph = Graph;
+    this->Shadow = Shadow;
 }
 
-void Menu::MainMenu(void)
-{
-    cout<< "---------------------------" << " Water Supply Management System " << "---------------------------" << endl;
-    cout<< "1 - Test the Pipes." << endl;
-    cout<< "2 - Test Pipe Removal." << endl;
-    cout<< "3 - Test the Vertexes." << endl;
-    cout<< "4 - Test the Aguapoints." << endl << endl;
-
-    string ans;
-    bool ret;
-    while(true) {
-        cout << "Choose: ";
-        cin>>ans;
-        if (ans == "1") {
-            GraphTester(Graph).testPipes();
-            if(MenuToMain()) {
-                MainMenu();
-            }
-            else
-                break;
+void Menu::displayMainMenu() {
+    std::cout << "---------------------- Water Supply Management System ----------------------" << std::endl;
+    std::cout << "1 - Determine the maximum amount of water that can reach each city." << std::endl;
+    std::cout << "2 - Test Pipe Removal." << std::endl;
+    std::cout << "3 - Test the Vertexes." << std::endl;
+    std::cout << "4 - Test the Aguapoints." << std::endl << std::endl;
+}
 
 
-        }
-        else if (ans == "2") {
-            GraphTester(Graph).testPipesRemoval();
-            if(MenuToMain()) {
-                MainMenu();
-            }
-            else
-                break;
-        }
 
-        else if (ans == "3") {
-            GraphTester(Graph).testVertexes();
-            if(MenuToMain()) {
-                MainMenu();
+
+void Menu::handleMenuSelection() {
+    while (true) {
+        std::string choice;
+        std::cout << "Choose an option (0 to exit): ";
+        std::cin >> choice;
+
+        if (choice == "0") {
+            break;
+        } else if (choice >= "1" && choice <= "4") {
+            WMSGraph temp;
+            temp = Graph;
+            switch (choice[0]) {
+                case '1':
+                    for (auto c: temp.get_agua_city()) {
+                        int edmonds = full_edmonds_karp(c.first, temp, Shadow);
+                        temp = Graph;
+                        cout << "The city of " << c.second.get_city() << " can get at most " << edmonds
+                             << " m^3/s of water." << endl;
+                    }
+                    if (promptReturnToMainMenu()) {
+                        displayMainMenu();
+                        handleMenuSelection();
+                    }
+                    break;
+                case '2':
+                    GraphTester(Graph).testPipesRemoval();
+                    if (promptReturnToMainMenu()) {
+                        displayMainMenu();
+                        handleMenuSelection();
+                    }
+                    break;
+                case '3':
+                    GraphTester(Graph).testVertexes();
+                    if (promptReturnToMainMenu()) {
+                        displayMainMenu();
+                        handleMenuSelection();
+                    }
+                    break;
+                case '4':
+                    GraphTester(Graph).testAguaPoints();
+                    if (promptReturnToMainMenu()) {
+                        displayMainMenu();
+                        handleMenuSelection();
+                    }
+                    break;
             }
-            else {
+            if (!promptReturnToMainMenu()) {
                 break;
             }
+        } else {
+            std::cout << "Invalid choice. Please try again." << std::endl;
         }
-        else if (ans == "4") {
-            GraphTester(Graph).testAguaPoints();
-            if(MenuToMain()) {
-                MainMenu();
-            }
-            else {
-                break;
-            }
-        }
-        else if (ans == "0") break;
-        else {
-            cout << "You typed something that is not one of the options." << endl
-                 << "Do you want to try again? (any character for yes, type 0 for no)" << endl;
-            cin >> ans;
-            if (ans == "0") break;
-            continue;
-        }
-        break;
     }
 }
 
-bool Menu::MenuToMain(void)
-{
-    string ans;
-    cout << endl << "Want to return to the Main Menu? (any character for yes, type 0 for no)" << endl;
-    cin >> ans;
-    if (ans == "0") return false;
-    else {
-        return true;
-    }
-
+bool Menu::promptReturnToMainMenu() {
+    std::string ans;
+    std::cout << std::endl << "Return to the Main Menu? (Type any character for yes, 0 for no): ";
+    std::cin >> ans;
+    return ans != "0";
 }
- */

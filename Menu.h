@@ -1,20 +1,19 @@
-//
-// Created by jogos on 3/25/2024.
-//
-
-#ifndef DA1PROJ_V1_MENU_H
-#define DA1PROJ_V1_MENU_H
-
+#ifndef MENU_H
+#define MENU_H
 
 #include "WMSGraph.h"
 
 class Menu {
+private:
     WMSGraph Graph;
+    WMSGraph Shadow;
 
-    public:
-        Menu(WMSGraph Graph);
-        void MainMenu(void);
-        bool MenuToMain(void);
+public:
+    Menu(WMSGraph Graph, WMSGraph Shadow);
+    void displayMainMenu();
+    void handleMenuSelection();
+    bool promptReturnToMainMenu();
 };
 
-#endif //DA1PROJ_V1_MENU_H
+#endif // MENU_H
+
