@@ -223,7 +223,7 @@ void back_track(WMSGraph& global_graph  ,WMSGraph shadow_graph, vector<std::stri
         auto edge = global_graph.findEdge(global_graph.get_agua_point(*it), global_graph.get_agua_point(*(it - 1)));
         full[edge->getWeight().get_id()] = false;
         carry[edge->getWeight().get_id()] -= exceeds;
-        giving[*it] -= exceeds;
+        giving[*it] += exceeds;
     }
 
     status[global_graph.get_agua_city_name(reverse_path[0]).get_id()] = 2;
@@ -302,7 +302,8 @@ void fill_city(WMSGraph global_graph,std::unordered_map<int, int>& carry, std::u
     }
 }
 
-void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
+
+std::unordered_map<std::string, int> is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
     std::unordered_map<int, int> carry; // What each pipe will be able to give ( max at pipe capacity)
     std::unordered_map<std::string, int> giving; // what each pipe will be giving out
     std::unordered_map<int, bool> full;
@@ -450,11 +451,19 @@ void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
             }
 
     }
+
+    return giving;
+}
+
+void show_is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph)
+{
+    std::unordered_map<std::string, int> giving = is_it_enough(global_graph, shadow_graph);
+
     for (auto a : global_graph.get_agua_city()) {
         cout << a.first << " gets " << giving[a.first] << endl;
     }
-
 }
+
 
 void reservoirs_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph, WaterReservoir reservoir)
 {
@@ -467,7 +476,22 @@ void reservoirs_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph, Wa
     dummy_graph.remove_water_reservoir(reservoir);
     shadow_dummy_graph.remove_water_reservoir(reservoir);
 
-    is_it_enough(dummy_graph, shadow_dummy_graph);
+    show_is_it_enough(dummy_graph, shadow_dummy_graph);
+}
+
+bool compare_givings(std::unordered_map<std::string, int> standard, std::unordered_map<std::string, int> modified)
+{
+    for(auto a : standard)
+    {
+        auto current_city = a.first;
+        if(current_city[0] == 'C')
+        {
+            if(standard[current_city] != modified[current_city])
+                return false;
+        }
+    }
+
+    return true;
 }
 
 void pumping_stations_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph)
@@ -475,22 +499,52 @@ void pumping_stations_affected_cities(WMSGraph global_graph, WMSGraph shadow_gra
     WMSGraph dummy_graph;
     WMSGraph shadow_dummy_graph;
 
-    dummy_graph = global_graph;
-    shadow_dummy_graph = shadow_graph;
+    std::unordered_map<std::string, int> standard = is_it_enough(global_graph, shadow_graph);
 
 
     for(auto pumping_station : global_graph.get_pumping_stations())
     {
+        dummy_graph = global_graph;
+        shadow_dummy_graph = shadow_graph;
+
         auto pump = pumping_station.second;
+        dummy_graph.remove_pumping_station(pump);
+        shadow_dummy_graph.remove_pumping_station(pump);
 
+        std::unordered_map<std::string, int> modified = is_it_enough(dummy_graph, shadow_dummy_graph);
+
+
+        if(compare_givings(standard,modified))
+        {
+            std::cout << "Even though, the Pumping Station " << pumping_station.second.get_code() << " there are no affected cities." << std::endl;
+        }
+
+        else
+        {
+            std::cout << "The Pumping Station " << pump.get_code() << " is in mantenance." << std::endl << " Sorry for the inconvenience." << std::endl;
+            std::cout << "The affected cities are :" << std::endl;
+
+            for(auto a : modified)
+            {
+                auto current_city = a.first;
+                if(   standard[current_city] - modified[current_city] > 0)
+                {
+                    std::cout << current_city << " and is missing " <<  standard[current_city] - modified[current_city] << std::endl;
+                }
+            }
+        }
     }
+}
 
+void pipes_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph)
+{
+    WMSGraph dummy_graph;
+    WMSGraph shadow_dummy_graph;
 
-
-
-
+    std::unordered_map<std::string, int> standard = is_it_enough(global_graph, shadow_graph);
 
 }
+
 
 
 

@@ -105,7 +105,12 @@ int main(void)
 
 
 
-is_it_enough(globalGraph, shadowGraph);
+        auto a = is_it_enough(globalGraph, shadowGraph);
+        for(auto b : a)
+        {
+            std::cout << b.first << " " << b.second << endl;
+        }
+
 
 
 
