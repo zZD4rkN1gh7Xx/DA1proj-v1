@@ -8,8 +8,7 @@
 #include "GraphTester.h"
 #include "helpfunctions.h"
 #include "Menu.h"
-#include "tarefas_2.h"
-#include "tarefas.h"
+
 #include <algorithm>
 #include <set>
 
@@ -107,17 +106,14 @@ int main(void)
 
     WMSGraph dummy2;
     WMSGraph shadowDummy2;
-/*
-    for (auto c : globalGraph.get_agua_city()) {
-        dummy = globalGraph;
-        shadowDummy = shadowGraph;
-        cout << "The city of " <<c.second.get_city() << " gets " << full_edmonds_karp(c.second.get_city(), dummy, shadowDummy) << endl;
-    }
-*/
+
+
     dummy2 = globalGraph;
     shadowDummy2 = shadowGraph;
 
-    is_it_enough(dummy2, shadowDummy2);
+    Menu menu = Menu(dummy2, shadowDummy2);
+    menu.DisplayMainMenu();
+    menu.MainMenu();
 
 
 

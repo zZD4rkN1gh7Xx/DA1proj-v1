@@ -166,6 +166,21 @@ DeliverySite WMSGraph::get_agua_city_code(Agua agua)
     }
 }
 
+DeliverySite WMSGraph::get_city_by_code(std::string code)
+{
+    auto it = agua_cities_code.find(code);
+
+    if(it != agua_cities_code.end())
+    {
+        DeliverySite new_delivery_site = it->second;
+        return new_delivery_site;
+    }
+    else
+    {
+        return DeliverySite(); // later use to check errors
+    }
+}
+
 PumpingStation WMSGraph::get_pumping_station_code(Agua agua)
 {
     auto it = agua_pumping_stations_code.find(agua.get_code());

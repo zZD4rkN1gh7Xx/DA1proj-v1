@@ -10,9 +10,11 @@
 
 class Menu {
     WMSGraph Graph;
+    WMSGraph Shadow;
 
     public:
-        Menu(WMSGraph Graph);
+        Menu(WMSGraph Graph, WMSGraph Shadow);
+        void DisplayMainMenu(void);
         void MainMenu(void);
         bool MenuToMain(void);
 };

@@ -303,7 +303,8 @@ void fill_city(WMSGraph global_graph,std::unordered_map<int, int>& carry, std::u
     }
 }
 
-void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
+std::unordered_map<std::string, int> is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
+    std::unordered_map<std::string, int> result;
     std::unordered_map<int, int> carry; // What each pipe will be able to give ( max at pipe capacity)
     std::unordered_map<std::string, int> giving; // what each pipe will be giving out
     std::unordered_map<int, bool> full;
@@ -346,6 +347,7 @@ void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
     sort(cities.begin(), cities.end());
 
     for (auto city : cities) {
+
         vector<std::string> path = get_city_path(global_graph, global_graph.findVertex(super), global_graph.findVertex(city), full);
 
         while (!path.empty() && (status[city.get_id()] != 2)) {
@@ -363,9 +365,11 @@ void is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
 
     }
 
+
     for (auto c : cities) {
-        cout << c.get_code() << " - " << giving[c.get_code()] << endl;
+        result[c.get_code()] = giving[c.get_code()];
     }
+    return result;
 }
 
 void reservoirs_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph, WaterReservoir reservoir)

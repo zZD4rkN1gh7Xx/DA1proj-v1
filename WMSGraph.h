@@ -44,6 +44,7 @@ class WMSGraph :public Graph<Agua>{
         DeliverySite get_agua_city_name(std::string city);
         WaterReservoir get_agua_reservoir_name(std::string reservoir);
         DeliverySite get_agua_city_code(Agua agua);
+        DeliverySite get_city_by_code(std::string code);
         PumpingStation get_pumping_station_code(Agua agua);
         std::unordered_map<std::string, PumpingStation> get_pumping_stations();
         WaterReservoir get_water_reservoir_code(Agua agua);
