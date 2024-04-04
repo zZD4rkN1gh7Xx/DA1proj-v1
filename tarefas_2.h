@@ -265,7 +265,7 @@ void fill_city(WMSGraph global_graph,std::unordered_map<int, int>& carry, std::u
     }
 }
 
-int is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
+int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
     std::unordered_map<std::string, int> result;
     std::unordered_map<int, int> carry; // What each pipe will be able to give ( max at pipe capacity)
     std::unordered_map<std::string, int> giving; // what each pipe will be giving out
@@ -333,7 +333,14 @@ int is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
      */
 
     //cout << edmonds_karp(super_del, super_res, global_graph) << endl;
-    int kk = edmonds_karp(super_del, super_res, global_graph);
+    carry = carry_initializator(global_graph);
+    int kk = edmonds_karp(super_del, super_res, global_graph, shadow_graph, carry);
+
+    for(auto a : global_graph.get_agua_city())
+    {
+        if(a.second.get_code() != "CS_2")
+            cout << a.second.get_city() << " " << carry[global_graph.findVertex(a.second)->getAdj()[0].getWeight().get_id()]  << std::endl;
+    }
 
     return kk ;
     /*for (auto c : cities) {
@@ -361,42 +368,6 @@ int is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
 
     }
 */
-}
-
-void reservoirs_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph, WaterReservoir reservoir)
-{
-    WMSGraph dummy_graph;
-    WMSGraph shadow_dummy_graph;
-
-    dummy_graph = global_graph;
-    shadow_dummy_graph = shadow_graph;
-
-    dummy_graph.remove_water_reservoir(reservoir);
-    shadow_dummy_graph.remove_water_reservoir(reservoir);
-
-    is_it_enough(dummy_graph, shadow_dummy_graph);
-}
-
-void pumping_stations_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph)
-{
-    WMSGraph dummy_graph;
-    WMSGraph shadow_dummy_graph;
-
-    dummy_graph = global_graph;
-    shadow_dummy_graph = shadow_graph;
-
-
-    for(auto pumping_station : global_graph.get_pumping_stations())
-    {
-        auto pump = pumping_station.second;
-
-    }
-
-
-
-
-
-
 }
 
 

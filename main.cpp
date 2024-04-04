@@ -27,22 +27,26 @@ int main(void)
     WMSGraph globalGraph;
     WMSGraph shadowGraph;
 
-    FileReader::add_cities("DAproj_v1/DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
+    FileReader::add_cities("../DA1proj-v1/Project1LargeDataSet/Project1LargeDataSet/Cities.csv",globalGraph);
+    //../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv"
     //cout << "Cities worked!" << endl;
-    FileReader::add_cities("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",shadowGraph);
+    FileReader::add_cities("../DA1proj-v1/Project1LargeDataSet/Project1LargeDataSet/Cities.csv",shadowGraph);
     //cout << "Cities worked!" << endl;
 
-    FileReader::add_reservoirs("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",globalGraph);
+    FileReader::add_reservoirs("../DA1proj-v1/Project1LargeDataSet/Project1LargeDataSet/Reservoir.csv",globalGraph);
+    //../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv
     //cout << "Reservoirs worked!" << endl;
-    FileReader::add_reservoirs("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",shadowGraph);
+    FileReader::add_reservoirs("../DA1proj-v1/Project1LargeDataSet/Project1LargeDataSet/Reservoir.csv",shadowGraph);
     //cout << "Reservoirs worked!" << endl;
 
-    FileReader::add_stations("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",globalGraph);
+    FileReader::add_stations("../DA1proj-v1/Project1LargeDataSet/Project1LargeDataSet/Stations.csv",globalGraph);
+    //../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv
     //cout << "Stations worked!" << endl;
-    FileReader::add_stations("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",shadowGraph);
+    FileReader::add_stations("../DA1proj-v1/Project1LargeDataSet/Project1LargeDataSet/Stations.csv",shadowGraph);
     //cout << "Stations worked!" << endl;
 
-    FileReader::add_pipes("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
+    FileReader::add_pipes("../DA1proj-v1/Project1LargeDataSet/Project1LargeDataSet/Pipes.csv", globalGraph, shadowGraph);
+    //DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv
     //cout << "Pipes worked!" << endl;
 
 
