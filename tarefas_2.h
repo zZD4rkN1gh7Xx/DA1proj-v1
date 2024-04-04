@@ -18,6 +18,7 @@
 #include <set>
 #include <algorithm>
 #include <climits>
+#include "soluçao.h"
 
 void status_checker(WMSGraph global_graph, Vertex<Agua> *city ,unordered_map<std::string, int>& giving, unordered_map<std::string, vector<std::string>> &path_saver, unordered_map<int, int> &status, vector<std::string> path) {
     if(giving[city->getInfo().get_code()] > global_graph.get_agua_city_code(city->getInfo()).get_demand())
@@ -264,7 +265,7 @@ void fill_city(WMSGraph global_graph,std::unordered_map<int, int>& carry, std::u
     }
 }
 
-std::unordered_map<std::string, int> is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
+int is_it_enough(WMSGraph& global_graph, WMSGraph shadow_graph) {
     std::unordered_map<std::string, int> result;
     std::unordered_map<int, int> carry; // What each pipe will be able to give ( max at pipe capacity)
     std::unordered_map<std::string, int> giving; // what each pipe will be giving out
@@ -316,7 +317,7 @@ std::unordered_map<std::string, int> is_it_enough(WMSGraph& global_graph, WMSGra
         }
     }
 
-
+    /*
     status = status_inicializator(global_graph);
     carry = carry_initializator(global_graph);
     giving = giving_initializator(global_graph);
@@ -327,10 +328,20 @@ std::unordered_map<std::string, int> is_it_enough(WMSGraph& global_graph, WMSGra
         cities.push_back(c.second);
     }
 
-    sort(cities.begin(), cities.end());
 
-    cout << edmonds_karp(super_del, super_res, global_graph) << endl;
-/*
+    sort(cities.begin(), cities.end());
+     */
+
+    //cout << edmonds_karp(super_del, super_res, global_graph) << endl;
+    int kk = edmonds_karp(super_del, super_res, global_graph);
+
+    return kk ;
+    /*for (auto c : cities) {
+        result[c.get_code()] = giving[c.get_code()];
+    }
+    return result;
+
+    /*
     for (auto city : cities) {
 
         vector<std::string> path = get_city_path(global_graph, global_graph.findVertex(super_res), global_graph.findVertex(city), full);
@@ -350,11 +361,6 @@ std::unordered_map<std::string, int> is_it_enough(WMSGraph& global_graph, WMSGra
 
     }
 */
-
-    for (auto c : cities) {
-        result[c.get_code()] = giving[c.get_code()];
-    }
-    return result;
 }
 
 void reservoirs_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph, WaterReservoir reservoir)

@@ -3,7 +3,7 @@
 //
 
 
-#include "Menu.h"
+/*#include "Menu.h"
 #include "tarefas_2.h"
 
 Menu::Menu(WMSGraph Graph, WMSGraph Shadow)
@@ -29,7 +29,8 @@ void Menu::MainMenu(void) {
         cin>>ans;
         cout << endl;
         if (ans == "1") {
-            std:unordered_map<std::string, int> results = is_it_enough(Graph, Shadow);
+
+            int results = is_it_enough(Graph, Shadow);
             vector<std::string> order;
 
             for (auto city : Graph.get_agua_city()) {
@@ -109,3 +110,4 @@ bool Menu::MenuToMain(void)
     }
 
 }
+*/

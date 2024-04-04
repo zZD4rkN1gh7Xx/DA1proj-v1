@@ -7,7 +7,8 @@
 #include "WMSGraph.h"
 #include "GraphTester.h"
 #include "helpfunctions.h"
-#include "Menu.h"
+#include "tarefas_2.h"
+
 
 #include <algorithm>
 #include <set>
@@ -26,22 +27,22 @@ int main(void)
     WMSGraph globalGraph;
     WMSGraph shadowGraph;
 
-    FileReader::add_cities("../Project1LargeDataSet/Cities.csv",globalGraph);
+    FileReader::add_cities("DAproj_v1/DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",globalGraph);
     //cout << "Cities worked!" << endl;
-    FileReader::add_cities("../Project1LargeDataSet/Cities.csv",shadowGraph);
+    FileReader::add_cities("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv",shadowGraph);
     //cout << "Cities worked!" << endl;
 
-    FileReader::add_reservoirs("../Project1LargeDataSet/Reservoir.csv",globalGraph);
+    FileReader::add_reservoirs("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",globalGraph);
     //cout << "Reservoirs worked!" << endl;
-    FileReader::add_reservoirs("../Project1LargeDataSet/Reservoir.csv",shadowGraph);
+    FileReader::add_reservoirs("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Reservoirs_Madeira.csv",shadowGraph);
     //cout << "Reservoirs worked!" << endl;
 
-    FileReader::add_stations("../Project1LargeDataSet/Stations.csv",globalGraph);
+    FileReader::add_stations("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",globalGraph);
     //cout << "Stations worked!" << endl;
-    FileReader::add_stations("../Project1LargeDataSet/Stations.csv",shadowGraph);
+    FileReader::add_stations("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Stations_Madeira.csv",shadowGraph);
     //cout << "Stations worked!" << endl;
 
-    FileReader::add_pipes("../Project1LargeDataSet/Pipes.csv", globalGraph, shadowGraph);
+    FileReader::add_pipes("DAproj-v1/Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
     //cout << "Pipes worked!" << endl;
 
 
@@ -101,20 +102,12 @@ int main(void)
     shadow_teste.add_shadow_pipe(pipe_6);
     shadow_teste.add_shadow_pipe(pipe_7);
 
-    WMSGraph dummy;
-    WMSGraph shadowDummy;
-
-    WMSGraph dummy2;
-    WMSGraph shadowDummy2;
+    WMSGraph dummy = globalGraph;
+    WMSGraph shadowDummy = shadowGraph;
 
 
-    dummy2 = globalGraph;
-    shadowDummy2 = shadowGraph;
-
-    Menu menu = Menu(globalGraph, shadowGraph);
-    menu.DisplayMainMenu();
-    menu.MainMenu();
-
+    int a = is_it_enough(dummy, shadowDummy);
+    std::cout << a << std::endl;
 
 
 

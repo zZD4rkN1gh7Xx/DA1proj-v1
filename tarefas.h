@@ -369,7 +369,7 @@ void back_track(WMSGraph& global_graph  ,WMSGraph shadow_graph, vector<std::stri
     }
 }
  */
-vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city, std::unordered_map<int, bool> full, std::unordered_map<int, int> left)
+/*vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city, std::unordered_map<int, bool> full, std::unordered_map<int, int> left)
 {
     global_graph.set_all_unvisited(global_graph.getVertexSet());
     unordered_map<std::string, std::string> parents;
@@ -411,7 +411,7 @@ vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir
 
     return path;
 }
-
+*/
 
 
 
@@ -433,7 +433,7 @@ bool deliveries_left(WMSGraph graph, Vertex<Agua> * sink, unordered_map<int, int
 }
 
 // nao esquecer de que o input do glogal graph tem de ser uma copia para nao alterarmos o grafo oriiginal
-int edmonds_karp(Agua sink, Agua source, WMSGraph& global_graph) {
+/*int edmonds_karp(Agua sink, Agua source, WMSGraph& global_graph) {
     global_graph.set_all_unvisited(global_graph.getVertexSet()); // Reset visited flags
     unordered_map<int, bool> full;
     unordered_map<int, int> left;
@@ -541,7 +541,7 @@ int edmonds_karp(Agua sink, Agua source, WMSGraph& global_graph) {
 
     return delivered;
 }
-
+*/
 /*
 //Fazer os couts no menu.
 int full_edmonds_karp(std::string city, WMSGraph global_graph, WMSGraph shadow_graph)  //e no shadow que se vai buscar
