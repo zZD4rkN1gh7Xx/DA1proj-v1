@@ -49,7 +49,8 @@ int main(void)
     //cout << "Stations worked!" << endl;
 
     FileReader::add_pipes("../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv", globalGraph, shadowGraph);
-    //DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv
+    //../DA1proj-v1/Project1DataSetSmall/Project1DataSetSmall/Pipes_Madeira.csv
+    //../DA1proj-v1/Project1LargeDataSet/Project1LargeDataSet/Pipes.csv
     //cout << "Pipes worked!" << endl;
 
 
