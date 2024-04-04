@@ -87,6 +87,8 @@ void WMSGraph::add_shadow_pipe(Pipe& pipe)
     shadow_pipe.set_capacity(0);
 
     addEdge(aguapoints[pipe.get_code_B()],aguapoints[pipe.get_code_A()],shadow_pipe);
+    this->agua_pipes.insert(std::make_pair(pipe.get_id(), pipe));
+
 }
 
 void WMSGraph::remove_pipe(Pipe pipe)

@@ -162,6 +162,7 @@ int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
     }
 
     global_graph.add_water_reservoir(super_res);
+    shadow_graph.add_water_reservoir(super_res);
 
     for (auto reservoir: global_graph.get_agua_reservoir()) // inicaliazdor das cidades que cada reservatoio chega
     {
@@ -170,6 +171,7 @@ int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
             pipe = Pipe("RS_2", reservoir.second.get_code(), reservoir.second.get_max_delivery(), 1,
                         global_graph.get_pipes().size() + count);
             global_graph.add_pipe(pipe);
+            shadow_graph.add_pipe(pipe);
         }
     }
 
@@ -180,6 +182,7 @@ int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
     }
 
     global_graph.add_delivery_site(super_del);
+    shadow_graph.add_delivery_site(super_del);
 
     for (auto sink: global_graph.get_agua_city()) // inicaliazdor das cidades que cada reservatoio chega
     {
@@ -188,6 +191,7 @@ int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
             pipe = Pipe(sink.second.get_code(), "CS_2", sink.second.get_demand(), 1,
                         global_graph.get_pipes().size() + count);
             global_graph.add_pipe(pipe);
+            shadow_graph.add_pipe(pipe);
         }
     }
 

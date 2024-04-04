@@ -20,6 +20,8 @@
 #include <climits>
 #include "soluçao.h"
 
+/*
+
 void status_checker(WMSGraph global_graph, Vertex<Agua> *city ,unordered_map<std::string, int>& giving, unordered_map<std::string, vector<std::string>> &path_saver, unordered_map<int, int> &status, vector<std::string> path) {
     if(giving[city->getInfo().get_code()] > global_graph.get_agua_city_code(city->getInfo()).get_demand())
     {
@@ -265,7 +267,7 @@ void fill_city(WMSGraph global_graph,std::unordered_map<int, int>& carry, std::u
     }
 }
 
-int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
+/*int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
     std::unordered_map<std::string, int> result;
     std::unordered_map<int, int> carry; // What each pipe will be able to give ( max at pipe capacity)
     std::unordered_map<std::string, int> giving; // what each pipe will be giving out
@@ -330,7 +332,7 @@ int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
 
 
     sort(cities.begin(), cities.end());
-     */
+
 
     //cout << edmonds_karp(super_del, super_res, global_graph) << endl;
     carry = carry_initializator(global_graph);
@@ -343,6 +345,7 @@ int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
     }
 
     return kk ;
+    */
     /*for (auto c : cities) {
         result[c.get_code()] = giving[c.get_code()];
     }
@@ -367,10 +370,10 @@ int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
         }
 
     }
-*/
+
 }
 
-
+*/
 
 
 #endif //PROJDAV1_TAREFAS_2_H
