@@ -47,7 +47,7 @@ class WMSGraph :public Graph<Agua>{
         DeliverySite get_city_by_code(std::string code);
         PumpingStation get_pumping_station_code(Agua agua);
         std::unordered_map<std::string, PumpingStation> get_pumping_stations();
-        WaterReservoir get_water_reservoir_code(Agua agua);
+        WaterReservoir get_water_reservoir_code(std::string code);
         std::unordered_map<std::string, WaterReservoir> get_agua_reservoir();
         PumpingStation get_pumping_station(int id);
         Pipe get_pipe_id(int id);
@@ -57,6 +57,10 @@ class WMSGraph :public Graph<Agua>{
         void reset_shadow_capacities(void);
         int get_total_num_of_edges(void);
         std::unordered_map<std::string, DeliverySite> get_agua_city();
+        DeliverySite get_city_id(int id);
+        Vertex<Agua> * get_super_sink();
+        Vertex<Agua> * get_super_source();
+
 };
 
 template bool Graph<Agua>::addVertex(Agua &in);

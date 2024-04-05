@@ -22,7 +22,7 @@ class FileReader {
         static void add_reservoirs(const std::string &filename ,WMSGraph &OurGraph);
         static void add_stations(const std::string &filename ,WMSGraph &OurGraph);
         static void add_cities(const std::string &filename ,WMSGraph &OurGraph);
-        static void add_pipes(const std::string &filename ,WMSGraph &OurGraph, WMSGraph &shadowGraph);
+        static void add_pipes(const std::string &filename ,WMSGraph &OurGraph);
 
 
 };

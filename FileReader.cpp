@@ -99,7 +99,7 @@ void FileReader::add_cities(const std::string &filename,WMSGraph &OurGraph)
 }
 
 
-void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph, WMSGraph &shadowGraph)
+void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph)
 {
     int count = 1;
     std::ifstream in(filename);
@@ -122,7 +122,7 @@ void FileReader::add_pipes(const std::string &filename, WMSGraph &OurGraph, WMSG
                 Pipe new_pipe(service_point_A, service_point_B, std::stoi(capacity), std::stoi(direction), count);
                 count++;
                 OurGraph.add_pipe(new_pipe);
-                shadowGraph.add_shadow_pipe(new_pipe); // so para ficar mais prety :D
+
 
 
             }

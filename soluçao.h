@@ -50,12 +50,13 @@ bool bfs(WMSGraph& residual, Vertex<Agua>& source, Vertex<Agua>& sink, std::unor
     return sink.isVisited();
 }
 
-int edmondsKarp(WMSGraph& graph, Vertex<Agua>& source, Vertex<Agua>* sink) {
+unordered_map<int, int> edmondsKarp(WMSGraph& graph, Vertex<Agua>& source, Vertex<Agua>* sink) {
+    WMSGraph dummy = graph;
     WMSGraph residual = graph;
     std::unordered_map<std::string, Vertex<Agua>*> parent;
     unordered_map<int, int> results;
 
-    for (auto a : graph.get_agua_city()) {
+    for (auto a : dummy.get_agua_city()) {
         if (a.first[1] == 'S') {
             continue;
         }
@@ -86,7 +87,6 @@ int edmondsKarp(WMSGraph& graph, Vertex<Agua>& source, Vertex<Agua>* sink) {
         vertex = sink;
         while (vertex->getInfo().get_code() != source.getInfo().get_code()) {
             Vertex<Agua>* next = parent[vertex->getInfo().get_code()];
-            cout << vertex->getInfo().get_code() << " - ";
             if (vertex->getInfo().get_code()[0] == 'C' && vertex->getInfo().get_code()[1] != 'S') {
                 prev_vertex = vertex;
             }
@@ -103,284 +103,114 @@ int edmondsKarp(WMSGraph& graph, Vertex<Agua>& source, Vertex<Agua>* sink) {
             }
             vertex = next;
         }
-        cout << pathFlow << endl << endl;
 
         maxFlow += pathFlow;
         results[prev_vertex->getInfo().get_id()] += pathFlow;
     }
 
-    for (auto a : graph.get_agua_city()) {
-        if (a.first[1] == 'S') {
-            continue;
-        }
-        else {
-            cout << a.second.get_city() << " - " <<results[a.second.get_id()] <<endl;
-        }
-    }
-
-    return maxFlow;
+    return results;
 }
 
-
-
-
-
-
-
-
-std::unordered_map<int, int> carry_initializator(WMSGraph global_graph)
+int max_flow(WMSGraph global_graph, unordered_map<int, int> results )
 {
-    std::unordered_map<int, int> carry;
+    int flow = 0;
 
-    for(auto pipe : global_graph.get_pipes())
+    for(auto city : results)
     {
-        carry[pipe.first] = 0;
+        flow += city.second;
     }
 
-    return carry;
+    return flow;
 }
 
-
-
-vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city, std::unordered_map<int, int>& carry, std::unordered_map<int , int>& hard)
+void show_results(WMSGraph global_graph, unordered_map<int, int> results)
 {
-    global_graph.set_all_unvisited(global_graph.getVertexSet());
-    unordered_map<std::string, std::string> parents;
-    queue<Vertex<Agua> * > q;
-    vector<std::string> path;
-
-    q.push(reservoir);
-
-    while(!q.empty())
+    for(int i = 1; i < results.size(); i++)
     {
-        auto current = q.front();
-        q.pop();
-
-        if(current->getInfo().get_code() == city->getInfo().get_code())
+        if(results[i] == global_graph.get_city_id(i).get_demand())
         {
-            auto child = current->getInfo().get_code();
-            path.push_back(child);
-
-            while(parents[child] != reservoir->getInfo().get_code()) //se fosse child != como estava ficava um valor "" no vetor path
-            {
-                path.push_back(parents[child]);
-                child = parents[child];
-            }
-
-            path.push_back(parents[child]);
-            std::reverse(path.begin(), path.end());
-            return path;
+            std::cout << "The city of " << global_graph.get_city_id(i).get_city() << "(" << global_graph.get_city_id(i).get_code() << ") receives all the needed water of: " << results[i] << "m^3/s." << std::endl;
         }
 
-        for(auto neighbour : current->getAdj())
+        else
         {
-            if ((neighbour.getWeight().get_capacity() > carry[neighbour.getWeight().get_id()]) && !neighbour.getDest()->isVisited() ) // caso o pipe nao esteja full e nao esteja visited
-            {
-                if (hard[neighbour.getWeight().get_id()] == 1)
-                {
-                    hard[neighbour.getWeight().get_id()] = 0;
-                    cout << "Go another way! Pipe " << neighbour.getWeight().get_id() << " is going to dry you!" << endl;
-                }
-                else {
-                    neighbour.getDest()->setVisited(true);
-                    parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
-                    q.push(neighbour.getDest());
-                }
-            }
+            std::cout << "The city of " << global_graph.get_city_id(i).get_city() << "(" << global_graph.get_city_id(i).get_code() << ") is it is missing " << global_graph.get_city_id(i).get_demand() - results[i] << "m^3/s." << std::endl;
         }
     }
-
-    return path;
-
 }
 
-int returning_water(WMSGraph& global_graph,WMSGraph shadow_graph , vector<std::string> path, std::unordered_map<int, int>& carry, std::unordered_map<int, int>& hard)
-{
-
-    int min_pipe = INT_MAX;
-    int receiving = 0;
-
-    for(auto it = path.begin(); it != (path.end() - 1); it++)
-    {
-        auto edge = global_graph.findEdge(global_graph.get_agua_point(*it), global_graph.get_agua_point(*(it + 1)));
-
-        if(min_pipe > (edge->getWeight().get_capacity() - carry[edge->getWeight().get_id()]))
-        {
-            min_pipe = (edge->getWeight().get_capacity() - carry[edge->getWeight().get_id()]);
-        }
-    }
-
-    for(auto getting : shadow_graph.findVertex(shadow_graph.get_agua_point(path[path.size() - 2]))->getAdj() )
-    {
-        receiving += carry[getting.getWeight().get_id()];
-    }
-
-    hard[global_graph.findEdge(global_graph.get_agua_point(path[0]), global_graph.get_agua_point(path[1]))->getWeight().get_id()] = 0;
-
-
-
-
-
-    if( global_graph.get_city_by_code(path[path.size() -2 ]).get_demand() < receiving + min_pipe )
-    {
-        min_pipe = global_graph.get_city_by_code(path[path.size() -2 ]).get_demand() - receiving;
-    }
-
-    auto capacidade = global_graph.findEdge(global_graph.get_agua_point(path[0]), global_graph.get_agua_point(path[1]))->getWeight().get_capacity();
-    auto a_dar = carry[global_graph.findEdge(global_graph.get_agua_point(path[0]), global_graph.get_agua_point(path[1]))->getWeight().get_id()];
-
-    if(capacidade - a_dar == min_pipe) {
-        hard[global_graph.findEdge(global_graph.get_agua_point(path[path.size() - 2]), global_graph.get_agua_point(path[path.size() - 1]))->getWeight().get_id()] = 1;
-    }
-
-    std::cout << min_pipe << std::endl;
-
-
-
-    for(auto it = path.begin(); it != (path.end() - 1); it++)
-    {
-        auto edge = global_graph.findEdge(global_graph.get_agua_point(*it), global_graph.get_agua_point(*(it + 1)));
-
-        carry[edge->getWeight().get_id()] += min_pipe;
-    }
-
-    return min_pipe;
-}
-
-
-
-
-int edmonds_karp(Agua sink, Agua source, WMSGraph& global_graph, WMSGraph& shadow_graph ,std::unordered_map<int, int>& carry) {
-
-    global_graph.set_all_unvisited(global_graph.getVertexSet()); // Reset visited flags
-
-    int max_flow = 0; // Initialize max flow
-    vector<std::string> path;
-    std::queue<Vertex<Agua>*> q;
-    WMSGraph dummy_graph = global_graph;
-    std::unordered_map<int , int> hard;
-
-    for(auto edge : global_graph.get_pipes()) {
-        hard[edge.first] = 0;
-    }
-
-    Vertex<Agua>* start_vertex = global_graph.findVertex(source);
-    Vertex<Agua>* end_vertex = global_graph.findVertex(sink);
-
-
-    if (sink.get_id() == 0 || source.get_id() == 0) {
-        std::cout << "Didnt find source or sink in Edmonds-Karp func" << std::endl;
-        return 0; // Return 0 if source or sink is not found
-    }
-
-    path = get_city_path(global_graph,start_vertex,end_vertex, carry, hard); // criar um path inicial
-
-    while (!path.empty() )
-    {
-
-        max_flow += returning_water(dummy_graph, shadow_graph ,path,carry, hard);
-        path = get_city_path(global_graph,start_vertex,end_vertex,carry, hard); // criar um path diferente
-    }
-
-    return max_flow;
-}
-
-int is_it_enough(WMSGraph& global_graph, WMSGraph& shadow_graph) {
-    std::unordered_map<int, int> carry; // What each pipe will be able to give ( max at pipe capacity)
-    Pipe pipe;
-    int count = 0;
-
-    WaterReservoir super_res = WaterReservoir("super", "RS_2", global_graph.get_agua_reservoir().size() + 1, "RS_2", 0);
-    DeliverySite super_del = DeliverySite("City Super", global_graph.get_agua_city().size() + 1, "CS_2", 0, 0);
-
-    for (auto reservoir: global_graph.get_agua_reservoir()) // inicaliazdor das cidades que cada reservatoio chega
-    {
-        super_res.set_max_delivery(super_res.get_max_delivery() + reservoir.second.get_max_delivery());
-    }
-
-    global_graph.add_water_reservoir(super_res);
-    shadow_graph.add_water_reservoir(super_res);
-
-    for (auto reservoir: global_graph.get_agua_reservoir()) // inicaliazdor das cidades que cada reservatoio chega
-    {
-        if (reservoir.second != super_res) {
-            count++;
-            Pipe pipe;
-            pipe = Pipe("RS_2", reservoir.second.get_code(), reservoir.second.get_max_delivery(), 1,global_graph.get_pipes().size() + count);
-
-            global_graph.add_pipe(pipe);
-            shadow_graph.add_shadow_pipe(pipe);
-        }
-    }
-
-    count = 0;
-
-    for (auto sink: global_graph.get_agua_city()) {
-        super_del.set_demand(super_del.get_demand() + sink.second.get_demand());
-    }
-
-    global_graph.add_delivery_site(super_del);
-    shadow_graph.add_delivery_site(super_del);
-
-    for (auto sink: global_graph.get_agua_city()) // inicaliazdor das cidades que cada reservatoio chega
-    {
-        if (sink.second != super_del) {
-            count++;
-            pipe = Pipe(sink.second.get_code(), "CS_2", sink.second.get_demand(), 1,global_graph.get_pipes().size() + count);
-
-            global_graph.add_pipe(pipe);
-            shadow_graph.add_shadow_pipe(pipe);
-        }
-    }
-
-    carry = carry_initializator(global_graph);
-    int kk = edmonds_karp(super_del, super_res, global_graph, shadow_graph, carry);
-
-    for (auto a: global_graph.get_agua_city()) {
-        if (a.second.get_code() != "CS_2")
-            cout << a.second.get_city() << " "
-                 << carry[global_graph.findVertex(a.second)->getAdj()[0].getWeight().get_id()] << std::endl ;
-    }
-
-
-    std::cout << endl << endl;
-    for(auto a : global_graph.findVertex(super_res)->getAdj())
-    {
-        std::cout  << global_graph.get_water_reservoir_code(a.getDest()->getInfo()).get_reservoir() << " " << carry[a.getWeight().get_id()] << endl;
-    }
-
-    return kk;
-}
 
 
 //Perguntas 3
 
-void reservoirs_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph, WaterReservoir reservoir)
+void reservoirs_affected_cities(WMSGraph global_graph,std::string code)
 {
     WMSGraph dummy_graph;
-    WMSGraph shadow_dummy_graph;
+    WaterReservoir res = global_graph.get_water_reservoir_code(code);
+
 
     dummy_graph = global_graph;
-    shadow_dummy_graph = shadow_graph;
 
-    dummy_graph.remove_water_reservoir(reservoir);
-    shadow_dummy_graph.remove_water_reservoir(reservoir);
+    dummy_graph.remove_water_reservoir(res);
 
-    is_it_enough(dummy_graph, shadow_dummy_graph);
+
+    auto source = dummy_graph.get_super_source();
+    auto sink = dummy_graph.get_super_sink();
+
+    auto solve = edmondsKarp(dummy_graph, *source, sink);
+
+    std::cout << "After the removal of the reservor: " << res.get_reservoir() << " the network has a total flow of: " << max_flow(dummy_graph, solve) << std::endl;
+    show_results(dummy_graph, solve);
+
 }
 
-void pumping_stations_affected_cities(WMSGraph global_graph, WMSGraph shadow_graph)
+void pumping_stations_affected_cities(WMSGraph global_graph)
 {
-    WMSGraph dummy_graph;
-    WMSGraph shadow_dummy_graph;
+    WMSGraph dummy_graph = global_graph;
 
-    dummy_graph = global_graph;
-    shadow_dummy_graph = shadow_graph;
+    auto source = dummy_graph.get_super_source();
+    auto sink = dummy_graph.get_super_sink();
+
+    auto solve = edmondsKarp(dummy_graph, *source, sink);
 
 
     for(auto pumping_station : global_graph.get_pumping_stations())
     {
+        dummy_graph = global_graph;
+
         auto pump = pumping_station.second;
+
+        dummy_graph.remove_pumping_station(pump);
+
+        auto without_pumping = edmondsKarp(dummy_graph, *source, sink);
+
+        if( without_pumping == solve)
+        {
+            std::cout << "After removing the Pumping Station: " << pump.get_code() << ", there were no affected cities" << std::endl;
+        }
+
+        else
+        {
+            std::cout << "After removing the Pumping Station: " << pump.get_code() << ", some cities lost some flow, each were:" << std::endl;
+            auto it1 = without_pumping.begin();
+            auto it2 = solve.begin();
+
+            while(it1 != without_pumping.end() && it2 != solve.end())
+            {
+
+                if(it1->second == it2->second)
+                {
+                    std::cout << "The city of: " << dummy_graph.get_city_id(it1->first).get_city() << "(" << dummy_graph.get_city_id(it1->first).get_code() << ") did not suffer any loss in flow. (current flow: " << it1->second << ")." << std::endl;
+                }
+                else
+                {
+                    std::cout << "The city of: " << dummy_graph.get_city_id(it1->first).get_city() << "(" << dummy_graph.get_city_id(it1->first).get_code() << ") suffered a loss in flow of: " <<  it2->second - it1->second   << " (current flow: " << it1->second << ")." << std::endl;
+                }
+
+                ++it1;
+                ++it2;
+            }
+        }
 
     }
 }

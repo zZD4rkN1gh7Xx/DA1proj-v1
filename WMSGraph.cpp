@@ -231,9 +231,9 @@ Pipe WMSGraph::get_pipe_id(int id)
 }
 
 
-WaterReservoir WMSGraph::get_water_reservoir_code(Agua agua)
+WaterReservoir WMSGraph::get_water_reservoir_code(std::string code)
 {
-    auto it = agua_water_reservoir_code.find(agua.get_code());
+    auto it = agua_water_reservoir_code.find(code);
 
     if(it != agua_water_reservoir_code.end())
     {
@@ -335,4 +335,25 @@ int WMSGraph::get_total_num_of_edges(void)
 std::unordered_map<std::string, PumpingStation> WMSGraph::get_pumping_stations()
 {
     return this->agua_pumping_stations_code;
+}
+
+DeliverySite WMSGraph::get_city_id(int id)
+{
+    for(auto a : get_agua_city())
+    {
+        if(a.second.get_id() == id)
+            return a.second;
+    }
+
+    return DeliverySite();
+}
+
+Vertex<Agua> * WMSGraph::get_super_sink()
+{
+    return findVertex(get_agua_point("CS_2"));
+}
+
+Vertex<Agua> * WMSGraph::get_super_source()
+{
+    return findVertex(get_agua_point("RS_2"));
 }
