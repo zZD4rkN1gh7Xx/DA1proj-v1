@@ -17,6 +17,116 @@
 #include <set>
 #include <algorithm>
 
+#include <iostream>
+#include <queue>
+#include <unordered_map>
+#include <limits>
+#include <algorithm>
+
+// Assuming the definitions of WMSGraph, Vertex<Agua>, Pipe, and other related classes
+
+bool bfs(WMSGraph& residual, Vertex<Agua>& source, Vertex<Agua>& sink, std::unordered_map<std::string, Vertex<Agua>*>& parent) {
+    for (auto& v : residual.getVertexSet()) {
+        v->setVisited(false);
+    }
+    std::queue<Vertex<Agua>*> q;
+    q.push(&source);
+    source.setVisited(true);
+
+    while (!q.empty()) {
+        Vertex<Agua>* u = q.front();
+        q.pop();
+
+        for (auto& edge : u->getAdj()) {
+            auto hello = residual.findEdge(u->getInfo(), edge.getDest()->getInfo())->getWeight().get_capacity();
+            if (!edge.getDest()->isVisited() && residual.findEdge(u->getInfo(), edge.getDest()->getInfo())->getWeight().get_capacity() > 0) {
+                q.push(edge.getDest());
+                parent[edge.getDest()->getInfo().get_code()] = u;
+                edge.getDest()->setVisited(true);
+            }
+        }
+    }
+
+    return sink.isVisited();
+}
+
+int edmondsKarp(WMSGraph& graph, Vertex<Agua>& source, Vertex<Agua>* sink) {
+    WMSGraph residual = graph;
+    std::unordered_map<std::string, Vertex<Agua>*> parent;
+    unordered_map<int, int> results;
+
+    for (auto a : graph.get_agua_city()) {
+        if (a.first[1] == 'S') {
+            continue;
+        }
+        else {
+            results[a.second.get_id()] = 0;
+        }
+    }
+
+    int maxFlow = 0;
+
+
+    Vertex<Agua>* prev_vertex;
+
+    while (bfs(residual, source, *sink, parent)) {
+        int pathFlow = std::numeric_limits<int>::max();
+
+        // Find path flow
+        Vertex<Agua>* vertex = sink;
+        auto prev_vertex = vertex;
+        while (vertex->getInfo().get_code() != source.getInfo().get_code()) {
+            Vertex<Agua>* next = parent[vertex->getInfo().get_code()];
+            auto hello = residual.findEdge(next->getInfo(), vertex->getInfo());
+            pathFlow = std::min(pathFlow, hello->getWeight().get_capacity());
+            vertex = next;
+        }
+
+        // Update residual graph capacities
+        vertex = sink;
+        while (vertex->getInfo().get_code() != source.getInfo().get_code()) {
+            Vertex<Agua>* next = parent[vertex->getInfo().get_code()];
+            cout << vertex->getInfo().get_code() << " - ";
+            if (vertex->getInfo().get_code()[0] == 'C' && vertex->getInfo().get_code()[1] != 'S') {
+                prev_vertex = vertex;
+            }
+            auto pipe = residual.findEdge(next->getInfo(), vertex->getInfo())->getWeight();
+
+            if (residual.findEdge(next->getInfo(), vertex->getInfo()) != nullptr) {
+                auto res_pipe = residual.findEdge(next->getInfo(), vertex->getInfo())->getWeight();
+                res_pipe.set_capacity(res_pipe.get_capacity() - pathFlow);
+                residual.remove_pipe(residual.findEdge(next->getInfo(), vertex->getInfo())->getWeight());
+                residual.add_pipe(res_pipe);
+            } else {
+                Pipe new_pipe = Pipe(vertex->getInfo().get_code(), next->getInfo().get_code(), pathFlow, 1, residual.get_pipes().size() + 1);
+                residual.add_pipe(new_pipe);
+            }
+            vertex = next;
+        }
+        cout << pathFlow << endl << endl;
+
+        maxFlow += pathFlow;
+        results[prev_vertex->getInfo().get_id()] += pathFlow;
+    }
+
+    for (auto a : graph.get_agua_city()) {
+        if (a.first[1] == 'S') {
+            continue;
+        }
+        else {
+            cout << a.second.get_city() << " - " <<results[a.second.get_id()] <<endl;
+        }
+    }
+
+    return maxFlow;
+}
+
+
+
+
+
+
+
 
 std::unordered_map<int, int> carry_initializator(WMSGraph global_graph)
 {
@@ -32,7 +142,7 @@ std::unordered_map<int, int> carry_initializator(WMSGraph global_graph)
 
 
 
-vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city, std::unordered_map<int, int>& carry, std::unordered_map<int , int> hard)
+vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir, Vertex<Agua> * city, std::unordered_map<int, int>& carry, std::unordered_map<int , int>& hard)
 {
     global_graph.set_all_unvisited(global_graph.getVertexSet());
     unordered_map<std::string, std::string> parents;
@@ -66,11 +176,16 @@ vector<std::string> get_city_path(WMSGraph global_graph, Vertex<Agua>* reservoir
         {
             if ((neighbour.getWeight().get_capacity() > carry[neighbour.getWeight().get_id()]) && !neighbour.getDest()->isVisited() ) // caso o pipe nao esteja full e nao esteja visited
             {
-
-                // fazia ciclo infinito, ver se continua certo
-                neighbour.getDest()->setVisited(true);
-                parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
-                q.push(neighbour.getDest());
+                if (hard[neighbour.getWeight().get_id()] == 1)
+                {
+                    hard[neighbour.getWeight().get_id()] = 0;
+                    cout << "Go another way! Pipe " << neighbour.getWeight().get_id() << " is going to dry you!" << endl;
+                }
+                else {
+                    neighbour.getDest()->setVisited(true);
+                    parents[neighbour.getDest()->getInfo().get_code()] = current->getInfo().get_code();
+                    q.push(neighbour.getDest());
+                }
             }
         }
     }
@@ -102,16 +217,20 @@ int returning_water(WMSGraph& global_graph,WMSGraph shadow_graph , vector<std::s
 
     hard[global_graph.findEdge(global_graph.get_agua_point(path[0]), global_graph.get_agua_point(path[1]))->getWeight().get_id()] = 0;
 
-    if( carry[global_graph.findEdge(global_graph.get_agua_point(path[0]), global_graph.get_agua_point(path[1]))->getWeight().get_id()] - min_pipe == 0)
-    {
-        hard[global_graph.findEdge(global_graph.get_agua_point(path[0]), global_graph.get_agua_point(path[1]))->getWeight().get_id()] = 1;
-    }
+
 
 
 
     if( global_graph.get_city_by_code(path[path.size() -2 ]).get_demand() < receiving + min_pipe )
     {
         min_pipe = global_graph.get_city_by_code(path[path.size() -2 ]).get_demand() - receiving;
+    }
+
+    auto capacidade = global_graph.findEdge(global_graph.get_agua_point(path[0]), global_graph.get_agua_point(path[1]))->getWeight().get_capacity();
+    auto a_dar = carry[global_graph.findEdge(global_graph.get_agua_point(path[0]), global_graph.get_agua_point(path[1]))->getWeight().get_id()];
+
+    if(capacidade - a_dar == min_pipe) {
+        hard[global_graph.findEdge(global_graph.get_agua_point(path[path.size() - 2]), global_graph.get_agua_point(path[path.size() - 1]))->getWeight().get_id()] = 1;
     }
 
     std::cout << min_pipe << std::endl;
@@ -141,6 +260,10 @@ int edmonds_karp(Agua sink, Agua source, WMSGraph& global_graph, WMSGraph& shado
     WMSGraph dummy_graph = global_graph;
     std::unordered_map<int , int> hard;
 
+    for(auto edge : global_graph.get_pipes()) {
+        hard[edge.first] = 0;
+    }
+
     Vertex<Agua>* start_vertex = global_graph.findVertex(source);
     Vertex<Agua>* end_vertex = global_graph.findVertex(sink);
 
@@ -155,8 +278,8 @@ int edmonds_karp(Agua sink, Agua source, WMSGraph& global_graph, WMSGraph& shado
     while (!path.empty() )
     {
 
-        max_flow += returning_water(dummy_graph, shadow_graph ,path,carry);
-        path = get_city_path(global_graph,start_vertex,end_vertex,carry); // criar um path diferente
+        max_flow += returning_water(dummy_graph, shadow_graph ,path,carry, hard);
+        path = get_city_path(global_graph,start_vertex,end_vertex,carry, hard); // criar um path diferente
     }
 
     return max_flow;

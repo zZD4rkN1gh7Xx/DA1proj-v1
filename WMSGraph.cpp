@@ -96,8 +96,10 @@ void WMSGraph::remove_pipe(Pipe pipe)
     if (pipe.get_direction() == 0) {
         removeEdge(aguapoints[pipe.get_code_A()], aguapoints[pipe.get_code_B()]);
         removeEdge(aguapoints[pipe.get_code_B()], aguapoints[pipe.get_code_A()]);
+        agua_pipes.erase(pipe.get_id());
     }
     else removeEdge(aguapoints[pipe.get_code_A()], aguapoints[pipe.get_code_B()]);
+    agua_pipes.erase(pipe.get_id());
 }
 
 std::unordered_map<std::string, Agua> WMSGraph::get_aguapoints(void) {
