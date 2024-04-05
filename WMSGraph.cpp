@@ -50,6 +50,12 @@ void WMSGraph::remove_pumping_station(PumpingStation& pumping_station)
 
     if(it != aguapoints.end())
         aguapoints.erase(it);
+
+    auto it2 = agua_pumping_stations.find(pumping_station.get_id());
+
+    if (it2 != agua_pumping_stations.end()) {
+        agua_pumping_stations.erase(it2);
+    }
 }
 
 void WMSGraph::remove_water_reservoir(WaterReservoir& water_reservoir)
