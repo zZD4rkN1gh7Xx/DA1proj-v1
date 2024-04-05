@@ -215,6 +215,49 @@ void pumping_stations_affected_cities(WMSGraph global_graph)
     }
 }
 
+void pipes_affected_cities(WMSGraph global_graph)
+{
+    WMSGraph dummy = global_graph;
+    WMSGraph solution = global_graph;
+
+    auto sol = edmondsKarp(solution, *solution.get_super_source(), solution.get_super_sink());
+
+    for(auto pipe : dummy.get_pipes())
+    {
+        int store_cap = pipe.second.get_capacity();
+
+       if(pipe.second.get_code_A() != "RS_2" || pipe.second.get_code_B() != "CS_2" )
+       {
+           pipe.second.set_capacity(0);
+
+           auto capacities = edmondsKarp(dummy, *dummy.get_super_source(), dummy.get_super_sink());
+
+           if(capacities != sol)
+           {
+               for(int i = 1; i < capacities.size(); i++)
+               {
+                   auto city = dummy.get_city_id(i);
+
+                   if(capacities[i] < city.get_demand())
+                   {
+                       std::cout << "The  city of " << city.get_city() << "(" << city.get_code() << ") was affected, resulting in a deficit of: " << city.get_demand() - capacities[i] << "m^3/s." << std::endl;
+                   }
+
+               }
+
+               pipe.second.set_capacity(store_cap);
+           }
+           else
+           {
+               std::cout << "No cities were affected after the removal of the pipe." << std::endl;
+           }
+       }
+
+
+
+    }
+}
+
 
 
 #endif //DAPROJ_V1_SOLUÇAO_H
