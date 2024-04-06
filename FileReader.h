@@ -2,6 +2,12 @@
 // Created by Administrador on 22/03/2024.
 //
 
+/**
+
+*@file FileReader.h
+*@brief Header file for the FileReader class
+*/
+
 #ifndef DAPROJ1_FILEREADER_H
 #define DAPROJ1_FILEREADER_H
 

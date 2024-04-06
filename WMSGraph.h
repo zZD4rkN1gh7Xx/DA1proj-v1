@@ -2,6 +2,12 @@
 // Created by Administrador on 20/03/2024.
 //
 
+/**
+
+    *@file WMSGraph.h
+    *@brief Header file for the WMSGraph class and an extention of graph.h
+*/
+
 #ifndef DAPROJ1_WMSGRAPH_H
 #define DAPROJ1_WMSGRAPH_H
 
@@ -35,29 +41,16 @@ class WMSGraph :public Graph<Agua>{
         void add_delivery_site(DeliverySite& delivery_site);
         void add_pumping_station(PumpingStation& pumping_station);
         void add_water_reservoir(WaterReservoir& water_reservoir);
-        void remove_delivery_site(DeliverySite& delivery_site);
-        void remove_pumping_station(PumpingStation& pumping_station);
-        void remove_water_reservoir(WaterReservoir& water_reservoir);
         void add_pipe(Pipe& pipe);
-        void add_shadow_pipe(Pipe& pipe);
         void remove_pipe(Pipe pipe);
-        std::unordered_map<std::string, Agua> get_aguapoints(void);
         Agua get_agua_point(std::string agua_point);
-        DeliverySite get_agua_city_name(std::string city);
-        WaterReservoir get_agua_reservoir_name(std::string reservoir);
-        DeliverySite get_agua_city_code(Agua agua);
         DeliverySite get_city_by_code(std::string code);
         PumpingStation get_pumping_station_code(Agua agua);
         std::unordered_map<std::string, PumpingStation> get_pumping_stations();
         WaterReservoir get_water_reservoir_code(std::string code);
         std::unordered_map<std::string, WaterReservoir> get_agua_reservoir();
-        PumpingStation get_pumping_station(int id);
         Pipe get_pipe_id(int id);
         std::unordered_map<int, Pipe> get_pipes(void);
-        void set_all_unvisited(const vector<Vertex<Agua> * >& all_agua); // auxiliar function self-explanatory
-        std::vector<Agua> get_all_sources(std::string sink); // auxiliar function
-        void reset_shadow_capacities(void);
-        int get_total_num_of_edges(void);
         std::unordered_map<std::string, DeliverySite> get_agua_city();
         DeliverySite get_city_id(int id);
         Vertex<Agua> * get_super_sink();

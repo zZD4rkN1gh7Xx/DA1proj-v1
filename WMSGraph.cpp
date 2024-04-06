@@ -2,6 +2,11 @@
 // Created by Administrador on 20/03/2024.
 //
 
+/**
+    *@file WMSGraph.cpp
+    *@brief Implementation of the WMSGraph class methods
+*/
+
 #include "WMSGraph.h"
 
 
@@ -58,15 +63,6 @@ void WMSGraph::remove_pumping_station(PumpingStation& pumping_station)
     }
 }
 
-void WMSGraph::remove_water_reservoir(WaterReservoir& water_reservoir)
-{
-    removeVertex(water_reservoir);
-
-    auto it = aguapoints.find(water_reservoir.get_code());
-
-    if(it != aguapoints.end())
-        aguapoints.erase(it);
-}
 
 void WMSGraph::add_pipe(Pipe& pipe)
 {
@@ -86,16 +82,7 @@ void WMSGraph::add_pipe(Pipe& pipe)
         this->agua_pipes.insert(std::make_pair(pipe.get_id(), pipe));
     }
 }
-void WMSGraph::add_shadow_pipe(Pipe& pipe)
-{
-    Pipe shadow_pipe = pipe;
 
-    shadow_pipe.set_capacity(0);
-
-    addEdge(aguapoints[pipe.get_code_B()],aguapoints[pipe.get_code_A()],shadow_pipe);
-    this->agua_pipes.insert(std::make_pair(pipe.get_id(), pipe));
-
-}
 
 void WMSGraph::remove_pipe(Pipe pipe)
 {
@@ -134,22 +121,7 @@ DeliverySite WMSGraph::get_agua_city_name(std::string city)
     }
 }
 
-WaterReservoir WMSGraph::get_agua_reservoir_name(std::string reservoir)
-{
-    std::string new_city = capitalizeFirstLetter(reservoir);
 
-    auto it = agua_water_reservoir_name.find(new_city);
-
-    if (it != agua_water_reservoir_name.end())
-    {
-        WaterReservoir new_delivery_site = it->second;
-        return new_delivery_site;
-    }
-    else
-    {
-        return WaterReservoir(); // later use for checking errors
-    }
-}
 
 std::unordered_map<std::string, WaterReservoir> WMSGraph::get_agua_reservoir()
 {
@@ -161,20 +133,7 @@ std::unordered_map<std::string, DeliverySite> WMSGraph::get_agua_city()
     return this->agua_cities_code;
 }
 
-DeliverySite WMSGraph::get_agua_city_code(Agua agua)
-{
-    auto it = agua_cities_code.find(agua.get_code());
 
-    if(it != agua_cities_code.end())
-    {
-        DeliverySite new_delivery_site = it->second;
-        return new_delivery_site;
-    }
-    else
-    {
-        return DeliverySite(); // later use to check errors
-    }
-}
 
 DeliverySite WMSGraph::get_city_by_code(std::string code)
 {
@@ -206,19 +165,7 @@ PumpingStation WMSGraph::get_pumping_station_code(Agua agua)
     }
 }
 
-PumpingStation WMSGraph::get_pumping_station(int id) {
-    auto it = agua_pumping_stations.find(id);
 
-    if(it != nullptr)
-    {
-        PumpingStation new_pumping_station = it->second;
-        return new_pumping_station;
-    }
-    else
-    {
-        return PumpingStation(); // later use to check errors
-    }
-}
 
 
 Pipe WMSGraph::get_pipe_id(int id)
@@ -252,74 +199,6 @@ WaterReservoir WMSGraph::get_water_reservoir_code(std::string code)
     }
 }
 
-void WMSGraph::set_all_unvisited(const vector<Vertex<Agua> * >& all_agua)
-{
-    for(Vertex<Agua>* agua : all_agua)
-    {
-        agua->setVisited(false);
-    }
-}
-
-void WMSGraph::reset_shadow_capacities(void)
-{
-    for(auto& agua_point : getVertexSet())
-    {
-        for(auto& pipes : agua_point->getAdj())
-        {
-            Pipe new_pipe = pipes.getWeight();
-            new_pipe.set_capacity(0);
-            pipes.setWeight(new_pipe);
-        }
-    }
-}
-
-
-std::vector<Agua> WMSGraph::get_all_sources(std::string sink)
-{
-
-    DeliverySite actual_sink = get_agua_city_name(sink);
-
-    // Marcar todos os vértices como não visitados
-    for (auto vertex : getVertexSet()) {
-        vertex->setVisited(false);
-    }
-
-    std::vector<Agua> sources;
-    std::queue<Vertex<Agua>*> q;
-
-    Vertex<Agua>* sinkVertex = findVertex(actual_sink);
-    if (sinkVertex == nullptr) {
-        std::cerr << "Erro: Cidade de destino não encontrada no grafo." << std::endl;
-        return sources; // Retorna vetor vazio se o destino não for encontrado
-    }
-
-    q.push(sinkVertex);
-    sinkVertex->setVisited(true);
-
-    while (!q.empty()) {
-        Vertex<Agua>* currentVertex = q.front();
-        q.pop();
-
-        bool isSource = true;
-
-        for (const Edge<Agua>& edge : currentVertex->getAdj()) {
-            Vertex<Agua>* adjacentVertex = edge.getDest();
-
-            if (!adjacentVertex->isVisited()) {
-                q.push(adjacentVertex);
-                adjacentVertex->setVisited(true);
-                isSource = false;
-            }
-        }
-
-        if (isSource) {
-            if (currentVertex->getInfo().get_code()[0] == 'R')
-                sources.push_back(currentVertex->getInfo());
-        }
-    }
-
-    return sources;
-}
 
 std::unordered_map<int, Pipe> WMSGraph::get_pipes(void)
 {
@@ -327,16 +206,6 @@ std::unordered_map<int, Pipe> WMSGraph::get_pipes(void)
 }
 
 
-int WMSGraph::get_total_num_of_edges(void)
-{
-    int total_edges = 0;
-    for(auto vertex : getVertexSet())
-    {
-        total_edges += vertex->getAdj().size();
-    }
-
-    return total_edges;
-}
 
 std::unordered_map<std::string, PumpingStation> WMSGraph::get_pumping_stations()
 {

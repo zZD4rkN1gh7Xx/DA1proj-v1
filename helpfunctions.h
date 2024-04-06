@@ -2,6 +2,12 @@
 // Created by Administrador on 25/03/2024.
 //
 
+/**
+
+*@file helpfunctions.h
+*@brief Header file for some functions that we will use on the project
+*/
+
 #ifndef HELPFUNCTIONS_H
 #define HELPFUNCTIONS_H
 

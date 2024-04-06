@@ -2,6 +2,11 @@
 // Created by Administrador on 20/03/2024.
 //
 
+/**
+*@file Pipes.cpp
+*@brief Implementation of the Pipe class methods
+*/
+
 #include "Pipes.h"
 
 Pipe::Pipe() {

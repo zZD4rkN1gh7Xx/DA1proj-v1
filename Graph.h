@@ -1,6 +1,13 @@
  /*
  * Graph.h
  */
+
+ /**
+*@file Graph.h
+*@brief Header file for the Graph class
+*/
+
+
 #ifndef GRAPH_H_
 #define GRAPH_H_
 

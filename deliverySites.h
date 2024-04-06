@@ -2,6 +2,12 @@
 // Created by Administrador on 20/03/2024.
 //
 
+/**
+
+*@file deliverySites.h
+*@brief Header file for the DeliverySite class an extention of the Agua class
+*/
+
 #ifndef DAPROJ1_DELIVERYSITES_H
 #define DAPROJ1_DELIVERYSITES_H
 

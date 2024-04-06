@@ -7,6 +7,7 @@
 #include "helpfunctions.h"
 #include "Menu.h"
 
+
 #include <algorithm>
 #include <set>
 
@@ -48,12 +49,14 @@ int main(void)
 
 
 
-    int reg;
-    cout<<"What region will we be choosing?" << endl << "(0 for Madeira(funciona) 1 for Portugal(duvidoso)): ";
-    cin>>reg;
-    Menu menu(reg);
+
+
+
+    Menu menu;
+    menu.Initializer();
     menu.DisplayMainMenu();
     menu.MainMenu();
+
 
 
 

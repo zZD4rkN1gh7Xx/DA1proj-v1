@@ -2,6 +2,12 @@
 // Created by Administrador on 04/04/2024.
 //
 
+/**
+
+    *@file solucao.h
+    *@brief Functions needed to solve the project
+*/
+
 #ifndef DAPROJ_V1_SOLUÇAO_H
 #define DAPROJ_V1_SOLUÇAO_H
 
@@ -27,6 +33,11 @@
 // Assuming the definitions of WMSGraph, Vertex<Agua>, Pipe, and other related classes
 
 void file_add(WMSGraph &grafo, int regiao) {
+    /**
+
+    *@return adds the info to the graph according the region chosen*
+    *@param grafo,regiao  graph that we will bea adding its properties and the region will be working on*
+    Complexity O(n + m + p)*/
     if (regiao == 0) {
         FileReader::add_cities("../Project1DataSetSmall/Project1DataSetSmall/Cities_Madeira.csv", grafo);
 
@@ -38,11 +49,11 @@ void file_add(WMSGraph &grafo, int regiao) {
     }
 
     if (regiao == 1) {
-        FileReader::add_cities("../Project1LargeDataSet/Project1LargeDataSet/Pipes.csv", grafo);
+        FileReader::add_cities("../Project1LargeDataSet/Project1LargeDataSet/Cities.csv", grafo);
 
-        FileReader::add_reservoirs("../Project1LargeDataSet/Project1LargeDataSet/Pipes.csv", grafo);
+        FileReader::add_reservoirs("../Project1LargeDataSet/Project1LargeDataSet/Reservoir.csv", grafo);
 
-        FileReader::add_stations("../Project1LargeDataSet/Project1LargeDataSet/Pipes.csv", grafo);
+        FileReader::add_stations("../Project1LargeDataSet/Project1LargeDataSet/Stations.csv", grafo);
 
         FileReader::add_pipes("../Project1LargeDataSet/Project1LargeDataSet/Pipes.csv", grafo);
     }
@@ -79,7 +90,7 @@ void file_add(WMSGraph &grafo, int regiao) {
     grafo.add_delivery_site(super_del);
 
 
-    for (auto sink: grafo.get_agua_city()) // inicaliazdor das cidades que cada reservatoio chega
+    for (auto sink: grafo.get_agua_city()) // inicaliazdor das cidades que cada reservatorio chega
     {
         if (sink.second != super_del) {
             count++;
@@ -91,7 +102,13 @@ void file_add(WMSGraph &grafo, int regiao) {
 }
 
 
+
 bool without_bfs(WMSGraph& residual, Vertex<Agua> remove, Vertex<Agua>& source, Vertex<Agua>& sink, std::unordered_map<std::string, Vertex<Agua>*>& parent) {
+    /**
+
+*@return returns true if theres a path between sorce and sink according the flow each pipe has and does not crosses a certain chosen vertex*
+*@param residual, remove, source, sink, parent  the residual values for edmonds karp the vertex to igore the source and the sink and each vertex "parents"*
+Complexity O(n + m + p)*/
     for (auto& v : residual.getVertexSet()) {
         v->setVisited(false);
     }
@@ -105,8 +122,6 @@ bool without_bfs(WMSGraph& residual, Vertex<Agua> remove, Vertex<Agua>& source, 
         q.pop();
 
         for (auto& edge : u->getAdj()) {
-            auto check = residual.findEdge(u->getInfo(), edge.getDest()->getInfo());
-            auto hello = residual.get_pipe_id(residual.findEdge(u->getInfo(), edge.getDest()->getInfo())->getWeight().get_id()).get_capacity();
             if (!edge.getDest()->isVisited() && residual.get_pipe_id(residual.findEdge(u->getInfo(), edge.getDest()->getInfo())->getWeight().get_id()).get_capacity() > 0 && edge.getDest()->getInfo().get_code() != remove.getInfo().get_code()) {
                 q.push(edge.getDest());
                 parent[edge.getDest()->getInfo().get_code()] = u;
@@ -119,6 +134,11 @@ bool without_bfs(WMSGraph& residual, Vertex<Agua> remove, Vertex<Agua>& source, 
 }
 
 bool bfs(WMSGraph& residual, Vertex<Agua>& source, Vertex<Agua>& sink, std::unordered_map<std::string, Vertex<Agua>*>& parent) {
+    /**
+
+*@return returns true if theres a path between sorce and sink according the flow each pipe has.*
+*@param residual, source, sink, parent  the residual values for edmonds karp the vertex to igore the source and the sink and each vertex "parents"*
+Complexity O(n + m + p)*/
     for (auto& v : residual.getVertexSet()) {
         v->setVisited(false);
     }
@@ -144,6 +164,12 @@ bool bfs(WMSGraph& residual, Vertex<Agua>& source, Vertex<Agua>& sink, std::unor
 }
 
 unordered_map<int, int> without_edmondsKarp(WMSGraph graph, Vertex<Agua>& without, Vertex<Agua>& source, Vertex<Agua>* sink) {
+    /**
+
+*@return returns the flow on each city acording their ID*
+*@param graph, without, source, sink  the  graph to cross the vertex to ignore and the sink and sorce of the graph*
+Complexity O((V + E) * V + V + M)
+     */
     WMSGraph dummy = graph;
     WMSGraph residual = graph;
     std::unordered_map<std::string, Vertex<Agua>*> parent;
@@ -163,19 +189,12 @@ unordered_map<int, int> without_edmondsKarp(WMSGraph graph, Vertex<Agua>& withou
     int maxFlow = 0;
 
 
-    Vertex<Agua>* prev_vertex;
-
     while (without_bfs(residual, without, source, *sink, parent)) {
         int pathFlow = std::numeric_limits<int>::max();
         // Find path flow
         Vertex<Agua>* vertex = sink;
         auto prev_vertex = vertex;
         while (vertex->getInfo().get_code() != source.getInfo().get_code()) {
-            if (vertex->getInfo().get_code() == "CS_2") {
-                if (parent[vertex->getInfo().get_code()]->getInfo().get_code() == "C_6") {
-                    cout << "gg" << endl;
-                }
-            }
             Vertex<Agua>* next = parent[vertex->getInfo().get_code()];
             auto deixaver = residual.get_pipe_id(residual.findEdge(next->getInfo(), vertex->getInfo())->getWeight().get_id());
             auto hello = residual.get_pipe_id(residual.findEdge(next->getInfo(), vertex->getInfo())->getWeight().get_id()).get_capacity();
@@ -215,6 +234,11 @@ unordered_map<int, int> without_edmondsKarp(WMSGraph graph, Vertex<Agua>& withou
 
 
 unordered_map<int, int> edmondsKarp(WMSGraph graph, Vertex<Agua>& source, Vertex<Agua>* sink) {
+    /**
+
+*@return returns the flow on each city acording their ID*
+*@param graph, without, source, sink  the  graph to cross the vertex to ignore and the sink and sorce of the graph*
+Complexity O((V + E) * V + V + M)*/
     WMSGraph dummy = graph;
     WMSGraph residual = graph;
     auto v = graph.getVertexSet();
@@ -280,6 +304,11 @@ unordered_map<int, int> edmondsKarp(WMSGraph graph, Vertex<Agua>& source, Vertex
 
 int max_flow(WMSGraph global_graph, unordered_map<int, int> results )
 {
+    /**
+
+*@return returns the flow on each city acording their ID*
+*@param graph, without, source, sink  the  graph to cross the vertex to ignore and the sink and sorce of the graph*
+Complexity O((V + E) * V + V + M)*/
     int flow = 0;
 
     for(auto city : results)
@@ -290,18 +319,24 @@ int max_flow(WMSGraph global_graph, unordered_map<int, int> results )
     return flow;
 }
 
-void show_results(WMSGraph global_graph, unordered_map<int, int> results)
+void show_results(WMSGraph global_graph, unordered_map<int, int> results, unordered_map<int, int> prev)
 {
+    /**
+
+@return returns the flow on each city acording their ID*
+@param graph, without, source, sink  the  graph to cross the vertex to ignore and the sink and sorce of the graph*
+Complexity O((V + E) * V + V + M)*/
+
     for(int i = 1; i < results.size(); i++)
     {
-        if(results[i] == global_graph.get_city_id(i).get_demand())
+        if(results[i] == prev[i])
         {
-            std::cout << "The city of " << global_graph.get_city_id(i).get_city() << "(" << global_graph.get_city_id(i).get_code() << ") receives all the needed water of: " << results[i] << "m^3/s." << std::endl;
+            std::cout << "The city of " << global_graph.get_city_id(i).get_city() << "(" << global_graph.get_city_id(i).get_code() << ") receives the same ammount of water as before: " << results[i] << "m^3/s." << std::endl;
         }
 
         else
         {
-            std::cout << "The city of " << global_graph.get_city_id(i).get_city() << "(" << global_graph.get_city_id(i).get_code() << ") is missing " << global_graph.get_city_id(i).get_demand() - results[i] << "m^3/s." << std::endl;
+            std::cout << "The city of " << global_graph.get_city_id(i).get_city() << "(" << global_graph.get_city_id(i).get_code() << ") is missing " << prev[i] - results[i] << "m^3/s." << std::endl;
         }
     }
 }
@@ -322,7 +357,7 @@ void reservoirs_affected_cities(int regiao, std::string code)
     auto source = dummy_graph.get_super_source();
     auto sink = dummy_graph.get_super_sink();
 
-    auto solve2 = edmondsKarp(dummy_graph, *source, sink);
+    auto solve2 = without_edmondsKarp(dummy_graph, *dummy_graph.findVertex(dummy_graph.get_agua_point(code)), *source, sink);
 
     WMSGraph killmyself2;
     file_add(killmyself2, regiao);
@@ -332,13 +367,19 @@ void reservoirs_affected_cities(int regiao, std::string code)
 
     auto solve = edmondsKarp(killmyself2, *source2, sink2);
 
-    std::cout << "After the removal of the reservor: " << res.get_reservoir() << " the network has a total flow of: " << max_flow(dummy_graph, solve) << std::endl;
-    show_results(dummy_graph, solve);
+    std::cout << "After the removal of the reservor: " << res.get_reservoir() << " the network has a total flow of: " << max_flow(dummy_graph, solve2) << std::endl;
+    show_results(dummy_graph, solve2, solve);
 
 }
 
-void pumping_stations_affected_cities(int regiao)
+bool pumping_stations_affected_cities(int regiao, std::unordered_map<int, int> expected, std::string code)
 {
+    /**
+
+*@return shows us the affected cities after removing a pumping station*
+*@param regiao the region we will be working on*
+Complexity O((V + E) * V + V + n*/
+    bool affecting = false;
     WMSGraph dummy_graph;
 
     file_add(dummy_graph, regiao);
@@ -346,99 +387,91 @@ void pumping_stations_affected_cities(int regiao)
     auto source = dummy_graph.get_super_source();
     auto sink = dummy_graph.get_super_sink();
 
-    auto solve = edmondsKarp(dummy_graph, *source, sink);
+    auto solve = without_edmondsKarp(dummy_graph, *dummy_graph.findVertex(dummy_graph.get_agua_point(code)),*source, sink);
 
-
-    for(auto pumping_station : dummy_graph.get_pumping_stations())
-    {
 
         WMSGraph place_holder;
 
         file_add(place_holder, regiao);
 
-        auto source3 = place_holder.get_super_source();
-        auto sink3 = place_holder.get_super_sink();
-
-        auto pump = pumping_station.second;
+        auto pump = place_holder.get_pumping_station_code(place_holder.get_agua_point(code));
 
 
-        auto without = place_holder.findVertex(place_holder.get_agua_point(pumping_station.first));
-
-        auto without_pumping = without_edmondsKarp(place_holder, *without, *source3, sink3);  //tem que ser porque atualizamos as capacidades sempre que fazemos o edmonds karp.
-
-        if(without_pumping == solve)
+        if(expected != solve)
         {
-            std::cout << endl <<"After removing the Pumping Station: " << pump.get_code() << ", there were no affected cities" << std::endl;
+            affecting = true;
         }
 
-        else
-        {
-            std::cout << endl << "After removing the Pumping Station: " << pump.get_code() << ", some cities lost some flow, each were:" << std::endl;
-            auto it1 = without_pumping.begin();
-            auto it2 = solve.begin();
+        std::cout << endl << "After removing " << pump.get_code() << ": " << endl;
+        auto it1 = expected.begin();
+        auto it2 = solve.begin();
 
-            while(it1 != without_pumping.end() && it2 != solve.end())
-            {
+        while(it1 != expected.end() && it2 != solve.end()) {
 
-                if(it1->second == it2->second)
-                {
-                    std::cout << "The city of: " << place_holder.get_city_id(it1->first).get_city() << "(" << place_holder.get_city_id(it1->first).get_code() << ") did not suffer any loss in flow. (current flow: " << it1->second << ")." << std::endl;
-                }
-                else
-                {
-                    std::cout << "The city of: " << place_holder.get_city_id(it1->first).get_city() << "(" << place_holder.get_city_id(it1->first).get_code() << ") suffered a loss in flow of: " <<  it2->second - it1->second   << " (current flow: " << it1->second << ")." << std::endl;
-                }
+            std::cout << "The city " << place_holder.get_city_id(it1->first).get_code() << " has " << it1->second << " flow (" << abs(it2->second - it1->second) << " deficit)" << std::endl;
 
-
-                ++it1;
-                ++it2;
-            }
+            ++it1;
+            ++it2;
         }
 
-    }
+        return affecting;
 }
 
-void pipes_affected_cities(WMSGraph global_graph)
+bool pipes_affected_cities(int regiao, unordered_map<int, int> expected, Pipe pipe)
 {
-    WMSGraph dummy = global_graph;
-    WMSGraph solution = global_graph;
+
+    bool affecting = false;
+
+    WMSGraph solution;
+
+    file_add(solution, regiao);
 
     auto sol = edmondsKarp(solution, *solution.get_super_source(), solution.get_super_sink());
 
-    for(auto pipe : dummy.get_pipes())
-    {
-        int store_cap = pipe.second.get_capacity();
 
-       if(pipe.second.get_code_A() != "RS_2" || pipe.second.get_code_B() != "CS_2" )
-       {
-           pipe.second.set_capacity(0);
+        WMSGraph dummy;
+        file_add(dummy, regiao);
 
-           auto capacities = edmondsKarp(dummy, *dummy.get_super_source(), dummy.get_super_sink());
+            Pipe new_pipe = pipe;
+            dummy.remove_pipe(pipe);
+            new_pipe.set_capacity(0);
+            dummy.add_pipe(new_pipe);
 
-           if(capacities != sol)
-           {
-               for(int i = 1; i < capacities.size(); i++)
-               {
-                   auto city = dummy.get_city_id(i);
 
-                   if(capacities[i] < city.get_demand())
-                   {
-                       std::cout << "The  city of " << city.get_city() << "(" << city.get_code() << ") was affected, resulting in a deficit of: " << city.get_demand() - capacities[i] << "m^3/s." << std::endl;
-                   }
+            auto capacities = edmondsKarp(dummy, *dummy.get_super_source(), dummy.get_super_sink());
 
-               }
+            if(capacities != expected) {
+                affecting = true;
+                cout << "The Pipe ("<< new_pipe.get_code_A() << " - " << new_pipe.get_code_B() << ") affects: " << endl;
+                for(int i = 1; i < capacities.size(); i++)
+                {
+                    auto city = dummy.get_city_id(i);
 
-               pipe.second.set_capacity(store_cap);
+                    if(capacities[i] < city.get_demand())
+                    {
+                        std::cout << "The city " << city.get_code() << " (" << expected[city.get_id()] - capacities[i] << ")" << std::endl;
+                    }
+
+                }
            }
-           else
-           {
-               std::cout << "No cities were affected after the removal of the pipe." << std::endl;
-           }
-       }
+            else
+            {
+                std::cout << "The Pipe (" << new_pipe.get_code_A() << " - " << new_pipe.get_code_B() << ") doesn't affect the network flow."<< std::endl << std::endl;
+                cout << "The Pipe ("<< new_pipe.get_code_A() << " - " << new_pipe.get_code_B() << ") affects: " << endl;
+                for(int i = 1; i < capacities.size(); i++)
+                {
+                    auto city = dummy.get_city_id(i);
+
+                    if(capacities[i] < city.get_demand())
+                    {
+                        std::cout << "The city " << city.get_code() << " (" << expected[city.get_id()] - capacities[i] << ")" << std::endl;
+                    }
+
+                }
+            }
+            return affecting;
 
 
-
-    }
 }
 
 

@@ -2,6 +2,11 @@
 // Created by Administrador on 20/03/2024.
 //
 
+/**
+*@file Pipes.h
+*@brief Header file for the Pipe class
+*/
+
 #ifndef DAPROJ1_PIPES_H
 #define DAPROJ1_PIPES_H
 

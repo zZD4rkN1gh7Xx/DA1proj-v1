@@ -2,6 +2,12 @@
 // Created by jogos on 3/25/2024.
 //
 
+/**
+
+*@file Menu.h
+*@brief Header file for the Menu class
+*/
+
 #ifndef DA1PROJ_V1_MENU_H
 #define DA1PROJ_V1_MENU_H
 
@@ -12,7 +18,9 @@ class Menu {
     int regiao;
 
     public:
-        Menu(int regiao);
+
+        Menu();
+        void Initializer(void);
         void DisplayMainMenu(void);
         void MainMenu(void);
         bool MenuToMain(void);

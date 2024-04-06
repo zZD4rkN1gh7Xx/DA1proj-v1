@@ -2,6 +2,11 @@
 // Created by Administrador on 20/03/2024.
 //
 
+/**
+    *@file waterReservoir.cpp
+    *@brief Implementation of the WaterReservoir class methods
+*/
+
 #include "waterReservoir.h"
 
 WaterReservoir::WaterReservoir(std::string reservoir, std::string municipality, int reservoir_id, std::string reservoir_code, int max_delivery) : Agua(reservoir_id,reservoir_code)

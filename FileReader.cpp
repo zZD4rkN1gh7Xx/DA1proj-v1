@@ -2,6 +2,11 @@
 // Created by Administrador on 22/03/2024.
 //
 
+/**
+*@file FileReader.cpp
+*@brief Implementation of the FileReader class methods
+*/
+
 #include "FileReader.h"
 
 
@@ -55,7 +60,7 @@ void FileReader::add_reservoirs(const std::string &filename ,WMSGraph &OurGraph)
         string line, reservoir, municipality, id, code, max, dump;
         std::getline(inputfile, line);
 
-        while (std::getline(inputfile, reservoir, ','), std::getline(inputfile, municipality, ','), std::getline(inputfile, id, ','), std::getline(inputfile, code, ','), std::getline(inputfile, max, ','), std::getline(inputfile, dump))
+        while (std::getline(inputfile, reservoir, ','), std::getline(inputfile, municipality, ','), std::getline(inputfile, id, ','), std::getline(inputfile, code, ','), std::getline(inputfile, max))
         {
 
             WaterReservoir new_water_reservoir = WaterReservoir(capitalizeFirstLetter(reservoir), municipality, std::stoi(id), code, std::stoi(max));

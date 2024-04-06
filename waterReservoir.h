@@ -2,6 +2,12 @@
 // Created by Administrador on 20/03/2024.
 //
 
+/**
+
+    *@file waterReservoir.h
+    *@brief Header file for the WaterReservoir class an extention of the Agua class
+*/
+
 #ifndef DAPROJ1_WATERRESERVOIR_H
 #define DAPROJ1_WATERRESERVOIR_H
 

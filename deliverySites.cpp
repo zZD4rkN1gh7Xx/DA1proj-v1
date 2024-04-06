@@ -2,6 +2,11 @@
 // Created by Administrador on 20/03/2024.
 //
 
+/**
+*@file deliverySites.cpp
+*@brief Implementation of the DeliverSite class methods
+*/
+
 #include "deliverySites.h"
 
 DeliverySite::DeliverySite(std::string city, int delivery_site_id, std::string delivery_site_code, int demand, int population) : Agua(delivery_site_id, delivery_site_code)

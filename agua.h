@@ -2,6 +2,12 @@
 // Created by Administrador on 22/03/2024.
 //
 
+/**
+
+*@file agua.h
+*@brief Header file for the Agua class
+*/
+
 #ifndef DAPROJ1_AGUA_H
 #define DAPROJ1_AGUA_H
 
