@@ -36,32 +36,6 @@ void WMSGraph::add_water_reservoir(WaterReservoir& water_reservoir)
 
 }
 
-void WMSGraph::remove_delivery_site(DeliverySite& delivery_site)
-{
-    removeVertex(delivery_site);
-
-    auto it = aguapoints.find(delivery_site.get_delivery_site_code());
-
-    if(it != aguapoints.end())
-            aguapoints.erase(it);
-
-}
-
-void WMSGraph::remove_pumping_station(PumpingStation& pumping_station)
-{
-    removeVertex(pumping_station);
-
-    auto it = aguapoints.find(pumping_station.get_code());
-
-    if(it != aguapoints.end())
-        aguapoints.erase(it);
-
-    auto it2 = agua_pumping_stations.find(pumping_station.get_id());
-
-    if (it2 != agua_pumping_stations.end()) {
-        agua_pumping_stations.erase(it2);
-    }
-}
 
 
 void WMSGraph::add_pipe(Pipe& pipe)
@@ -95,31 +69,12 @@ void WMSGraph::remove_pipe(Pipe pipe)
     agua_pipes.erase(pipe.get_id());
 }
 
-std::unordered_map<std::string, Agua> WMSGraph::get_aguapoints(void) {
-    return this->aguapoints;
-}
 
 Agua WMSGraph::get_agua_point(std::string agua_point)
 {
     return aguapoints[agua_point];
 }
 
-DeliverySite WMSGraph::get_agua_city_name(std::string city)
-{
-    std::string new_city = capitalizeFirstLetter(city);
-
-    auto it = agua_cities_name.find(new_city);
-
-    if (it != agua_cities_name.end())
-    {
-        DeliverySite new_delivery_site = it->second;
-        return new_delivery_site;
-    }
-    else
-    {
-        return DeliverySite(); // later use for checking errors
-    }
-}
 
 
 

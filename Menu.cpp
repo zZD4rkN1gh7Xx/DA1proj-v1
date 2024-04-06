@@ -18,9 +18,9 @@ void Menu::DisplayMainMenu(void)
     cout<< "1 - Determine the maximum amount of water that can reach each city (2.1)." << endl;
     cout<< "2 - Determine which cities don't get enough water (2.2)." << endl;
     cout<< "3 - Determine the maximum amount of water that can reach a specific city (2.1)." << endl;
-    cout<< "4 - Delivery capacity changes when removing a specific Water Reservoir (3.1)." << endl;
-    cout<< "5 - Delivery capacity changes when removing a specific Pumping Station (3.2)." << endl;
-    cout<< "6 - Delivery capacity changes when removing a specific Pipe (3.3)." << endl << endl;
+    cout<< "4 - Delivery capacity changes when removing a chosen Water Reservoir (3.1)." << endl;
+    cout<< "5 - Delivery capacity changes when removing each Pumping Station at a time (3.2)." << endl;
+    cout<< "6 - Delivery capacity changes when removing each Pipe at a time (3.3)." << endl << endl;
 }
 
 void Menu::MainMenu(void) {
@@ -185,10 +185,20 @@ void Menu::MainMenu(void) {
 
         else if (ans == "4") {
 
+            bool can = false;
             std::string code;
-            cout << "Which reservoir do you wish to remove?: ";
-            cin >> code;
-            cout << endl << endl;
+
+            while(can == false)
+            {
+                cout << "Which reservoir do you wish to remove?: ";
+                cin >> code;
+                cout << endl << endl;
+
+                if (code[0] != 'R' || code[1] != '_') {
+                    cout << "That is not a reservoir! Try again." << endl << endl;
+                }
+                else can = true;
+            }
 
             reservoirs_affected_cities(regiao, code);
 
@@ -315,7 +325,7 @@ void Menu::Initializer(void) {
     bool can = false;
     int reg;
     while (!can) {
-        cout << "What region will we be choosing?" << endl << "(0 for Madeira(funciona) 1 for Portugal(duvidoso)): ";
+        cout << "What region will we be choosing?" << endl << "0 for Madeira(funciona) 1 for Portugal(duvidoso): ";
         cin >> reg;
 
         if (reg != 1 && reg != 0) {

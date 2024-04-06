@@ -331,12 +331,12 @@ Complexity O((V + E) * V + V + M)*/
     {
         if(results[i] == prev[i])
         {
-            std::cout << "The city of " << global_graph.get_city_id(i).get_city() << "(" << global_graph.get_city_id(i).get_code() << ") receives the same ammount of water as before: " << results[i] << "m^3/s." << std::endl;
+            std::cout << "The city " << global_graph.get_city_id(i).get_code() << " receives the same as before: (" << results[i] << ")." << std::endl;
         }
 
         else
         {
-            std::cout << "The city of " << global_graph.get_city_id(i).get_city() << "(" << global_graph.get_city_id(i).get_code() << ") is missing " << prev[i] - results[i] << "m^3/s." << std::endl;
+            std::cout << "The city " << global_graph.get_city_id(i).get_code() << " is missing " << prev[i] - results[i] << " compared to before." <<std::endl;
         }
     }
 }
@@ -347,28 +347,41 @@ Complexity O((V + E) * V + V + M)*/
 
 void reservoirs_affected_cities(int regiao, std::string code)
 {
+    bool flag = false;
+
     WMSGraph dummy_graph;
 
     file_add(dummy_graph, regiao);
-
     WaterReservoir res = dummy_graph.get_water_reservoir_code(code);
 
+    for (auto reserv : dummy_graph.get_agua_reservoir()) {
+        if (reserv.first == code) {
+            flag = true;
+        }
+    }
 
-    auto source = dummy_graph.get_super_source();
-    auto sink = dummy_graph.get_super_sink();
+    if (flag == true) {
+        auto source = dummy_graph.get_super_source();
+        auto sink = dummy_graph.get_super_sink();
 
-    auto solve2 = without_edmondsKarp(dummy_graph, *dummy_graph.findVertex(dummy_graph.get_agua_point(code)), *source, sink);
+        auto solve2 = without_edmondsKarp(dummy_graph, *dummy_graph.findVertex(dummy_graph.get_agua_point(code)),
+                                          *source, sink);
 
-    WMSGraph killmyself2;
-    file_add(killmyself2, regiao);
+        WMSGraph killmyself2;
+        file_add(killmyself2, regiao);
 
-    auto source2 = killmyself2.get_super_source();
-    auto sink2 = killmyself2.get_super_sink();
+        auto source2 = killmyself2.get_super_source();
+        auto sink2 = killmyself2.get_super_sink();
 
-    auto solve = edmondsKarp(killmyself2, *source2, sink2);
+        auto solve = edmondsKarp(killmyself2, *source2, sink2);
 
-    std::cout << "After the removal of the reservor: " << res.get_reservoir() << " the network has a total flow of: " << max_flow(dummy_graph, solve2) << std::endl;
-    show_results(dummy_graph, solve2, solve);
+        std::cout << "Reservoir removed: " << res.get_code()
+                  << " | Network total flow: " << max_flow(dummy_graph, solve2) << std::endl << std::endl;
+        show_results(dummy_graph, solve2, solve);
+    }
+    else {
+        cout << "There is no reservoir with that code! " <<endl << endl;
+    }
 
 }
 
@@ -397,9 +410,10 @@ Complexity O((V + E) * V + V + n*/
         auto pump = place_holder.get_pumping_station_code(place_holder.get_agua_point(code));
 
 
-        if(expected != solve)
-        {
-            affecting = true;
+        for (auto cities : place_holder.get_agua_city()) {
+            if (solve[cities.second.get_id()] != expected[cities.second.get_id()]) {
+                affecting = true;
+            }
         }
 
         std::cout << endl << "After removing " << pump.get_code() << ": " << endl;
@@ -408,7 +422,7 @@ Complexity O((V + E) * V + V + n*/
 
         while(it1 != expected.end() && it2 != solve.end()) {
 
-            std::cout << "The city " << place_holder.get_city_id(it1->first).get_code() << " has " << it1->second << " flow (" << abs(it2->second - it1->second) << " deficit)" << std::endl;
+            std::cout << "The city " << place_holder.get_city_id(it1->first).get_code() << " has " << it2->second << " flow (" << abs(it1->second - it2->second) << " deficit)" << std::endl;
 
             ++it1;
             ++it2;
@@ -419,14 +433,14 @@ Complexity O((V + E) * V + V + n*/
 
 bool pipes_affected_cities(int regiao, unordered_map<int, int> expected, Pipe pipe)
 {
+    /**
+
+        *@return shows us the affected cities after removing a pipe
+    *@param regiao,expeted, pipe  the region , the original before removing  a pipe and the pipe to remove
+    Complexity O((V + E) * V + V + n
+     */
 
     bool affecting = false;
-
-    WMSGraph solution;
-
-    file_add(solution, regiao);
-
-    auto sol = edmondsKarp(solution, *solution.get_super_source(), solution.get_super_sink());
 
 
         WMSGraph dummy;
@@ -440,34 +454,30 @@ bool pipes_affected_cities(int regiao, unordered_map<int, int> expected, Pipe pi
 
             auto capacities = edmondsKarp(dummy, *dummy.get_super_source(), dummy.get_super_sink());
 
-            if(capacities != expected) {
-                affecting = true;
-                cout << "The Pipe ("<< new_pipe.get_code_A() << " - " << new_pipe.get_code_B() << ") affects: " << endl;
-                for(int i = 1; i < capacities.size(); i++)
-                {
-                    auto city = dummy.get_city_id(i);
+            for (auto cities : dummy.get_agua_city()) {
+                if (capacities[cities.second.get_id()] != expected[cities.second.get_id()]) {
+                    affecting = true;
+                }
+            }
 
-                    if(capacities[i] < city.get_demand())
+            if (affecting == true)
+            {
+                cout << "The Pipe ("<< new_pipe.get_code_A() << " - " << new_pipe.get_code_B() << ") affects: " << endl;
+                for(auto city : dummy.get_agua_city())
+                {
+
+                    if(capacities[city.second.get_id()] < expected[city.second.get_id()])
                     {
-                        std::cout << "The city " << city.get_code() << " (" << expected[city.get_id()] - capacities[i] << ")" << std::endl;
+                        std::cout << "The city " << city.second.get_code() << " (" << expected[city.second.get_id()] - capacities[city.second.get_id()] << ")" << std::endl;
                     }
 
                 }
+                cout << endl;
            }
             else
             {
                 std::cout << "The Pipe (" << new_pipe.get_code_A() << " - " << new_pipe.get_code_B() << ") doesn't affect the network flow."<< std::endl << std::endl;
-                cout << "The Pipe ("<< new_pipe.get_code_A() << " - " << new_pipe.get_code_B() << ") affects: " << endl;
-                for(int i = 1; i < capacities.size(); i++)
-                {
-                    auto city = dummy.get_city_id(i);
-
-                    if(capacities[i] < city.get_demand())
-                    {
-                        std::cout << "The city " << city.get_code() << " (" << expected[city.get_id()] - capacities[i] << ")" << std::endl;
-                    }
-
-                }
+                cout << endl;
             }
             return affecting;
 
