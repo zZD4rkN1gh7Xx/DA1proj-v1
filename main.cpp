@@ -91,8 +91,16 @@ int main(void)
         }
     }
 
+    int a = 7;
+    int b = a;
+    cout << a << endl;
+    cout << b << endl;
+    b = 3;
+    cout << a << endl;
 
-    pumping_stations_affected_cities(globalGraph);
+
+
+    pumping_stations_affected_cities(0);
 
 
 

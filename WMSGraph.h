@@ -30,6 +30,8 @@ class WMSGraph :public Graph<Agua>{
 
     public:
 
+        WMSGraph();
+        WMSGraph(WMSGraph &graph);
         void add_delivery_site(DeliverySite& delivery_site);
         void add_pumping_station(PumpingStation& pumping_station);
         void add_water_reservoir(WaterReservoir& water_reservoir);

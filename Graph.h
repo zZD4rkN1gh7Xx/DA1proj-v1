@@ -86,6 +86,7 @@ public:
 	bool addEdge(const T &sourc, const T &dest, Pipe w);
 	bool removeEdge(const T &sourc, const T &dest);
     vector<Vertex<T> * > getVertexSet() const;
+    void setVertexSet(vector<Vertex<T> * >);
 	vector<T> dfs() const;
 	vector<T> dfs(const T & source) const;
 	vector<T> bfs(const T &source) const;
@@ -93,6 +94,11 @@ public:
     Edge<T>* findEdge(const T& source_info, const T& dest_info) const;
 
 };
+
+template<class T>
+void Graph<T>::setVertexSet(vector<Vertex<T> * > vertexes) {
+     this->vertexSet = vertexes;
+ }
 
  template <class T>
  void Vertex<T>::sortAdjByCapacity() {

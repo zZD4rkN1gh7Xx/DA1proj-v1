@@ -363,3 +363,19 @@ Vertex<Agua> * WMSGraph::get_super_source()
 {
     return findVertex(get_agua_point("RS_2"));
 }
+
+WMSGraph::WMSGraph(WMSGraph &graph) {
+    this->aguapoints = graph.aguapoints;
+    this->agua_pipes = graph.agua_pipes;
+    this->agua_cities_code = graph.agua_cities_code;
+    this->agua_pumping_stations = graph.agua_pumping_stations;
+    this->agua_pumping_stations_code = graph.agua_pumping_stations_code;
+    this->agua_water_reservoir_code = graph.agua_water_reservoir_code;
+    this->agua_cities_name = graph.agua_cities_name;
+    this->agua_water_reservoir_name = graph.agua_water_reservoir_name;
+    this->setVertexSet(graph.getVertexSet());
+}
+
+WMSGraph::WMSGraph() {
+
+}
