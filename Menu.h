@@ -9,10 +9,11 @@
 #include "WMSGraph.h"
 
 class Menu {
-    WMSGraph Graph;
+    int regiao;
 
     public:
-        Menu(WMSGraph Graph);
+        Menu(int regiao);
+        void DisplayMainMenu(void);
         void MainMenu(void);
         bool MenuToMain(void);
 };

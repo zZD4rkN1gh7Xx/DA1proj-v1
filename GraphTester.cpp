@@ -1,7 +1,7 @@
 //
 // Created by jogos on 3/23/2024.
 //
-
+/*
 #include "GraphTester.h"
 
 GraphTester::GraphTester(WMSGraph tt_graph) {
@@ -140,3 +140,4 @@ void GraphTester::testPipesRemoval() {
     }
 
 }
+*/

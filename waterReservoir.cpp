@@ -36,3 +36,7 @@ int WaterReservoir::get_max_delivery(void)
 {
     return this->max_delivery;
 }
+
+void WaterReservoir::set_max_delivery(int max_delivery) {
+    this->max_delivery = max_delivery;
+}

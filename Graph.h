@@ -8,8 +8,9 @@
 #include <vector>
 #include <queue>
 #include <fstream>
+#include <algorithm>
 
-using namespace std;
+ using namespace std;
 
 template <class T> class Edge;
 template <class T> class Graph;
@@ -54,12 +55,15 @@ public:
     void setAdj(const vector<Edge<T>> &adj);
     void setIngoing(const vector<Edge<T>> &ingoing);
     friend class Graph<T>;
+
+    void sortAdjByCapacity();
 };
 
 template <class T>
 class Edge {
 	Vertex<T> * dest;      // destination vertex
-	Pipe weight;         // edge weight
+	Pipe weight;// edge weight
+
 public:
 	Edge(Vertex<T> *d, Pipe w);
     Vertex<T> *getDest() const;
@@ -82,6 +86,7 @@ public:
 	bool addEdge(const T &sourc, const T &dest, Pipe w);
 	bool removeEdge(const T &sourc, const T &dest);
     vector<Vertex<T> * > getVertexSet() const;
+    void setVertexSet(vector<Vertex<T> * >);
 	vector<T> dfs() const;
 	vector<T> dfs(const T & source) const;
 	vector<T> bfs(const T &source) const;
@@ -89,6 +94,22 @@ public:
     Edge<T>* findEdge(const T& source_info, const T& dest_info) const;
 
 };
+
+template<class T>
+void Graph<T>::setVertexSet(vector<Vertex<T> * > vertexes) {
+     this->vertexSet = vertexes;
+ }
+
+ template <class T>
+ void Vertex<T>::sortAdjByCapacity() {
+     // Define a custom comparison function for sorting
+     auto compareByCapacity = [](const Edge<T>& a, const Edge<T>& b) {
+         return a.getWeight().get_capacity() < b.getWeight().get_capacity();
+     };
+
+     // Sort the adj vector using the custom comparison function
+     std::sort(adj.begin(), adj.end(), compareByCapacity);
+ }
 
 /****************** Provided constructors and functions ********************/
 
@@ -244,6 +265,7 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, Pipe w) {
 template <class T>
 void Vertex<T>::addEdge(Vertex<T> *d, Pipe w) {
 	adj.push_back(Edge<T>(d, w));
+    sortAdjByCapacity();
 }
 
 

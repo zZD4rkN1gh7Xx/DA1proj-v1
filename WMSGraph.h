@@ -25,9 +25,13 @@ class WMSGraph :public Graph<Agua>{
         std::unordered_map<std::string, PumpingStation> agua_pumping_stations_code; // unordered map com as pumping stations do grapho e chave o seu codigo
         std::unordered_map<std::string, WaterReservoir> agua_water_reservoir_code; // unordered map com os water reservoirs do grapho e chave o seu codigo
         std::unordered_map<std::string, WaterReservoir> agua_water_reservoir_name; // unordered map com os water reservoirs do grapho e chave o seu nome
+        std::unordered_map<int, PumpingStation> agua_pumping_stations; // unordered map com as pumping stations do grapho e chave o seu id
+        std::unordered_map<int, Pipe> agua_pipes;
 
     public:
 
+        WMSGraph();
+        WMSGraph(WMSGraph &graph);
         void add_delivery_site(DeliverySite& delivery_site);
         void add_pumping_station(PumpingStation& pumping_station);
         void add_water_reservoir(WaterReservoir& water_reservoir);
@@ -42,12 +46,23 @@ class WMSGraph :public Graph<Agua>{
         DeliverySite get_agua_city_name(std::string city);
         WaterReservoir get_agua_reservoir_name(std::string reservoir);
         DeliverySite get_agua_city_code(Agua agua);
+        DeliverySite get_city_by_code(std::string code);
         PumpingStation get_pumping_station_code(Agua agua);
-        WaterReservoir get_water_reservoir_code(Agua agua);
+        std::unordered_map<std::string, PumpingStation> get_pumping_stations();
+        WaterReservoir get_water_reservoir_code(std::string code);
         std::unordered_map<std::string, WaterReservoir> get_agua_reservoir();
+        PumpingStation get_pumping_station(int id);
+        Pipe get_pipe_id(int id);
+        std::unordered_map<int, Pipe> get_pipes(void);
         void set_all_unvisited(const vector<Vertex<Agua> * >& all_agua); // auxiliar function self-explanatory
         std::vector<Agua> get_all_sources(std::string sink); // auxiliar function
         void reset_shadow_capacities(void);
+        int get_total_num_of_edges(void);
+        std::unordered_map<std::string, DeliverySite> get_agua_city();
+        DeliverySite get_city_id(int id);
+        Vertex<Agua> * get_super_sink();
+        Vertex<Agua> * get_super_source();
+
 };
 
 template bool Graph<Agua>::addVertex(Agua &in);

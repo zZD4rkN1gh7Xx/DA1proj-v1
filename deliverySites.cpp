@@ -6,6 +6,8 @@
 
 DeliverySite::DeliverySite(std::string city, int delivery_site_id, std::string delivery_site_code, int demand, int population) : Agua(delivery_site_id, delivery_site_code)
 {
+    this->delivery_site_id = delivery_site_id;
+    this->delivery_site_code = delivery_site_code;
     this->city = city;
     this->demand = demand;
     this->population = population;
@@ -39,4 +41,13 @@ int DeliverySite::get_population(void)
 std::string DeliverySite::get_delivery_site_code(void)
 {
     return this->delivery_site_code;
+}
+
+bool DeliverySite::operator<(const DeliverySite& other) const {
+
+    return this->demand < other.demand;
+}
+
+void DeliverySite::set_demand(int demand) {
+    this->demand = demand;
 }
