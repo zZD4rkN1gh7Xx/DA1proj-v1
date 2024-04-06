@@ -7,7 +7,7 @@
 #include "WMSGraph.h"
 #include "GraphTester.h"
 #include "helpfunctions.h"
-#include "soluçao.h"
+#include "solucao.h"
 
 #include <algorithm>
 #include <set>
@@ -100,7 +100,11 @@ int main(void)
 
 
 
-    pumping_stations_affected_cities(0);
+    int regiao;
+    cout<<"What region will we be choosing?" << endl << "(0 for Madeira(funciona) 1 for Portugal(duvidoso)): ";
+    cin>>regiao;
+    Menu(regiao);
+
 
 
 

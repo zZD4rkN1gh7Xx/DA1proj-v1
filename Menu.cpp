@@ -2,14 +2,13 @@
 // Created by jogos on 3/25/2024.
 //
 
-/*
-#include "Menu.h"
-#include "tarefas_2.h"
 
-Menu::Menu(WMSGraph Graph, WMSGraph Shadow)
+#include "Menu.h"
+#include "solucao.h"
+
+Menu::Menu(int regiao)
 {
-    this->Graph = Graph;
-    this->Shadow = Shadow;
+    this->regiao = regiao;
 }
 
 void Menu::DisplayMainMenu(void)
@@ -110,4 +109,3 @@ bool Menu::MenuToMain(void)
     }
 
 }
-*/
