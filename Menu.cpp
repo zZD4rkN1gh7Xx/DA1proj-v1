@@ -14,7 +14,7 @@ Menu::Menu(int regiao)
 void Menu::DisplayMainMenu(void)
 {
     cout<< "---------------------------" << " Water Supply Management System " << "---------------------------" << endl;
-    cout<< "1 - Determine the maximum amount of water that can reach each city (2.1)" << endl;
+    cout<< "1 - Determine the maximum amount of water that can reach each city (2.1 and 2.2)" << endl;
     cout<< "2 - Determine the maximum amount of water that can reach a specific city (2.1)" << endl;
     cout<< "3 - Test the Vertexes." << endl;
     cout<< "4 - Test the Aguapoints." << endl << endl;
@@ -29,22 +29,29 @@ void Menu::MainMenu(void) {
         cout << endl;
         if (ans == "1") {
 
-            int results = is_it_enough(Graph, Shadow);
+            WMSGraph fazer;
+            file_add(fazer, this->regiao);
+            auto source = fazer.get_super_source();
+            auto sink = fazer.get_super_sink();
+
+            auto solve2 = edmondsKarp(fazer, *source, sink);
             vector<std::string> order;
 
-            for (auto city : Graph.get_agua_city()) {
+            for (auto city : fazer.get_agua_city()) {
                 order.push_back(city.first);
             }
 
-            sort(order.begin(), order.end(), [this](const auto& first, const auto& second) {
-                return Graph.get_city_by_code(first).get_id() < Graph.get_city_by_code(second).get_id();
+            sort(order.begin(), order.end(), [&](const auto& first, const auto& second) {
+                return fazer.get_city_by_code(first).get_id() < fazer.get_city_by_code(second).get_id();
             });
 
             int value = 0;
 
             for (auto cities : order) {
-                cout << "(" <<cities << ") " << Graph.get_city_by_code(cities).get_city() << " gets " << results[cities] << " m^3/s of water." << endl;
-                value += results[cities];
+                if (cities != "CS_2") {
+                    cout << cities << " - " << solve2[fazer.get_city_by_code(cities).get_id()] << endl;
+                    value += solve2[fazer.get_city_by_code(cities).get_id()];
+                }
             }
 
             cout << endl << value << endl;
@@ -60,6 +67,62 @@ void Menu::MainMenu(void) {
 
         }
         else if (ans == "2") {
+
+            std::string cidade;
+            cout << "What city do you choose?: ";
+            cin >> cidade;
+            cout << endl << endl;
+
+            WMSGraph fazer;
+            file_add(fazer, this->regiao);
+            auto source = fazer.get_super_source();
+            auto sink = fazer.get_super_sink();
+
+            auto solve2 = edmondsKarp(fazer, *source, sink);
+            vector<std::string> order;
+
+            for (auto city : fazer.get_agua_city()) {
+                order.push_back(city.first);
+            }
+
+            sort(order.begin(), order.end(), [&](const auto& first, const auto& second) {
+                return fazer.get_city_by_code(first).get_id() < fazer.get_city_by_code(second).get_id();
+            });
+
+            int count = 0;
+
+            for (auto cities : order) {
+                if (cities == cidade) {
+                    cout << cities << " - " << solve2[fazer.get_city_by_code(cities).get_id()] << endl;
+                    count++;
+                }
+            }
+
+            std::string ok;
+
+            if (count == 0) {
+                while (count == 0) {
+                    cout << "That city doesn't exist! Try again?" << endl << "0 for no, type anything for yes: ";
+                    cin >> ok;
+                    cout << endl;
+                    if (ok == "0")
+                    {
+                        count = -1;
+                    }
+                    else {
+                        cout << "Which city do you want to see?: ";
+                        cin >> cidade;
+                        cout << endl;
+
+                        for (auto cities: order) {
+                            if (cities == cidade) {
+                                cout << cities << " - " << solve2[fazer.get_city_by_code(cities).get_id()] << endl;
+                                count++;
+                            }
+                        }
+                    }
+                }
+            }
 
             if(MenuToMain()) {
                 MainMenu();

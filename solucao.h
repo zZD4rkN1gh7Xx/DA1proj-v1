@@ -7,6 +7,7 @@
 
 #include "WMSGraph.h"
 #include "helpfunctions.h"
+#include "FileReader.h"
 #include <string>
 #include <iostream>
 #include <queue>
