@@ -1,0 +1,63 @@
+\doxysection{WMSGraph.\+h}
+\hypertarget{_w_m_s_graph_8h_source}{}\label{_w_m_s_graph_8h_source}\mbox{\hyperlink{_w_m_s_graph_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Administrador\ on\ 20/03/2024.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ DAPROJ1\_WMSGRAPH\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ DAPROJ1\_WMSGRAPH\_H}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_graph_8h}{Graph.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{delivery_sites_8h}{deliverySites.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{pumping_stations_8h}{pumpingStations.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{water_reservoir_8h}{waterReservoir.h}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_pipes_8h}{Pipes.h}}"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{agua_8h}{agua.h}}"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{helpfunctions_8h}{helpfunctions.h}}"{}}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ :\textcolor{keyword}{public}\ \mbox{\hyperlink{class_graph}{Graph}}<Agua>\{}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ Agua>\ aguapoints;\ \textcolor{comment}{//\ unordered\ map\ co\ tudos\ os\ vertexes\ do\ grapho\ e\ chave\ o\ seu\ codigo}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ DeliverySite>\ agua\_cities\_name;\ \textcolor{comment}{//\ unordered\ map\ com\ os\ vertexes\ que\ sao\ delivery\ sites\ do\ grapho\ e\ chave\ o\ seu\ nome}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ DeliverySite>\ agua\_cities\_code;\ \textcolor{comment}{//\ unordered\ map\ com\ os\ vertexes\ que\ sao\ delivery\ sites\ \ do\ grapho\ e\ chave\ o\ seu\ codigo}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ PumpingStation>\ agua\_pumping\_stations\_code;\ \textcolor{comment}{//\ unordered\ map\ com\ as\ pumping\ stations\ do\ grapho\ e\ chave\ o\ seu\ codigo}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ WaterReservoir>\ agua\_water\_reservoir\_code;\ \textcolor{comment}{//\ unordered\ map\ com\ os\ water\ reservoirs\ do\ grapho\ e\ chave\ o\ seu\ codigo}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ WaterReservoir>\ agua\_water\_reservoir\_name;\ \textcolor{comment}{//\ unordered\ map\ com\ os\ water\ reservoirs\ do\ grapho\ e\ chave\ o\ seu\ nome}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ std::unordered\_map<int,\ PumpingStation>\ agua\_pumping\_stations;\ \textcolor{comment}{//\ unordered\ map\ com\ as\ pumping\ stations\ do\ grapho\ e\ chave\ o\ seu\ id}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ std::unordered\_map<int,\ Pipe>\ agua\_pipes;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}();}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}(\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ \&graph);}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ add\_delivery\_site(\mbox{\hyperlink{class_delivery_site}{DeliverySite}}\&\ delivery\_site);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ add\_pumping\_station(\mbox{\hyperlink{class_pumping_station}{PumpingStation}}\&\ pumping\_station);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ add\_water\_reservoir(\mbox{\hyperlink{class_water_reservoir}{WaterReservoir}}\&\ water\_reservoir);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ add\_pipe(\mbox{\hyperlink{class_pipe}{Pipe}}\&\ pipe);}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ remove\_pipe(\mbox{\hyperlink{class_pipe}{Pipe}}\ pipe);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_agua}{Agua}}\ get\_agua\_point(std::string\ agua\_point);}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_delivery_site}{DeliverySite}}\ get\_city\_by\_code(std::string\ code);}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_pumping_station}{PumpingStation}}\ get\_pumping\_station\_code(\mbox{\hyperlink{class_agua}{Agua}}\ agua);}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ PumpingStation>\ get\_pumping\_stations();}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_water_reservoir}{WaterReservoir}}\ get\_water\_reservoir\_code(std::string\ code);}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ WaterReservoir>\ get\_agua\_reservoir();}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_pipe}{Pipe}}\ get\_pipe\_id(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ std::unordered\_map<int,\ Pipe>\ get\_pipes(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ DeliverySite>\ get\_agua\_city();}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_delivery_site}{DeliverySite}}\ get\_city\_id(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}\ *\ get\_super\_sink();}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}\ *\ get\_super\_source();}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_graph}{Graph<Agua>::addVertex}}(\mbox{\hyperlink{class_agua}{Agua}}\ \&in);}
+\DoxyCodeLine{00062\ \textcolor{keyword}{template}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_graph}{Graph<Agua>::removeVertex}}(\mbox{\hyperlink{class_agua}{Agua}}\ \&in);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//DAPROJ1\_WMSGRAPH\_H}}
+
+\end{DoxyCode}

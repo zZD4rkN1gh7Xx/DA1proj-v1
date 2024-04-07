@@ -1,0 +1,36 @@
+\doxysection{File\+Reader.\+h}
+\hypertarget{_file_reader_8h_source}{}\label{_file_reader_8h_source}\mbox{\hyperlink{_file_reader_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Administrador\ on\ 22/03/2024.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ DAPROJ1\_FILEREADER\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ DAPROJ1\_FILEREADER\_H}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{agua_8h}{agua.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{delivery_sites_8h}{deliverySites.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_pipes_8h}{Pipes.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{pumping_stations_8h}{pumpingStations.h}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{water_reservoir_8h}{waterReservoir.h}}"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_w_m_s_graph_8h}{WMSGraph.h}}"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_file_reader}{FileReader}}\ \{}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ add\_reservoirs(\textcolor{keyword}{const}\ std::string\ \&filename\ ,\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ \&OurGraph);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ add\_stations(\textcolor{keyword}{const}\ std::string\ \&filename\ ,\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ \&OurGraph);}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ add\_cities(\textcolor{keyword}{const}\ std::string\ \&filename\ ,\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ \&OurGraph);}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ add\_pipes(\textcolor{keyword}{const}\ std::string\ \&filename\ ,\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ \&OurGraph);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//DAPROJ1\_FILEREADER\_H}}
+
+\end{DoxyCode}

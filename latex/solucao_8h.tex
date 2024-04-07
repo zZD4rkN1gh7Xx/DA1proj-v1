@@ -1,0 +1,190 @@
+\doxysection{solucao.\+h File Reference}
+\hypertarget{solucao_8h}{}\label{solucao_8h}\index{solucao.h@{solucao.h}}
+
+
+Functions needed to solve the project.  
+
+
+{\ttfamily \#include "{}WMSGraph.\+h"{}}\newline
+{\ttfamily \#include "{}helpfunctions.\+h"{}}\newline
+{\ttfamily \#include "{}File\+Reader.\+h"{}}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+set$>$}\newline
+{\ttfamily \#include $<$list$>$}\newline
+{\ttfamily \#include $<$set$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{solucao_8h_a50a6d34ee552b02b0708ff7791691647}{file\+\_\+add}} (\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} \&grafo, int regiao)
+\item 
+bool \mbox{\hyperlink{solucao_8h_a398a940b8bd654d66cb0b1678b38d47d}{without\+\_\+bfs}} (\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} \&residual, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ remove, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&source, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&sink, std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*} $>$ \&parent)
+\item 
+bool \mbox{\hyperlink{solucao_8h_a68c5ba605425c7dc40a6421ac2fd464c}{bfs}} (\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} \&residual, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&source, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&sink, std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*} $>$ \&parent)
+\item 
+unordered\+\_\+map$<$ int, int $>$ \mbox{\hyperlink{solucao_8h_affeb707d207f1c157d6e057d0d735441}{without\+\_\+edmonds\+Karp}} (\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} graph, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&without, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&source, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*}sink)
+\item 
+unordered\+\_\+map$<$ int, int $>$ \mbox{\hyperlink{solucao_8h_afe6939ff2f13e240c56a77fa00fcf084}{edmonds\+Karp}} (\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} graph, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&source, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*}sink)
+\item 
+int \mbox{\hyperlink{solucao_8h_a07c9be3a52f9ff8d510d718f438cfe5a}{max\+\_\+flow}} (\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} global\+\_\+graph, unordered\+\_\+map$<$ int, int $>$ results)
+\item 
+void \mbox{\hyperlink{solucao_8h_a2c932ffbf23cc33d2c7d218ea1628890}{show\+\_\+results}} (\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} global\+\_\+graph, unordered\+\_\+map$<$ int, int $>$ results, unordered\+\_\+map$<$ int, int $>$ prev)
+\item 
+void \mbox{\hyperlink{solucao_8h_aa7c80530404843913606f433c1de2f42}{reservoirs\+\_\+affected\+\_\+cities}} (int regiao, std\+::string code)
+\item 
+bool \mbox{\hyperlink{solucao_8h_a0f894f1e3f31474a9a0c79286f0637ed}{pumping\+\_\+stations\+\_\+affected\+\_\+cities}} (int regiao, std\+::unordered\+\_\+map$<$ int, int $>$ expected, std\+::string code)
+\item 
+bool \mbox{\hyperlink{solucao_8h_aa1ebad1916bd5dae22d0927b5e47c805}{pipes\+\_\+affected\+\_\+cities}} (int regiao, unordered\+\_\+map$<$ int, int $>$ expected, \mbox{\hyperlink{class_pipe}{Pipe}} pipe)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions needed to solve the project. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{solucao_8h_a68c5ba605425c7dc40a6421ac2fd464c}\label{solucao_8h_a68c5ba605425c7dc40a6421ac2fd464c} 
+\index{solucao.h@{solucao.h}!bfs@{bfs}}
+\index{bfs@{bfs}!solucao.h@{solucao.h}}
+\doxysubsubsection{\texorpdfstring{bfs()}{bfs()}}
+{\footnotesize\ttfamily bool bfs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} \&}]{residual,  }\item[{\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&}]{source,  }\item[{\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&}]{sink,  }\item[{std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*} $>$ \&}]{parent }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+returns true if theres a path between sorce and sink according the flow each pipe has.\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em residual,source,sink,parent} & the residual values for edmonds karp the vertex to igore the source and the sink and each vertex "{}parents"{}\texorpdfstring{$\ast$}{*} Complexity O(n + m + p)\\
+\hline
+\end{DoxyParams}
+\Hypertarget{solucao_8h_afe6939ff2f13e240c56a77fa00fcf084}\label{solucao_8h_afe6939ff2f13e240c56a77fa00fcf084} 
+\index{solucao.h@{solucao.h}!edmondsKarp@{edmondsKarp}}
+\index{edmondsKarp@{edmondsKarp}!solucao.h@{solucao.h}}
+\doxysubsubsection{\texorpdfstring{edmondsKarp()}{edmondsKarp()}}
+{\footnotesize\ttfamily unordered\+\_\+map$<$ int, int $>$ edmonds\+Karp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}}]{graph,  }\item[{\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&}]{source,  }\item[{\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*}}]{sink }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+returns the flow on each city acording their ID\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em graph,without,source,sink} & the graph to cross the vertex to ignore and the sink and sorce of the graph\texorpdfstring{$\ast$}{*} Complexity O((V + E) \texorpdfstring{$\ast$}{*} V + V + M)\\
+\hline
+\end{DoxyParams}
+\Hypertarget{solucao_8h_a50a6d34ee552b02b0708ff7791691647}\label{solucao_8h_a50a6d34ee552b02b0708ff7791691647} 
+\index{solucao.h@{solucao.h}!file\_add@{file\_add}}
+\index{file\_add@{file\_add}!solucao.h@{solucao.h}}
+\doxysubsubsection{\texorpdfstring{file\_add()}{file\_add()}}
+{\footnotesize\ttfamily void file\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} \&}]{grafo,  }\item[{int}]{regiao }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+adds the info to the graph according the region chosen\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em grafo,regiao} & graph that we will bea adding its properties and the region will be working on\texorpdfstring{$\ast$}{*} Complexity O(n + m + p)\\
+\hline
+\end{DoxyParams}
+\Hypertarget{solucao_8h_a07c9be3a52f9ff8d510d718f438cfe5a}\label{solucao_8h_a07c9be3a52f9ff8d510d718f438cfe5a} 
+\index{solucao.h@{solucao.h}!max\_flow@{max\_flow}}
+\index{max\_flow@{max\_flow}!solucao.h@{solucao.h}}
+\doxysubsubsection{\texorpdfstring{max\_flow()}{max\_flow()}}
+{\footnotesize\ttfamily int max\+\_\+flow (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}}]{global\+\_\+graph,  }\item[{unordered\+\_\+map$<$ int, int $>$}]{results }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+returns the flow on each city acording their ID\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em graph,without,source,sink} & the graph to cross the vertex to ignore and the sink and sorce of the graph\texorpdfstring{$\ast$}{*} Complexity O((V + E) \texorpdfstring{$\ast$}{*} V + V + M)\\
+\hline
+\end{DoxyParams}
+\Hypertarget{solucao_8h_aa1ebad1916bd5dae22d0927b5e47c805}\label{solucao_8h_aa1ebad1916bd5dae22d0927b5e47c805} 
+\index{solucao.h@{solucao.h}!pipes\_affected\_cities@{pipes\_affected\_cities}}
+\index{pipes\_affected\_cities@{pipes\_affected\_cities}!solucao.h@{solucao.h}}
+\doxysubsubsection{\texorpdfstring{pipes\_affected\_cities()}{pipes\_affected\_cities()}}
+{\footnotesize\ttfamily bool pipes\+\_\+affected\+\_\+cities (\begin{DoxyParamCaption}\item[{int}]{regiao,  }\item[{unordered\+\_\+map$<$ int, int $>$}]{expected,  }\item[{\mbox{\hyperlink{class_pipe}{Pipe}}}]{pipe }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+shows us the affected cities after removing a pipe 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em regiao,expeted,pipe} & the region , the original before removing a pipe and the pipe to remove Complexity O((V + E) \texorpdfstring{$\ast$}{*} V + V + n\\
+\hline
+\end{DoxyParams}
+\Hypertarget{solucao_8h_a0f894f1e3f31474a9a0c79286f0637ed}\label{solucao_8h_a0f894f1e3f31474a9a0c79286f0637ed} 
+\index{solucao.h@{solucao.h}!pumping\_stations\_affected\_cities@{pumping\_stations\_affected\_cities}}
+\index{pumping\_stations\_affected\_cities@{pumping\_stations\_affected\_cities}!solucao.h@{solucao.h}}
+\doxysubsubsection{\texorpdfstring{pumping\_stations\_affected\_cities()}{pumping\_stations\_affected\_cities()}}
+{\footnotesize\ttfamily bool pumping\+\_\+stations\+\_\+affected\+\_\+cities (\begin{DoxyParamCaption}\item[{int}]{regiao,  }\item[{std\+::unordered\+\_\+map$<$ int, int $>$}]{expected,  }\item[{std\+::string}]{code }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+shows us the affected cities after removing a pumping station\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em regiao} & the region we will be working on\texorpdfstring{$\ast$}{*} Complexity O((V + E) \texorpdfstring{$\ast$}{*} V + V + n\\
+\hline
+\end{DoxyParams}
+\Hypertarget{solucao_8h_aa7c80530404843913606f433c1de2f42}\label{solucao_8h_aa7c80530404843913606f433c1de2f42} 
+\index{solucao.h@{solucao.h}!reservoirs\_affected\_cities@{reservoirs\_affected\_cities}}
+\index{reservoirs\_affected\_cities@{reservoirs\_affected\_cities}!solucao.h@{solucao.h}}
+\doxysubsubsection{\texorpdfstring{reservoirs\_affected\_cities()}{reservoirs\_affected\_cities()}}
+{\footnotesize\ttfamily void reservoirs\+\_\+affected\+\_\+cities (\begin{DoxyParamCaption}\item[{int}]{regiao,  }\item[{std\+::string}]{code }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+shows us the affected cities after removing a water reservoir 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em regiao} & the region we will be working on\texorpdfstring{$\ast$}{*} Complexity O((V + E) \texorpdfstring{$\ast$}{*} V + V + n\\
+\hline
+\end{DoxyParams}
+\Hypertarget{solucao_8h_a2c932ffbf23cc33d2c7d218ea1628890}\label{solucao_8h_a2c932ffbf23cc33d2c7d218ea1628890} 
+\index{solucao.h@{solucao.h}!show\_results@{show\_results}}
+\index{show\_results@{show\_results}!solucao.h@{solucao.h}}
+\doxysubsubsection{\texorpdfstring{show\_results()}{show\_results()}}
+{\footnotesize\ttfamily void show\+\_\+results (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}}]{global\+\_\+graph,  }\item[{unordered\+\_\+map$<$ int, int $>$}]{results,  }\item[{unordered\+\_\+map$<$ int, int $>$}]{prev }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+returns the flow on each city acording their ID\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em graph,without,source,sink} & the graph to cross the vertex to ignore and the sink and sorce of the graph\texorpdfstring{$\ast$}{*} Complexity O((V + E) \texorpdfstring{$\ast$}{*} V + V + M)\\
+\hline
+\end{DoxyParams}
+\Hypertarget{solucao_8h_a398a940b8bd654d66cb0b1678b38d47d}\label{solucao_8h_a398a940b8bd654d66cb0b1678b38d47d} 
+\index{solucao.h@{solucao.h}!without\_bfs@{without\_bfs}}
+\index{without\_bfs@{without\_bfs}!solucao.h@{solucao.h}}
+\doxysubsubsection{\texorpdfstring{without\_bfs()}{without\_bfs()}}
+{\footnotesize\ttfamily bool without\+\_\+bfs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} \&}]{residual,  }\item[{\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$}]{remove,  }\item[{\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&}]{source,  }\item[{\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&}]{sink,  }\item[{std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*} $>$ \&}]{parent }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+returns true if theres a path between sorce and sink according the flow each pipe has and does not crosses a certain chosen vertex\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em residual,remove,source,sink,parent} & the residual values for edmonds karp the vertex to igore the source and the sink and each vertex "{}parents"{}\texorpdfstring{$\ast$}{*} Complexity O(n + m + p)\\
+\hline
+\end{DoxyParams}
+\Hypertarget{solucao_8h_affeb707d207f1c157d6e057d0d735441}\label{solucao_8h_affeb707d207f1c157d6e057d0d735441} 
+\index{solucao.h@{solucao.h}!without\_edmondsKarp@{without\_edmondsKarp}}
+\index{without\_edmondsKarp@{without\_edmondsKarp}!solucao.h@{solucao.h}}
+\doxysubsubsection{\texorpdfstring{without\_edmondsKarp()}{without\_edmondsKarp()}}
+{\footnotesize\ttfamily unordered\+\_\+map$<$ int, int $>$ without\+\_\+edmonds\+Karp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}}]{graph,  }\item[{\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&}]{without,  }\item[{\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \&}]{source,  }\item[{\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*}}]{sink }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+returns the flow on each city acording their ID\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em graph,without,source,sink} & the graph to cross the vertex to ignore and the sink and sorce of the graph\texorpdfstring{$\ast$}{*} Complexity O((V + E) \texorpdfstring{$\ast$}{*} V + V + M)\\
+\hline
+\end{DoxyParams}

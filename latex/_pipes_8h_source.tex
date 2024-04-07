@@ -1,0 +1,45 @@
+\doxysection{Pipes.\+h}
+\hypertarget{_pipes_8h_source}{}\label{_pipes_8h_source}\mbox{\hyperlink{_pipes_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Administrador\ on\ 20/03/2024.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#ifndef\ DAPROJ1\_PIPES\_H}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ DAPROJ1\_PIPES\_H}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_pipe}{Pipe}}\ \{}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ std::string\ code\_point\_A;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ std::string\ code\_point\_B;}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ capacity;}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ direction;}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ id;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ city\_link;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_pipe}{Pipe}}(std::string\ code\_point\_A,\ std::string\ code\_point\_B,\ \textcolor{keywordtype}{int}\ capacity,\ \textcolor{keywordtype}{int}\ direction,\ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_pipe}{Pipe}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ std::string\ get\_code\_A(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::string\ get\_code\_B(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ get\_capacity(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ get\_direction(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ get\_id(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_capacity(\textcolor{keywordtype}{int}\ capacity);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_inverse\_direction(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_city\_link(\textcolor{keywordtype}{bool}\ city\_link);}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_code\_A(std::string\ codeA);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_code\_B(std::string\ codeB);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//DAPROJ1\_PIPES\_H}}
+
+\end{DoxyCode}

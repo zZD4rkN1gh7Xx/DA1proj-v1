@@ -347,6 +347,14 @@ Complexity O((V + E) * V + V + M)*/
 
 void reservoirs_affected_cities(int regiao, std::string code)
 {
+
+/**
+
+*@return shows us the affected cities after removing a water reservoir
+*@param regiao the region we will be working on*
+Complexity O((V + E) * V + V + n
+ */
+
     bool flag = false;
 
     WMSGraph dummy_graph;

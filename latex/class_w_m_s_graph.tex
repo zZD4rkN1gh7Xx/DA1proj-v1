@@ -1,0 +1,100 @@
+\doxysection{WMSGraph Class Reference}
+\hypertarget{class_w_m_s_graph}{}\label{class_w_m_s_graph}\index{WMSGraph@{WMSGraph}}
+Inheritance diagram for WMSGraph\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_w_m_s_graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_w_m_s_graph_a9df7b6a2c24118079be35fb04b348206}\label{class_w_m_s_graph_a9df7b6a2c24118079be35fb04b348206} 
+{\bfseries WMSGraph} (\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}} \&graph)
+\item 
+\Hypertarget{class_w_m_s_graph_a82cfca7f810f8f5019374a8089403d15}\label{class_w_m_s_graph_a82cfca7f810f8f5019374a8089403d15} 
+void {\bfseries add\+\_\+delivery\+\_\+site} (\mbox{\hyperlink{class_delivery_site}{Delivery\+Site}} \&delivery\+\_\+site)
+\item 
+\Hypertarget{class_w_m_s_graph_a18ade10c829e2f1f424471757ce1c15c}\label{class_w_m_s_graph_a18ade10c829e2f1f424471757ce1c15c} 
+void {\bfseries add\+\_\+pumping\+\_\+station} (\mbox{\hyperlink{class_pumping_station}{Pumping\+Station}} \&pumping\+\_\+station)
+\item 
+\Hypertarget{class_w_m_s_graph_a61089be9303d1cca101071241864df59}\label{class_w_m_s_graph_a61089be9303d1cca101071241864df59} 
+void {\bfseries add\+\_\+water\+\_\+reservoir} (\mbox{\hyperlink{class_water_reservoir}{Water\+Reservoir}} \&water\+\_\+reservoir)
+\item 
+\Hypertarget{class_w_m_s_graph_a729838e511c1e77079f807bb65e52df9}\label{class_w_m_s_graph_a729838e511c1e77079f807bb65e52df9} 
+void {\bfseries add\+\_\+pipe} (\mbox{\hyperlink{class_pipe}{Pipe}} \&pipe)
+\item 
+\Hypertarget{class_w_m_s_graph_aef4faeab3e882d21ebe9c1604250df41}\label{class_w_m_s_graph_aef4faeab3e882d21ebe9c1604250df41} 
+void {\bfseries remove\+\_\+pipe} (\mbox{\hyperlink{class_pipe}{Pipe}} pipe)
+\item 
+\Hypertarget{class_w_m_s_graph_a23c49e93372d5c58608bd289d58ad2f3}\label{class_w_m_s_graph_a23c49e93372d5c58608bd289d58ad2f3} 
+\mbox{\hyperlink{class_agua}{Agua}} {\bfseries get\+\_\+agua\+\_\+point} (std\+::string agua\+\_\+point)
+\item 
+\Hypertarget{class_w_m_s_graph_acab7a345c70dc2b1f0b500a91677431b}\label{class_w_m_s_graph_acab7a345c70dc2b1f0b500a91677431b} 
+\mbox{\hyperlink{class_delivery_site}{Delivery\+Site}} {\bfseries get\+\_\+city\+\_\+by\+\_\+code} (std\+::string code)
+\item 
+\Hypertarget{class_w_m_s_graph_a3de0fb289bb3962682e3ba148d5c1c1f}\label{class_w_m_s_graph_a3de0fb289bb3962682e3ba148d5c1c1f} 
+\mbox{\hyperlink{class_pumping_station}{Pumping\+Station}} {\bfseries get\+\_\+pumping\+\_\+station\+\_\+code} (\mbox{\hyperlink{class_agua}{Agua}} agua)
+\item 
+\Hypertarget{class_w_m_s_graph_a9dff18f583410472764cdb177a3a8256}\label{class_w_m_s_graph_a9dff18f583410472764cdb177a3a8256} 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_pumping_station}{Pumping\+Station}} $>$ {\bfseries get\+\_\+pumping\+\_\+stations} ()
+\item 
+\Hypertarget{class_w_m_s_graph_ab28749f1927775b3fd2127ef3c6bac85}\label{class_w_m_s_graph_ab28749f1927775b3fd2127ef3c6bac85} 
+\mbox{\hyperlink{class_water_reservoir}{Water\+Reservoir}} {\bfseries get\+\_\+water\+\_\+reservoir\+\_\+code} (std\+::string code)
+\item 
+\Hypertarget{class_w_m_s_graph_a25bbd39f24dfd357fdf9755e69b77bfe}\label{class_w_m_s_graph_a25bbd39f24dfd357fdf9755e69b77bfe} 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_water_reservoir}{Water\+Reservoir}} $>$ {\bfseries get\+\_\+agua\+\_\+reservoir} ()
+\item 
+\Hypertarget{class_w_m_s_graph_ad9663127835ffc8d6d9ce829adadca39}\label{class_w_m_s_graph_ad9663127835ffc8d6d9ce829adadca39} 
+\mbox{\hyperlink{class_pipe}{Pipe}} {\bfseries get\+\_\+pipe\+\_\+id} (int id)
+\item 
+\Hypertarget{class_w_m_s_graph_a6187c8fe8a74ed962cbe3a8046297843}\label{class_w_m_s_graph_a6187c8fe8a74ed962cbe3a8046297843} 
+std\+::unordered\+\_\+map$<$ int, \mbox{\hyperlink{class_pipe}{Pipe}} $>$ {\bfseries get\+\_\+pipes} (void)
+\item 
+\Hypertarget{class_w_m_s_graph_a4155fb010198abf65eb70d1babc335bd}\label{class_w_m_s_graph_a4155fb010198abf65eb70d1babc335bd} 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{class_delivery_site}{Delivery\+Site}} $>$ {\bfseries get\+\_\+agua\+\_\+city} ()
+\item 
+\Hypertarget{class_w_m_s_graph_a6b9c562440a24329a6142c2bf979b04b}\label{class_w_m_s_graph_a6b9c562440a24329a6142c2bf979b04b} 
+\mbox{\hyperlink{class_delivery_site}{Delivery\+Site}} {\bfseries get\+\_\+city\+\_\+id} (int id)
+\item 
+\Hypertarget{class_w_m_s_graph_a23c36bad4cf2fd0fbad5250aa0f63e33}\label{class_w_m_s_graph_a23c36bad4cf2fd0fbad5250aa0f63e33} 
+\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*} {\bfseries get\+\_\+super\+\_\+sink} ()
+\item 
+\Hypertarget{class_w_m_s_graph_acd7bb3f6253348263bb75d87391bb91e}\label{class_w_m_s_graph_acd7bb3f6253348263bb75d87391bb91e} 
+\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*} {\bfseries get\+\_\+super\+\_\+source} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_graph}{Graph$<$ Agua $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*} {\bfseries find\+Vertex} (const \mbox{\hyperlink{class_agua}{Agua}} \&in) const
+\item 
+int {\bfseries get\+Num\+Vertex} () const
+\item 
+bool {\bfseries add\+Vertex} (\mbox{\hyperlink{class_agua}{Agua}} \&in)
+\item 
+bool {\bfseries remove\+Vertex} (\mbox{\hyperlink{class_agua}{Agua}} \&in)
+\item 
+bool {\bfseries add\+Edge} (const \mbox{\hyperlink{class_agua}{Agua}} \&sourc, const \mbox{\hyperlink{class_agua}{Agua}} \&dest, \mbox{\hyperlink{class_pipe}{Pipe}} w)
+\item 
+bool {\bfseries remove\+Edge} (const \mbox{\hyperlink{class_agua}{Agua}} \&sourc, const \mbox{\hyperlink{class_agua}{Agua}} \&dest)
+\item 
+vector$<$ \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*} $>$ {\bfseries get\+Vertex\+Set} () const
+\item 
+void {\bfseries set\+Vertex\+Set} (vector$<$ \mbox{\hyperlink{class_vertex}{Vertex}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*} $>$)
+\item 
+vector$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ {\bfseries dfs} () const
+\item 
+vector$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ {\bfseries dfs} (const \mbox{\hyperlink{class_agua}{Agua}} \&source) const
+\item 
+vector$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ {\bfseries bfs} (const \mbox{\hyperlink{class_agua}{Agua}} \&source) const
+\item 
+void {\bfseries emit\+DOTFile} (string gname)
+\item 
+\mbox{\hyperlink{class_edge}{Edge}}$<$ \mbox{\hyperlink{class_agua}{Agua}} $>$ \texorpdfstring{$\ast$}{*} {\bfseries find\+Edge} (const \mbox{\hyperlink{class_agua}{Agua}} \&source\+\_\+info, const \mbox{\hyperlink{class_agua}{Agua}} \&dest\+\_\+info) const
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_w_m_s_graph_8h}{WMSGraph.\+h}}\item 
+\mbox{\hyperlink{_w_m_s_graph_8cpp}{WMSGraph.\+cpp}}\end{DoxyCompactItemize}

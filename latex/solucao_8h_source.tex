@@ -1,0 +1,440 @@
+\doxysection{solucao.\+h}
+\hypertarget{solucao_8h_source}{}\label{solucao_8h_source}\mbox{\hyperlink{solucao_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Administrador\ on\ 04/04/2024.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ DAPROJ\_V1\_SOLUÇAO\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ DAPROJ\_V1\_SOLUÇAO\_H}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_w_m_s_graph_8h}{WMSGraph.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{helpfunctions_8h}{helpfunctions.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_file_reader_8h}{FileReader.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <unordered\_set>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ Assuming\ the\ definitions\ of\ WMSGraph,\ Vertex<Agua>,\ Pipe,\ and\ other\ related\ classes}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{solucao_8h_a50a6d34ee552b02b0708ff7791691647}{file\_add}}(\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ \&grafo,\ \textcolor{keywordtype}{int}\ regiao)\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{if}\ (regiao\ ==\ 0)\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ FileReader::add\_cities(\textcolor{stringliteral}{"{}../Project1DataSetSmall/Project1DataSetSmall/Cities\_Madeira.csv"{}},\ grafo);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ FileReader::add\_reservoirs(\textcolor{stringliteral}{"{}../Project1DataSetSmall/Project1DataSetSmall/Reservoirs\_Madeira.csv"{}},\ grafo);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ FileReader::add\_stations(\textcolor{stringliteral}{"{}../Project1DataSetSmall/Project1DataSetSmall/Stations\_Madeira.csv"{}},\ grafo);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ FileReader::add\_pipes(\textcolor{stringliteral}{"{}../Project1DataSetSmall/Project1DataSetSmall/Pipes\_Madeira.csv"{}},\ grafo);}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{if}\ (regiao\ ==\ 1)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ FileReader::add\_cities(\textcolor{stringliteral}{"{}../Project1LargeDataSet/Project1LargeDataSet/Cities.csv"{}},\ grafo);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ FileReader::add\_reservoirs(\textcolor{stringliteral}{"{}../Project1LargeDataSet/Project1LargeDataSet/Reservoir.csv"{}},\ grafo);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ FileReader::add\_stations(\textcolor{stringliteral}{"{}../Project1LargeDataSet/Project1LargeDataSet/Stations.csv"{}},\ grafo);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ FileReader::add\_pipes(\textcolor{stringliteral}{"{}../Project1LargeDataSet/Project1LargeDataSet/Pipes.csv"{}},\ grafo);}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{int}\ count\ =\ 0;}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{class_water_reservoir}{WaterReservoir}}\ super\_res\ =\ \mbox{\hyperlink{class_water_reservoir}{WaterReservoir}}(\textcolor{stringliteral}{"{}super"{}},\ \textcolor{stringliteral}{"{}RS\_2"{}},\ grafo.get\_agua\_reservoir().size()\ +\ 1,\ \textcolor{stringliteral}{"{}RS\_2"{}},\ 0);}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{class_delivery_site}{DeliverySite}}\ super\_del\ =\ \mbox{\hyperlink{class_delivery_site}{DeliverySite}}(\textcolor{stringliteral}{"{}City\ Super"{}},\ grafo.get\_agua\_city().size()\ +\ 1,\ \textcolor{stringliteral}{"{}CS\_2"{}},\ 0,\ 0);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ reservoir:\ grafo.get\_agua\_reservoir())\ \textcolor{comment}{//\ inicaliazdor\ das\ cidades\ que\ cada\ reservatoio\ chega}}
+\DoxyCodeLine{00067\ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ super\_res.set\_max\_delivery(super\_res.get\_max\_delivery()\ +\ reservoir.second.get\_max\_delivery());}
+\DoxyCodeLine{00069\ \ \ \ \ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ grafo.add\_water\_reservoir(super\_res);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ reservoir:\ grafo.get\_agua\_reservoir())\ \textcolor{comment}{//\ inicaliazdor\ das\ cidades\ que\ cada\ reservatoio\ chega}}
+\DoxyCodeLine{00074\ \ \ \ \ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (reservoir.second\ !=\ super\_res)\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ count++;}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_pipe}{Pipe}}\ pipe;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ pipe\ =\ \mbox{\hyperlink{class_pipe}{Pipe}}(\textcolor{stringliteral}{"{}RS\_2"{}},\ reservoir.second.get\_code(),\ reservoir.second.get\_max\_delivery(),\ 1,grafo.get\_pipes().size()\ +\ count\ +\ 24\ +\ reservoir.second.get\_max\_delivery()\ +\ reservoir.second.get\_id());}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ grafo.add\_pipe(pipe);}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ count\ =\ 0;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ sink:\ grafo.get\_agua\_city())\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ super\_del.set\_demand(super\_del.get\_demand()\ +\ sink.second.get\_demand());}
+\DoxyCodeLine{00088\ \ \ \ \ \}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ grafo.add\_delivery\_site(super\_del);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ sink:\ grafo.get\_agua\_city())\ \textcolor{comment}{//\ inicaliazdor\ das\ cidades\ que\ cada\ reservatorio\ chega}}
+\DoxyCodeLine{00094\ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sink.second\ !=\ super\_del)\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ count++;}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pipe\ =\ \mbox{\hyperlink{class_pipe}{Pipe}}(sink.second.get\_code(),\ \textcolor{stringliteral}{"{}CS\_2"{}},\ sink.second.get\_demand(),\ 1,grafo.get\_pipes().size()\ +\ count);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ grafo.add\_pipe(pipe);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{solucao_8h_a398a940b8bd654d66cb0b1678b38d47d}{without\_bfs}}(\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\&\ residual,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}\ remove,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}\&\ source,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}\&\ sink,\ std::unordered\_map<std::string,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*>\&\ parent)\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ v\ :\ residual.getVertexSet())\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ v-\/>setVisited(\textcolor{keyword}{false});}
+\DoxyCodeLine{00114\ \ \ \ \ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ std::queue<Vertex<Agua>*>\ q;}
+\DoxyCodeLine{00117\ \ \ \ \ q.push(\&source);}
+\DoxyCodeLine{00118\ \ \ \ \ source.setVisited(\textcolor{keyword}{true});}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordflow}{while}\ (!q.empty())\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ u\ =\ q.front();}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ q.pop();}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ edge\ :\ u-\/>getAdj())\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!edge.getDest()-\/>isVisited()\ \&\&\ residual.get\_pipe\_id(residual.findEdge(u-\/>getInfo(),\ edge.getDest()-\/>getInfo())-\/>getWeight().get\_id()).get\_capacity()\ >\ 0\ \&\&\ edge.getDest()-\/>getInfo().get\_code()\ !=\ remove.getInfo().get\_code())\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.push(edge.getDest());}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parent[edge.getDest()-\/>getInfo().get\_code()]\ =\ u;}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ edge.getDest()-\/>setVisited(\textcolor{keyword}{true});}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00131\ \ \ \ \ \}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordflow}{return}\ sink.isVisited();}
+\DoxyCodeLine{00134\ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{solucao_8h_a68c5ba605425c7dc40a6421ac2fd464c}{bfs}}(\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\&\ residual,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}\&\ source,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}\&\ sink,\ std::unordered\_map<std::string,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*>\&\ parent)\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ v\ :\ residual.getVertexSet())\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ v-\/>setVisited(\textcolor{keyword}{false});}
+\DoxyCodeLine{00144\ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \ std::queue<Vertex<Agua>*>\ q;}
+\DoxyCodeLine{00146\ \ \ \ \ q.push(\&source);}
+\DoxyCodeLine{00147\ \ \ \ \ source.setVisited(\textcolor{keyword}{true});}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordflow}{while}\ (!q.empty())\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ u\ =\ q.front();}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ q.pop();}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ edge\ :\ u-\/>getAdj())\ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ hello\ =\ residual.findEdge(u-\/>getInfo(),\ edge.getDest()-\/>getInfo())-\/>getWeight().get\_capacity();}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!edge.getDest()-\/>isVisited()\ \&\&\ residual.get\_pipe\_id(residual.findEdge(u-\/>getInfo(),\ edge.getDest()-\/>getInfo())-\/>getWeight().get\_id()).get\_capacity()\ >\ 0)\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q.push(edge.getDest());}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parent[edge.getDest()-\/>getInfo().get\_code()]\ =\ u;}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ edge.getDest()-\/>setVisited(\textcolor{keyword}{true});}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00161\ \ \ \ \ \}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordflow}{return}\ sink.isVisited();}
+\DoxyCodeLine{00164\ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ unordered\_map<int,\ int>\ \mbox{\hyperlink{solucao_8h_affeb707d207f1c157d6e057d0d735441}{without\_edmondsKarp}}(\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ graph,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}\&\ without,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}\&\ source,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ sink)\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ dummy\ =\ graph;}
+\DoxyCodeLine{00174\ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ residual\ =\ graph;}
+\DoxyCodeLine{00175\ \ \ \ \ std::unordered\_map<std::string,\ Vertex<Agua>*>\ parent;}
+\DoxyCodeLine{00176\ \ \ \ \ unordered\_map<int,\ int>\ results;}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keyword}{auto}\ v\ =\ graph.getVertexSet();}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ a\ :\ dummy.get\_agua\_city())\ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a.first[1]\ ==\ \textcolor{charliteral}{'S'})\ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ results[a.second.get\_id()]\ =\ 0;}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00186\ \ \ \ \ \}}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{int}\ maxFlow\ =\ 0;}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordflow}{while}\ (\mbox{\hyperlink{solucao_8h_a398a940b8bd654d66cb0b1678b38d47d}{without\_bfs}}(residual,\ without,\ source,\ *sink,\ parent))\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pathFlow\ =\ std::numeric\_limits<int>::max();}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ path\ flow}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ vertex\ =\ sink;}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ prev\_vertex\ =\ vertex;}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (vertex-\/>getInfo().get\_code()\ !=\ source.getInfo().get\_code())\ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ next\ =\ parent[vertex-\/>getInfo().get\_code()];}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ deixaver\ =\ residual.get\_pipe\_id(residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo())-\/>getWeight().get\_id());}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ hello\ =\ residual.get\_pipe\_id(residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo())-\/>getWeight().get\_id()).get\_capacity();}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ pathFlow\ =\ std::min(pathFlow,\ hello);}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ vertex\ =\ next;}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ residual\ graph\ capacities}}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ vertex\ =\ sink;}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (vertex-\/>getInfo().get\_code()\ !=\ source.getInfo().get\_code())\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ next\ =\ parent[vertex-\/>getInfo().get\_code()];}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vertex-\/>getInfo().get\_code()[0]\ ==\ \textcolor{charliteral}{'C'}\ \&\&\ vertex-\/>getInfo().get\_code()[1]\ !=\ \textcolor{charliteral}{'S'})\ \{}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prev\_vertex\ =\ vertex;}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pipe\ =\ residual.get\_pipe\_id(residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo())-\/>getWeight().get\_id());}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo())\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ res\_pipe\ =\ residual.get\_pipe\_id(residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo())-\/>getWeight().get\_id());}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\_pipe.set\_capacity(res\_pipe.get\_capacity()\ -\/\ pathFlow);}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ residual.remove\_pipe(residual.get\_pipe\_id(residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo())-\/>getWeight().get\_id()));}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ residual.add\_pipe(res\_pipe);}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_pipe}{Pipe}}\ new\_pipe\ =\ \mbox{\hyperlink{class_pipe}{Pipe}}(vertex-\/>getInfo().get\_code(),\ next-\/>getInfo().get\_code(),\ pathFlow,\ 1,\ residual.get\_pipes().size()\ +\ 1);}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ residual.add\_pipe(new\_pipe);}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ vertex\ =\ next;}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ maxFlow\ +=\ pathFlow;}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ results[prev\_vertex-\/>getInfo().get\_id()]\ +=\ pathFlow;}
+\DoxyCodeLine{00228\ \ \ \ \ \}}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ graph.setVertexSet(v);}
+\DoxyCodeLine{00231\ \ \ \ \ residual.setVertexSet(v);}
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keywordflow}{return}\ results;}
+\DoxyCodeLine{00233\ \}}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ unordered\_map<int,\ int>\ \mbox{\hyperlink{solucao_8h_afe6939ff2f13e240c56a77fa00fcf084}{edmondsKarp}}(\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ graph,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}\&\ source,\ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ sink)\ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ dummy\ =\ graph;}
+\DoxyCodeLine{00243\ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ residual\ =\ graph;}
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{keyword}{auto}\ v\ =\ graph.getVertexSet();}
+\DoxyCodeLine{00245\ \ \ \ \ std::unordered\_map<std::string,\ Vertex<Agua>*>\ parent;}
+\DoxyCodeLine{00246\ \ \ \ \ unordered\_map<int,\ int>\ results;}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ a\ :\ dummy.get\_agua\_city())\ \{}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (a.first[1]\ ==\ \textcolor{charliteral}{'S'})\ \{}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ results[a.second.get\_id()]\ =\ 0;}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00255\ \ \ \ \ \}}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keywordtype}{int}\ maxFlow\ =\ 0;}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ prev\_vertex;}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keywordflow}{while}\ (\mbox{\hyperlink{solucao_8h_a68c5ba605425c7dc40a6421ac2fd464c}{bfs}}(residual,source,\ *sink,\ parent))\ \{}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pathFlow\ =\ std::numeric\_limits<int>::max();}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ path\ flow}}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ vertex\ =\ sink;}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ prev\_vertex\ =\ vertex;}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (vertex-\/>getInfo().get\_code()\ !=\ source.getInfo().get\_code())\ \{}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ next\ =\ parent[vertex-\/>getInfo().get\_code()];}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ hello\ =\ residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo());}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ pathFlow\ =\ std::min(pathFlow,\ hello-\/>getWeight().get\_capacity());}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ vertex\ =\ next;}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ residual\ graph\ capacities}}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ vertex\ =\ sink;}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (vertex-\/>getInfo().get\_code()\ !=\ source.getInfo().get\_code())\ \{}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vertex}{Vertex<Agua>}}*\ next\ =\ parent[vertex-\/>getInfo().get\_code()];}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vertex-\/>getInfo().get\_code()[0]\ ==\ \textcolor{charliteral}{'C'}\ \&\&\ vertex-\/>getInfo().get\_code()[1]\ !=\ \textcolor{charliteral}{'S'})\ \{}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prev\_vertex\ =\ vertex;}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pipe\ =\ residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo())-\/>getWeight();}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo())\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ res\_pipe\ =\ residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo())-\/>getWeight();}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ res\_pipe.set\_capacity(res\_pipe.get\_capacity()\ -\/\ pathFlow);}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ residual.remove\_pipe(residual.findEdge(next-\/>getInfo(),\ vertex-\/>getInfo())-\/>getWeight());}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ residual.add\_pipe(res\_pipe);}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_pipe}{Pipe}}\ new\_pipe\ =\ \mbox{\hyperlink{class_pipe}{Pipe}}(vertex-\/>getInfo().get\_code(),\ next-\/>getInfo().get\_code(),\ pathFlow,\ 1,\ residual.get\_pipes().size()\ +\ 1);}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ residual.add\_pipe(new\_pipe);}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ vertex\ =\ next;}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ maxFlow\ +=\ pathFlow;}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ results[prev\_vertex-\/>getInfo().get\_id()]\ +=\ pathFlow;}
+\DoxyCodeLine{00298\ \ \ \ \ \}}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \ \ \ \ graph.setVertexSet(v);}
+\DoxyCodeLine{00301\ \ \ \ \ residual.setVertexSet(v);}
+\DoxyCodeLine{00302\ \ \ \ \ \textcolor{keywordflow}{return}\ results;}
+\DoxyCodeLine{00303\ \}}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{solucao_8h_a07c9be3a52f9ff8d510d718f438cfe5a}{max\_flow}}(\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ global\_graph,\ unordered\_map<int,\ int>\ results\ )}
+\DoxyCodeLine{00306\ \{}
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keywordtype}{int}\ flow\ =\ 0;}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\ city\ :\ results)}
+\DoxyCodeLine{00315\ \ \ \ \ \{}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ flow\ +=\ city.second;}
+\DoxyCodeLine{00317\ \ \ \ \ \}}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keywordflow}{return}\ flow;}
+\DoxyCodeLine{00320\ \}}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00322\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{solucao_8h_a2c932ffbf23cc33d2c7d218ea1628890}{show\_results}}(\mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ global\_graph,\ unordered\_map<int,\ int>\ results,\ unordered\_map<int,\ int>\ prev)}
+\DoxyCodeLine{00323\ \{}
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ results.size();\ i++)}
+\DoxyCodeLine{00331\ \ \ \ \ \{}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(results[i]\ ==\ prev[i])}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}The\ city\ "{}}\ <<\ global\_graph.get\_city\_id(i).get\_code()\ <<\ \textcolor{stringliteral}{"{}\ receives\ the\ same\ as\ before:\ ("{}}\ <<\ results[i]\ <<\ \textcolor{stringliteral}{"{})."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}The\ city\ "{}}\ <<\ global\_graph.get\_city\_id(i).get\_code()\ <<\ \textcolor{stringliteral}{"{}\ is\ missing\ "{}}\ <<\ prev[i]\ -\/\ results[i]\ <<\ \textcolor{stringliteral}{"{}\ compared\ to\ before."{}}\ <<std::endl;}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00341\ \ \ \ \ \}}
+\DoxyCodeLine{00342\ \}}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \textcolor{comment}{//Perguntas\ 3}}
+\DoxyCodeLine{00347\ }
+\DoxyCodeLine{00348\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{solucao_8h_aa7c80530404843913606f433c1de2f42}{reservoirs\_affected\_cities}}(\textcolor{keywordtype}{int}\ regiao,\ std::string\ code)}
+\DoxyCodeLine{00349\ \{}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00358\ \ \ \ \ \textcolor{keywordtype}{bool}\ flag\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00359\ }
+\DoxyCodeLine{00360\ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ dummy\_graph;}
+\DoxyCodeLine{00361\ }
+\DoxyCodeLine{00362\ \ \ \ \ \mbox{\hyperlink{solucao_8h_a50a6d34ee552b02b0708ff7791691647}{file\_add}}(dummy\_graph,\ regiao);}
+\DoxyCodeLine{00363\ \ \ \ \ \mbox{\hyperlink{class_water_reservoir}{WaterReservoir}}\ res\ =\ dummy\_graph.get\_water\_reservoir\_code(code);}
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ reserv\ :\ dummy\_graph.get\_agua\_reservoir())\ \{}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (reserv.first\ ==\ code)\ \{}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ flag\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00369\ \ \ \ \ \}}
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00371\ \ \ \ \ \textcolor{keywordflow}{if}\ (flag\ ==\ \textcolor{keyword}{true})\ \{}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ source\ =\ dummy\_graph.get\_super\_source();}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ sink\ =\ dummy\_graph.get\_super\_sink();}
+\DoxyCodeLine{00374\ }
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ solve2\ =\ \mbox{\hyperlink{solucao_8h_affeb707d207f1c157d6e057d0d735441}{without\_edmondsKarp}}(dummy\_graph,\ *dummy\_graph.findVertex(dummy\_graph.get\_agua\_point(code)),}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *source,\ sink);}
+\DoxyCodeLine{00377\ }
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ killmyself2;}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{solucao_8h_a50a6d34ee552b02b0708ff7791691647}{file\_add}}(killmyself2,\ regiao);}
+\DoxyCodeLine{00380\ }
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ source2\ =\ killmyself2.get\_super\_source();}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ sink2\ =\ killmyself2.get\_super\_sink();}
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ solve\ =\ \mbox{\hyperlink{solucao_8h_afe6939ff2f13e240c56a77fa00fcf084}{edmondsKarp}}(killmyself2,\ *source2,\ sink2);}
+\DoxyCodeLine{00385\ }
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Reservoir\ removed:\ "{}}\ <<\ res.get\_code()}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ |\ Network\ total\ flow:\ "{}}\ <<\ \mbox{\hyperlink{solucao_8h_a07c9be3a52f9ff8d510d718f438cfe5a}{max\_flow}}(dummy\_graph,\ solve2)\ <<\ std::endl\ <<\ std::endl;}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{solucao_8h_a2c932ffbf23cc33d2c7d218ea1628890}{show\_results}}(dummy\_graph,\ solve2,\ solve);}
+\DoxyCodeLine{00389\ \ \ \ \ \}}
+\DoxyCodeLine{00390\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}There\ is\ no\ reservoir\ with\ that\ code!\ "{}}\ <<endl\ <<\ endl;}
+\DoxyCodeLine{00392\ \ \ \ \ \}}
+\DoxyCodeLine{00393\ }
+\DoxyCodeLine{00394\ \}}
+\DoxyCodeLine{00395\ }
+\DoxyCodeLine{00396\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{solucao_8h_a0f894f1e3f31474a9a0c79286f0637ed}{pumping\_stations\_affected\_cities}}(\textcolor{keywordtype}{int}\ regiao,\ std::unordered\_map<int,\ int>\ expected,\ std::string\ code)}
+\DoxyCodeLine{00397\ \{}
+\DoxyCodeLine{00403\ \ \ \ \ \textcolor{keywordtype}{bool}\ affecting\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00404\ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ dummy\_graph;}
+\DoxyCodeLine{00405\ }
+\DoxyCodeLine{00406\ \ \ \ \ \mbox{\hyperlink{solucao_8h_a50a6d34ee552b02b0708ff7791691647}{file\_add}}(dummy\_graph,\ regiao);}
+\DoxyCodeLine{00407\ }
+\DoxyCodeLine{00408\ \ \ \ \ \textcolor{keyword}{auto}\ source\ =\ dummy\_graph.get\_super\_source();}
+\DoxyCodeLine{00409\ \ \ \ \ \textcolor{keyword}{auto}\ sink\ =\ dummy\_graph.get\_super\_sink();}
+\DoxyCodeLine{00410\ }
+\DoxyCodeLine{00411\ \ \ \ \ \textcolor{keyword}{auto}\ solve\ =\ \mbox{\hyperlink{solucao_8h_affeb707d207f1c157d6e057d0d735441}{without\_edmondsKarp}}(dummy\_graph,\ *dummy\_graph.findVertex(dummy\_graph.get\_agua\_point(code)),*source,\ sink);}
+\DoxyCodeLine{00412\ }
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ place\_holder;}
+\DoxyCodeLine{00415\ }
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{solucao_8h_a50a6d34ee552b02b0708ff7791691647}{file\_add}}(place\_holder,\ regiao);}
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pump\ =\ place\_holder.get\_pumping\_station\_code(place\_holder.get\_agua\_point(code));}
+\DoxyCodeLine{00419\ }
+\DoxyCodeLine{00420\ }
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ cities\ :\ place\_holder.get\_agua\_city())\ \{}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (solve[cities.second.get\_id()]\ !=\ expected[cities.second.get\_id()])\ \{}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ affecting\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00426\ }
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ std::cout\ <<\ endl\ <<\ \textcolor{stringliteral}{"{}After\ removing\ "{}}\ <<\ pump.get\_code()\ <<\ \textcolor{stringliteral}{"{}:\ "{}}\ <<\ endl;}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it1\ =\ expected.begin();}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it2\ =\ solve.begin();}
+\DoxyCodeLine{00430\ }
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(it1\ !=\ expected.end()\ \&\&\ it2\ !=\ solve.end())\ \{}
+\DoxyCodeLine{00432\ }
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}The\ city\ "{}}\ <<\ place\_holder.get\_city\_id(it1-\/>first).get\_code()\ <<\ \textcolor{stringliteral}{"{}\ has\ "{}}\ <<\ it2-\/>second\ <<\ \textcolor{stringliteral}{"{}\ flow\ ("{}}\ <<\ abs(it1-\/>second\ -\/\ it2-\/>second)\ <<\ \textcolor{stringliteral}{"{}\ deficit)"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00434\ }
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ ++it1;}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ ++it2;}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00438\ }
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ affecting;}
+\DoxyCodeLine{00440\ \}}
+\DoxyCodeLine{00441\ }
+\DoxyCodeLine{00442\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{solucao_8h_aa1ebad1916bd5dae22d0927b5e47c805}{pipes\_affected\_cities}}(\textcolor{keywordtype}{int}\ regiao,\ unordered\_map<int,\ int>\ expected,\ \mbox{\hyperlink{class_pipe}{Pipe}}\ pipe)}
+\DoxyCodeLine{00443\ \{}
+\DoxyCodeLine{00451\ \ \ \ \ \textcolor{keywordtype}{bool}\ affecting\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00452\ }
+\DoxyCodeLine{00453\ }
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_w_m_s_graph}{WMSGraph}}\ dummy;}
+\DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{solucao_8h_a50a6d34ee552b02b0708ff7791691647}{file\_add}}(dummy,\ regiao);}
+\DoxyCodeLine{00456\ }
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_pipe}{Pipe}}\ new\_pipe\ =\ pipe;}
+\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ \ \ \ \ dummy.remove\_pipe(pipe);}
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \ \ \ \ new\_pipe.set\_capacity(0);}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \ \ \ \ dummy.add\_pipe(new\_pipe);}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00462\ }
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ capacities\ =\ \mbox{\hyperlink{solucao_8h_afe6939ff2f13e240c56a77fa00fcf084}{edmondsKarp}}(dummy,\ *dummy.get\_super\_source(),\ dummy.get\_super\_sink());}
+\DoxyCodeLine{00464\ }
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ cities\ :\ dummy.get\_agua\_city())\ \{}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (capacities[cities.second.get\_id()]\ !=\ expected[cities.second.get\_id()])\ \{}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ affecting\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00470\ }
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (affecting\ ==\ \textcolor{keyword}{true})}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}The\ Pipe\ ("{}}<<\ new\_pipe.get\_code\_A()\ <<\ \textcolor{stringliteral}{"{}\ -\/\ "{}}\ <<\ new\_pipe.get\_code\_B()\ <<\ \textcolor{stringliteral}{"{})\ affects:\ "{}}\ <<\ endl;}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\ city\ :\ dummy.get\_agua\_city())}
+\DoxyCodeLine{00475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00476\ }
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(capacities[city.second.get\_id()]\ <\ expected[city.second.get\_id()])}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}The\ city\ "{}}\ <<\ city.second.get\_code()\ <<\ \textcolor{stringliteral}{"{}\ ("{}}\ <<\ expected[city.second.get\_id()]\ -\/\ capacities[city.second.get\_id()]\ <<\ \textcolor{stringliteral}{"{})"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00481\ }
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ endl;}
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}The\ Pipe\ ("{}}\ <<\ new\_pipe.get\_code\_A()\ <<\ \textcolor{stringliteral}{"{}\ -\/\ "{}}\ <<\ new\_pipe.get\_code\_B()\ <<\ \textcolor{stringliteral}{"{})\ doesn't\ affect\ the\ network\ flow."{}}<<\ std::endl\ <<\ std::endl;}
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ endl;}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ affecting;}
+\DoxyCodeLine{00491\ }
+\DoxyCodeLine{00492\ }
+\DoxyCodeLine{00493\ \}}
+\DoxyCodeLine{00494\ }
+\DoxyCodeLine{00495\ }
+\DoxyCodeLine{00496\ }
+\DoxyCodeLine{00497\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//DAPROJ\_V1\_SOLUÇAO\_H}}
+
+\end{DoxyCode}

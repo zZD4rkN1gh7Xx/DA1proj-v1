@@ -1,0 +1,42 @@
+\doxysection{delivery\+Sites.\+h}
+\hypertarget{delivery_sites_8h_source}{}\label{delivery_sites_8h_source}\mbox{\hyperlink{delivery_sites_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Created\ by\ Administrador\ on\ 20/03/2024.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ DAPROJ1\_DELIVERYSITES\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ DAPROJ1\_DELIVERYSITES\_H}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{agua_8h}{agua.h}}"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_delivery_site}{DeliverySite}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_agua}{Agua}}\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ std::string\ city;}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ delivery\_site\_id;}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ std::string\ delivery\_site\_code;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ demand;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ population;}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_delivery_site}{DeliverySite}}(std::string\ city,\ \textcolor{keywordtype}{int}\ delivery\_site\_id,\ std::string\ delivery\_site\_code,\ \textcolor{keywordtype}{int}\ demand,\ \textcolor{keywordtype}{int}\ population);}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_delivery_site}{DeliverySite}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::string\ get\_city(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ get\_delivery\_site\_id(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ std::string\ get\_delivery\_site\_code(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ get\_demand(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ get\_population(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ set\_demand(\textcolor{keywordtype}{int}\ demand);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_delivery_site}{DeliverySite}}\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//DAPROJ1\_DELIVERYSITES\_H}}
+
+\end{DoxyCode}
